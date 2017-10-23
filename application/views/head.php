@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Tuyo.com - todo lo que quieres lo encuenta aquí</title>
 
     <!-- Bootstrap core CSS -->
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyDP5opBg3ZbeX96OI9l7Zh_Mc1iK7_NIBs"></script>
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="<?php echo base_url("assets/public/css/style.css?n=".rand()); ?>" rel="stylesheet">

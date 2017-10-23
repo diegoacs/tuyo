@@ -30,16 +30,18 @@ Como muestra del crecimiento en sus últimos años ha contribuido con un gran ap
 
 		$data = ['city' =>$city, 'detalle' => $detalle];
 		$this->load->view('head', '', FALSE);
+		$this->load->view('panel_search','', FALSE);
 		$this->load->view('city',$data, FALSE);
-		$this->load->view('footer', '', FALSE);
+		$this->load->view('footer_gris', '', FALSE);
 	}
 
 
 	public function productDetals()
 	{
 		$this->load->view('head', '', FALSE);
+		$this->load->view('panel_search','', FALSE);
 		$this->load->view('detals','', FALSE);
-		$this->load->view('footer', '', FALSE);
+		$this->load->view('footer_gris', '', FALSE);
 	}
 
 }

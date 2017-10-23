@@ -376,7 +376,7 @@
                           <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio A" class="img-guia">
                         </figure>
                         <div class="desc">
-                            <h3>Bucaramanga</h3>
+                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Bucaramanga</a></h3>
                             <p>
                                 <a href="#">25 alojamientos</a>,
                                 <a href="#">15 chalets</a>,
@@ -389,7 +389,7 @@
                           <img src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="Sitio A" class="img-guia">
                         </figure>
                         <div class="desc">
-                            <h3>Lebrija</h3>
+                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Lebrija</a></h3>
                             <p>
                                 <a href="#">25 alojamientos</a>,
                                 <a href="#">15 chalets</a>,
@@ -418,7 +418,7 @@
                           <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio A" class="img-guia">
                         </figure>
                         <div class="desc">
-                            <h3>Barrancabermeja</h3>
+                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Barrancabermeja</a></h3>
                             <p>
                                 <a href="#">25 alojamientos</a>,
                                 <a href="#">15 chalets</a>,
@@ -431,7 +431,7 @@
                           <img src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="Sitio A" class="img-guia">
                         </figure>
                         <div class="desc">
-                            <h3>Girón</h3>
+                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Girón</a></h3>
                             <p>
                                 <a href="#">25 alojamientos</a>,
                                 <a href="#">15 chalets</a>,
@@ -444,7 +444,7 @@
                           <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio C" class="img-guia">
                         </figure>
                         <div class="desc">
-                            <h3>Piedecuesta</h3>
+                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Piedecuesta</a></h3>
                             <p>
                                 <a href="#">25 alojamientos</a>,
                                 <a href="#">15 chalets</a>,
