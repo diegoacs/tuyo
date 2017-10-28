@@ -5,6 +5,35 @@
  dfdce3 :gris;
  */
 
+.link-map{
+    color: #000000;
+    text-decoration: none !important;
+}
+.link-map:hover{
+    color:  #f2f2f2;
+    text-decoration: !important;
+}
+.seemore{
+    background-color: #f2f2f2;
+    color: #000000;
+    text-align: center;
+    height: auto;
+    width: 70px;
+    float: right;
+    padding-right: 5px;
+    position: absolute;
+}
+.seemore:hover{
+    background-color: #8a3ab9;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#map{
+    width: auto;
+    height: auto;
+    margin: 5px 5px 5px 5px;
+}
 
 body{
     font-family: 'Abel', sans-serif;
@@ -137,7 +166,20 @@ h1, .color-white{
 }
 
 .desc{
+    padding: 10px 0px 10px 10px;
+    margin: 4px 6px 4px 0px;
+    border-style: solid;
+    border-color: #dfdce3;
+    border-width: 1px;
     height: 10%;
+}
+
+.desc:hover{
+    padding: 10px 0px 10px 10px;
+    margin: 4px 6px 4px 0px;
+    border-style: solid;
+    border-color: #8a3ab9;
+    border-width: 1px;
 }
 
 .panel-destacado{
@@ -204,6 +246,15 @@ h1, .color-white{
     background-color: #ffffff;
     padding-bottom: 50px;
     height: auto;
+}
+
+.mapgral{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    border: 15px 0px 15px 0px;
+    border-color: #f2f2f2;
+    border-style: solid;
+
 }
 
 .c3 {
@@ -327,5 +378,11 @@ a{
 .mright{
     
     padding-right: 10px;
+}
+
+.filtro{
+    margin: 15px 5px 0px 0px;
+    background-color: #f2f2f2;
+    padding: 10px 10px 10px 10px;
 }
 

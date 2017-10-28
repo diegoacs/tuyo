@@ -1,7 +1,5 @@
-
-
-
-
+    
+    <!-- portada de imagen -->
     <div class="container-fluid c1" id='c1'>
         <div class="container">
             <div class="row">
@@ -62,8 +60,188 @@
         </div>
     </div>
 
+    <!-- ciudades -->
+    <div class="container-fluid c4">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                    <h3><span class="fa fa-map-signs text-title"></span>&nbsp;<b>Guia de ciudades</b></h3>
+                </div>
+            </div>
+            <br><br>
 
-    <div class="container-fluid c2" id='c2'>
+            <div id="guiciudad" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#guiciudad" data-slide-to="0" class="active"></li>
+                    <li data-target="#guiciudad" data-slide-to="1" class=""></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
+                                <img src="<?php echo base_url("assets/public/img/bucaramanga.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail img-responsive">
+                                <h3>Bucaramanga</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
+                                <img src="<?php echo base_url("assets/public/img/giron.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail img-responsive">
+                                <h3>Girón</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
+                                <img src="<?php echo base_url("assets/public/img/lebrija.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail img-responsive">
+                                <h3>Lebrija</h3>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
+                                <img src="<?php echo base_url("assets/public/img/florida.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail">
+                                <h3>Floridablanca</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
+                                <img src="<?php echo base_url("assets/public/img/piedecuesta.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail">
+                                <h3>Piedecuesta</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
+                                <img src="<?php echo base_url("assets/public/img/lebrija.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail">
+                                <h3>Lebrija</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a class="left" href="#guiciudad" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right" href="#guiciudad" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- lugares cercanos -->
+    <div class="row c2">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h2 class="text-center text-title">
+                <span class="fa fa-map-marker text-danger"></span>
+                 <b>Lugares cerca de ti</b>
+            </h2>
+        </div>
+    </div>
+
+    <!-- map -->
+    <div class="container-fluid mapgral">
+        <input type="hidden" id='routelist' value="<?php echo base_url("assets/public/img/logo2.png"); ?>">
+        <div id="map_gral" style="height: 400px; width:auto;"></div>
+
+        <script>
+            
+            var map;
+            function initMap() {
+                //Obtenemos latitud y longitud
+                function localizacion(posicion){
+
+                    var img=document.getElementById('routelist').value;
+                    var latitude = posicion.coords.latitude;
+                    var longitude = posicion.coords.longitude;
+
+                    map = new google.maps.Map(document.getElementById('map_gral'), {
+                    center: {lat: latitude, lng: longitude},
+                    zoom: 10
+                    });
+
+                    var desc = '<h3>hotel<h3>'+  
+                                'Descripcion de hotel';
+
+                    var infowindow = new google.maps.InfoWindow({
+                      content: desc
+                    });
+                    var villa = new google.maps.Marker({
+                        position: {lat: 7.014035, lng: -73.111061},
+                        map: map,
+                        icon: img,
+                        title: 'Villa Maria Paula',
+                        draggable: false
+                    });
+            
+                    villa.addListener('click', function() {
+                      infowindow.open(map, villa);
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: {lat: 7.111982, lng: -73.215040},
+                        map: map,
+                        icon: img,
+                        title: 'Hospedaje Palonegro',
+                        draggable: false
+                    });
+                    var marker = new google.maps.Marker({
+                        position: {lat: 7.111447, lng: -73.216389},
+                        map: map,
+                        icon: img,
+                        title: 'Hotel Cascade Real',
+                        draggable: false
+                    });                    
+                }
+
+
+
+                function error(){
+                    $("#map_gral").html("tu navegador no soporta geolocation");
+                }
+
+                // iniciar funcion
+                navigator.geolocation.getCurrentPosition(localizacion,error);
+            }
+
+        </script>
+    </div>
+
+    <!-- unete a nosostros -->
+    <div class="container-fluid c4">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                    <h3><span class="fa fa-user-o text-title"></span>&nbsp;<b>Unete a nosotros</b></h3>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="desc">
+                            <h3><span class="fa fa-envelope-o text-title"></span>&nbsp;Ofertas increibles</h3>
+                            <p>
+                                Recibe en tu correo ofertas y descuentos increibles 
+                                para tus vacaciones.
+                            </p>
+                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="desc">
+                            <h3><span class="fa fa-smile-o text-title"></span>&nbsp;Fácil y rápido</h3>
+                            <p>
+                                Desde la comodidad de tu hogar u oficina, reservar tus proximas vacaciones.
+                            </p>
+                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="desc">
+                            <h3><span class="fa fa-heart text-title"></span>&nbsp;Compartenos</h3>
+                            <p>
+                                comparte con tus amigos la mejor experiencia, buscanos en las redes sociales.
+                            </p>
+                        </div>
+                </div>             
+            </div>  
+        </div>
+    </div> 
+
+
+<!--     <div class="container-fluid c2" id='c2'>
         <div class="container">
             <h2 class="text-center text-title">
                 <span class="fa fa-map-marker text-danger"></span>
@@ -72,12 +250,35 @@
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 marginA">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
+                    <div id="map_gral" style="height: 400px; width: 100%"></div>
+
+
+
+                    <script>
+                        var map;
+                        function initMap() {
+                            map = new google.maps.Map(document.getElementById('map_gral'), {
+                            center: {lat: -34.397, lng: 150.644},
+                            zoom: 9
+                        });
+
+                        var marker = new google.maps.Marker({
+                            position: {lat: -34.397, lng: 150.644},
+                            map: map,
+                            title: 'Hello World!',
+                            animation: google.maps.Animation.BOUNCE,
+                            draggable: true
+                        });
+                    }
+
+                    </script>
+
+
+
+
+
+
+
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 panel-destacado">
                     <div class="row">
@@ -85,15 +286,15 @@
                                 <div>
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="<? echo base_url("index.php/Panel_ini/productDetals");?>">
+                                            <a href=" <?php echo base_url('index.php/Panel_ini/productDetals'); ?> ">
                                                 <img class="media-object img-circle img-ini"
-                                                src="<?php echo base_url("assets/public/img/mp3.jpg"); ?>" alt="Villa María Paula">
+                                                src="<?php echo base_url('assets/public/img/mp3.jpg'); ?>" alt="Villa María Paula">
                                             </a>
                                         </div>
                                         <div class="media-body">
                                             <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Villa María Paula</h4>
                                             <p>Finca campestre en Floridablanca<br>
-                                            <a href="<? echo base_url("index.php/Panel_ini/productDetals");?>">
+                                            <a href="<?php echo base_url('index.php/Panel_ini/productDetals');?>">
                                                 <span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más
                                             </a> 
                                             </p>
@@ -143,10 +344,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
-    <div class="container-fluid c3 main-destacado" id='c3'>
+<!--     <div class="container-fluid c3 main-destacado" id='c3'>
         <div class="container" >
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -356,149 +557,9 @@
             </div>
           
         </div>
-    </div>  
+    </div>   -->
 
 
-    <div class="container-fluid c4" id='c4' >
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                    <h3><span class="fa fa-map-signs text-title"></span>&nbsp;<b>Guia de ciudades</b></h3>
-                </div>
-            </div>
-            <br><br>
-                      
-            <div class="row slide_city">
-                
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <figure>
-                          <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio A" class="img-guia">
-                        </figure>
-                        <div class="desc">
-                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Bucaramanga</a></h3>
-                            <p>
-                                <a href="#">25 alojamientos</a>,
-                                <a href="#">15 chalets</a>,
-                                <a href="#">42 hoteles</a>
-                            </p>
-                        </div>
-                    </div> 
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <figure>
-                          <img src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="Sitio A" class="img-guia">
-                        </figure>
-                        <div class="desc">
-                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Lebrija</a></h3>
-                            <p>
-                                <a href="#">25 alojamientos</a>,
-                                <a href="#">15 chalets</a>,
-                                <a href="#">42 hoteles</a>
-                            </p>
-                        </div>
-                    </div> 
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <figure>
-                          <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio C" class="img-guia">
-                        </figure>
-                        <div class="desc">
-                            <h3> <a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Floridablanca</a></h3>
-                            <p>
-                                <a href="#">25 alojamientos</a>,
-                                <a href="#">15 chalets</a>,
-                                <a href="#">42 hoteles</a>
-                            </p>
-                        </div>
-                    </div> 
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <figure>
-                          <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio A" class="img-guia">
-                        </figure>
-                        <div class="desc">
-                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Barrancabermeja</a></h3>
-                            <p>
-                                <a href="#">25 alojamientos</a>,
-                                <a href="#">15 chalets</a>,
-                                <a href="#">42 hoteles</a>
-                            </p>
-                        </div>
-                    </div> 
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <figure>
-                          <img src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="Sitio A" class="img-guia">
-                        </figure>
-                        <div class="desc">
-                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Girón</a></h3>
-                            <p>
-                                <a href="#">25 alojamientos</a>,
-                                <a href="#">15 chalets</a>,
-                                <a href="#">42 hoteles</a>
-                            </p>
-                        </div>
-                    </div> 
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <figure>
-                          <img src="<?php echo base_url("assets/public/img/parque.jpg"); ?>" alt="Sitio C" class="img-guia">
-                        </figure>
-                        <div class="desc">
-                            <h3><a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>">Piedecuesta</a></h3>
-                            <p>
-                                <a href="#">25 alojamientos</a>,
-                                <a href="#">15 chalets</a>,
-                                <a href="#">42 hoteles</a>
-                            </p>
-                        </div>
-                    </div> 
-                </div> 
-
-            </div>          
-        </div>
-
-    </div>  
-
-
-    <div class="container-fluid c4">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                    <h3><span class="fa fa-user-o text-title"></span>&nbsp;<b>Unete a nosotros</b></h3>
-                </div>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 destaca">
-                        <div class="desc">
-                            <h3><span class="fa fa-envelope-o text-title"></span>&nbsp;Ofertas increibles</h3>
-                            <p>
-                                Recibe en tu correo ofertas y descuentos increibles 
-                                para tus vacaciones.
-                            </p>
-                        </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 destaca">
-                        <div class="desc">
-                            <h3><span class="fa fa-smile-o text-title"></span>&nbsp;Fácil y rápido</h3>
-                            <p>
-                                Desde la comodidad de tu hogar u oficina, reservar tus proximas vacaciones.
-                            </p>
-                        </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 destaca">
-                        <div class="desc">
-                            <h3><span class="fa fa-heart text-title"></span>&nbsp;Compartenos</h3>
-                            <p>
-                                comparte con tus amigos la mejor experiencia, buscanos en las redes sociales.
-                            </p>
-                        </div>
-                </div>             
-                <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
  
-            </div>  
-        </div>
-    </div>  
 
 

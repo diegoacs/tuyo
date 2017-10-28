@@ -16,12 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Tuyo.com - todo lo que quieres lo encuenta aquí</title>
 
     <!-- Bootstrap core CSS -->
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyDP5opBg3ZbeX96OI9l7Zh_Mc1iK7_NIBs"></script>
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="<?php echo base_url("assets/public/css/style.css?n=".rand()); ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
   </head>
 
   <body>
@@ -46,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="<?php echo base_url("index.php/Panel_ini/"); ?>"><span class="fa fa-home"></span>&nbsp;Home</a>
                     </li>
                     <li>
-                        <a href="#c1"><span class="fa fa-search"></span>&nbsp;Busca ofertas</a>
+                        <a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>"><span class="fa fa-search"></span>&nbsp;Busca ofertas</a>
                     </li>
                     <li>
                         <a href="#c2"><span class="fa fa-sign-in"></span>&nbsp;Registrate</a>

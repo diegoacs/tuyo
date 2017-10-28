@@ -24,7 +24,7 @@
             <div class="row">
 
 
-            	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 ">
+            	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 filtro">
 				
 					<div class="row">
 						
@@ -50,7 +50,7 @@
 
 							<div class="row">
 								
-								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									
 
 									<div class="checkbox">
@@ -99,7 +99,7 @@
 
 								</div>
 
-								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
 									<div class="checkbox">
 										<label>
@@ -157,17 +157,16 @@
             	</div>
 
 
-            	<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+            	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 						
 						
 							<div class="row">
-
 				                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca">
 				                    <div class="media">
 				                        <div class="media-left">
 				                            <a href="#">
 				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/mp3.jpg"); ?>" alt="hotel colonial">
+				                                src="<?php echo base_url("assets/public/img/mp3.jpg"); ?>" alt="Villa Maria Paula">
 				                            </a>
 				                        </div>
 				                        <div class="media-body">
@@ -196,7 +195,7 @@
 			                                <span class="fa fa-wifi"></span> 
 			                                <br>
 
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
+				                            <a href=" <?php echo base_url('index.php/Panel_ini/productDetals/001'); ?> "><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
 											<div class="text-right mright">
 												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
 											</div>
@@ -211,7 +210,7 @@
 				                        <div class="media-left">
 				                            <a href="#">
 				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="hotel colonial">
+				                                src="<?php echo base_url("assets/public/img/img_no.jpg"); ?>" alt="Hotel Cascade">
 				                            </a>
 				                        </div>
 				                        <div class="media-body">
@@ -234,7 +233,7 @@
 			                                <span class="fa fa-wifi"></span> 
 			                                <br>
 
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
+				                            <a href=" <?php echo base_url('index.php/Panel_ini/productDetals/002'); ?> "><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
 											<div class="text-right mright">
 												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
 											</div>
@@ -249,11 +248,11 @@
 				                        <div class="media-left">
 				                            <a href="#">
 				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/mp3.jpg"); ?>" alt="hotel colonial">
+				                                src="<?php echo base_url("assets/public/img/img_no.jpg"); ?>" alt="Hospedaje Palonegro">
 				                            </a>
 				                        </div>
 				                        <div class="media-body">
-				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Villa María Paula</h4>
+				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hospedaje Palonegro</h4>
 				                            <span class='fa fa-star color-star'></span>
 				                            <span class='fa fa-star color-star'></span>
 				                            <span class='fa fa-star color-star'></span>
@@ -261,24 +260,18 @@
 				                            <span class='fa fa-star-o color-star'></span>
 				                            4.3
 					                        <p class="text-paragraph mright">
-					                            Villa María paula es un espacio 
-					                            campestre perfecto para toda clase de reuniones y eventos sociales, su
-					                            cercania con la ciudad de Bucaramanga y Floridablanca permiten disfrutar 
-					                            de la naturaleza sin salir de la ciudad.
+                                                Confortable hospedaje para descanso, habitaciones con baño privado, TV, Wifi y servicios de cafeteria.
+                                                Parqueadero vigilado.
 					                        </p>
-											
-											<span class="fa fa-cutlery"></span>
-			                                <span class="fa fa-hotel"></span>
+											<span class="fa fa-hotel"></span>
 			                                <span class="fa fa-bath"></span>   
 			                                <span class="fa fa-television"></span>
-			                                <span class="fa fa-life-bouy"></span>
-						                    <span class="fa fa-group"></span>
 			                                <span class="fa fa-car"></span>                
 			                                <span class="fa fa-coffee"></span>
 			                                <span class="fa fa-wifi"></span> 
 			                                <br>
 
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
+				                            <a href=" <?php echo base_url('index.php/Panel_ini/productDetals/003'); ?> "><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
 											<div class="text-right mright">
 												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
 											</div>
@@ -287,209 +280,6 @@
 				                        </div>
 				                    </div>
 				                </div>
-	
-					            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca">
-				                    <div class="media">
-				                        <div class="media-left">
-				                            <a href="#">
-				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="hotel colonial">
-				                            </a>
-				                        </div>
-				                        <div class="media-body">
-				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Cascade Real</h4>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star-o color-star'></span>
-				                            4.3
-					                        <p class="text-paragraph mright">
-					                            Confortable hotel familiar en Lebrija, Santander. Habitaciones Sencillas, Dobles,
-					                            Familiares y multiples. TV por cable, Wifi, servicio de cafeteria y parqueadero 24 horas.
-					                        </p>
-			                                <span class="fa fa-hotel"></span>
-			                                <span class="fa fa-bath"></span>   
-			                                <span class="fa fa-television"></span>
-			                                <span class="fa fa-car"></span>                
-			                                <span class="fa fa-coffee"></span>
-			                                <span class="fa fa-wifi"></span> 
-			                                <br>
-
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-											<div class="text-right mright">
-												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
-											</div>
-
-
-				                        </div>
-				                    </div>
-				                </div>
-
-				                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca">
-				                    <div class="media">
-				                        <div class="media-left">
-				                            <a href="#">
-				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/mp3.jpg"); ?>" alt="hotel colonial">
-				                            </a>
-				                        </div>
-				                        <div class="media-body">
-				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Villa María Paula</h4>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star-o color-star'></span>
-				                            4.3
-					                        <p class="text-paragraph mright">
-					                            Villa María paula es un espacio 
-					                            campestre perfecto para toda clase de reuniones y eventos sociales, su
-					                            cercania con la ciudad de Bucaramanga y Floridablanca permiten disfrutar 
-					                            de la naturaleza sin salir de la ciudad.
-					                        </p>
-											
-											<span class="fa fa-cutlery"></span>
-			                                <span class="fa fa-hotel"></span>
-			                                <span class="fa fa-bath"></span>   
-			                                <span class="fa fa-television"></span>
-			                                <span class="fa fa-life-bouy"></span>
-						                    <span class="fa fa-group"></span>
-			                                <span class="fa fa-car"></span>                
-			                                <span class="fa fa-coffee"></span>
-			                                <span class="fa fa-wifi"></span> 
-			                                <br>
-
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-											<div class="text-right mright">
-												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
-											</div>
-
-
-				                        </div>
-				                    </div>
-				                </div>
-	
-					            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca">
-				                    <div class="media">
-				                        <div class="media-left">
-				                            <a href="#">
-				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="hotel colonial">
-				                            </a>
-				                        </div>
-				                        <div class="media-body">
-				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Cascade Real</h4>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star-o color-star'></span>
-				                            4.3
-					                        <p class="text-paragraph mright">
-					                            Confortable hotel familiar en Lebrija, Santander. Habitaciones Sencillas, Dobles,
-					                            Familiares y multiples. TV por cable, Wifi, servicio de cafeteria y parqueadero 24 horas.
-					                        </p>
-			                                <span class="fa fa-hotel"></span>
-			                                <span class="fa fa-bath"></span>   
-			                                <span class="fa fa-television"></span>
-			                                <span class="fa fa-car"></span>                
-			                                <span class="fa fa-coffee"></span>
-			                                <span class="fa fa-wifi"></span> 
-			                                <br>
-
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-											<div class="text-right mright">
-												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
-											</div>
-
-
-				                        </div>
-				                    </div>
-				                </div>
-
-				                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca">
-				                    <div class="media">
-				                        <div class="media-left">
-				                            <a href="#">
-				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/mp3.jpg"); ?>" alt="hotel colonial">
-				                            </a>
-				                        </div>
-				                        <div class="media-body">
-				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Villa María Paula</h4>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star-o color-star'></span>
-				                            4.3
-					                        <p class="text-paragraph mright">
-					                            Villa María paula es un espacio 
-					                            campestre perfecto para toda clase de reuniones y eventos sociales, su
-					                            cercania con la ciudad de Bucaramanga y Floridablanca permiten disfrutar 
-					                            de la naturaleza sin salir de la ciudad.
-					                        </p>
-											
-											<span class="fa fa-cutlery"></span>
-			                                <span class="fa fa-hotel"></span>
-			                                <span class="fa fa-bath"></span>   
-			                                <span class="fa fa-television"></span>
-			                                <span class="fa fa-life-bouy"></span>
-						                    <span class="fa fa-group"></span>
-			                                <span class="fa fa-car"></span>                
-			                                <span class="fa fa-coffee"></span>
-			                                <span class="fa fa-wifi"></span> 
-			                                <br>
-
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-											<div class="text-right mright">
-												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
-											</div>
-
-
-				                        </div>
-				                    </div>
-				                </div>
-	
-					            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca">
-				                    <div class="media">
-				                        <div class="media-left">
-				                            <a href="#">
-				                                <img class="media-object img-oferta" 
-				                                src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="hotel colonial">
-				                            </a>
-				                        </div>
-				                        <div class="media-body">
-				                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Cascade Real</h4>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star color-star'></span>
-				                            <span class='fa fa-star-o color-star'></span>
-				                            4.3
-					                        <p class="text-paragraph mright">
-					                            Confortable hotel familiar en Lebrija, Santander. Habitaciones Sencillas, Dobles,
-					                            Familiares y multiples. TV por cable, Wifi, servicio de cafeteria y parqueadero 24 horas.
-					                        </p>
-			                                <span class="fa fa-hotel"></span>
-			                                <span class="fa fa-bath"></span>   
-			                                <span class="fa fa-television"></span>
-			                                <span class="fa fa-car"></span>                
-			                                <span class="fa fa-coffee"></span>
-			                                <span class="fa fa-wifi"></span> 
-			                                <br>
-
-				                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-											<div class="text-right mright">
-												<a href="#"><span class="fa fa-comments-o"></span>&nbsp;comentarios</a>
-											</div>
-
-
-				                        </div>
-				                    </div>
-				                </div>
-
 							</div>
 
             	</div>
