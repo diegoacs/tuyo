@@ -1,6 +1,6 @@
 
 <div class="modal fade" id="map_modal">
-    <div class="modal-dialog" style="width: 100%">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

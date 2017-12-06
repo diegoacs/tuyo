@@ -14,12 +14,8 @@
 					<input type="date" class="form-control">		
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
-				<label for="">Busco</label>
-					
-					<select class="form-control">
-						<option value="H">Hoteles</option>
-						<option value="A">Apartamentos</option>
-						<option value="E">Espacios recreativos</option>				
+					<select class="selectpicker form-control" data-live-search="true">
+                    <?php echo $categorias; ?>		
 					</select>
 					
 
@@ -27,7 +23,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
 				<label for="">Destino</label>
 				<div class="input-group">
-					<input type="text" class="form-control" value="Floridablanca">		
+					<input type="text" class="form-control" value="<?php echo $city; ?>">		
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-success">
 							<span class="fa fa-search"></span>

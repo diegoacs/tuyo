@@ -21,6 +21,8 @@
     <!-- Bootstrap core JavaScript -->
 
     <script src="<?php echo base_url('assets/public/vendor/jquery/jquery.min.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap-select.js"); ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url("assets/js/slick.min.js"); ?>"></script>
     <script src="<?php echo base_url('assets/public/panel.js?n='.rand()); ?>"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

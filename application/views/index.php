@@ -44,10 +44,8 @@
                                     <div class="form-group">
                                         <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-h-square text-info"></span>&nbsp;Busco</label>
                                         <div class="col-sm-12 col-md-8">
-                                            <select name="" id="input" class="form-control">
-                                                <option value="H">Hoteles</option>
-                                                <option value="A">Apartamentos</option>
-                                                <option value="R">Espacios recreativos</option>
+                                            <select class="selectpicker form-control" data-live-search="true">
+                                                <?php echo $categorias; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -70,55 +68,38 @@
             </div>
             <br><br>
 
-            <div id="guiciudad" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#guiciudad" data-slide-to="0" class="active"></li>
-                    <li data-target="#guiciudad" data-slide-to="1" class=""></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
-                                <img src="<?php echo base_url("assets/public/img/bucaramanga.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail img-responsive">
-                                <h3>Bucaramanga</h3>
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="gallery-places">
+                        <div>
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/912'); ?>">
+                            <img src="<?php echo base_url("assets/public/img/bucaramanga.jpg?n=".rand()); ?>" alt="Sitio A">
                             </a>
                         </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
-                                <img src="<?php echo base_url("assets/public/img/giron.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail img-responsive">
-                                <h3>Girón</h3>
+                        <div>
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/939'); ?>">
+                            <img src="<?php echo base_url("assets/public/img/giron.jpg?n=".rand()); ?>" alt="Sitio A">
                             </a>
                         </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
-                                <img src="<?php echo base_url("assets/public/img/lebrija.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail img-responsive">
-                                <h3>Lebrija</h3>
+                        <div>
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/951'); ?>">
+                            <img src="<?php echo base_url("assets/public/img/lebrija.jpg?n=".rand()); ?>" alt="Sitio A">
                             </a>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
-                                <img src="<?php echo base_url("assets/public/img/florida.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail">
-                                <h3>Floridablanca</h3>
+                        <div>
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/936'); ?>">
+                            <img src="<?php echo base_url("assets/public/img/florida.jpg?n=".rand()); ?>" alt="Sitio A">
                             </a>
                         </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
-                                <img src="<?php echo base_url("assets/public/img/piedecuesta.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail">
-                                <h3>Piedecuesta</h3>
-                            </a>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/Floridablanca'); ?>">
-                                <img src="<?php echo base_url("assets/public/img/lebrija.jpg?n=".rand()); ?>" alt="Sitio A" class="img-guia img-thumbnail">
-                                <h3>Lebrija</h3>
+                        <div>
+                            <a href="<?php echo base_url('index.php/Panel_ini/cityDetails/964'); ?>">
+                            <img src="<?php echo base_url("assets/public/img/piedecuesta.jpg?n=".rand()); ?>" alt="Sitio A">
                             </a>
                         </div>
                     </div>
                 </div>
-                <a class="left" href="#guiciudad" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                <a class="right" href="#guiciudad" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
             </div>
         </div>
     </div>
@@ -139,13 +120,23 @@
         <div id="map_gral" style="height: 400px; width:auto;"></div>
 
         <script>
-            
+    
             var map;
+            var route='http://localhost/tuyo/index.php/';
+
+            var customLabel = {
+                hotel: {
+                    label: 'H'
+                },
+                bar: {
+                    label: 'B'
+                }
+            };
+
             function initMap() {
                 //Obtenemos latitud y longitud
                 function localizacion(posicion){
 
-                    var img=document.getElementById('routelist').value;
                     var latitude = posicion.coords.latitude;
                     var longitude = posicion.coords.longitude;
 
@@ -154,38 +145,40 @@
                     zoom: 10
                     });
 
-                    var desc = '<h3>hotel<h3>'+  
-                                'Descripcion de hotel';
+                    var infoWindow = new google.maps.InfoWindow;
+                    
+                    downloadUrl(route+'Panel_ini/getMapData/', function(data) {
+                        var xml = data.responseXML;
+                        var markers = xml.documentElement.getElementsByTagName('marker');
+                        Array.prototype.forEach.call(markers, function(markerElem) {
+                          var name = markerElem.getAttribute('name');
+                          var address = markerElem.getAttribute('address');
+                          var type = markerElem.getAttribute('type');
+                          var point = new google.maps.LatLng(
+                              parseFloat(markerElem.getAttribute('lat')),
+                              parseFloat(markerElem.getAttribute('lng')));
 
-                    var infowindow = new google.maps.InfoWindow({
-                      content: desc
-                    });
-                    var villa = new google.maps.Marker({
-                        position: {lat: 7.014035, lng: -73.111061},
-                        map: map,
-                        icon: img,
-                        title: 'Villa Maria Paula',
-                        draggable: false
-                    });
-            
-                    villa.addListener('click', function() {
-                      infowindow.open(map, villa);
-                    });
+                          var infowincontent = document.createElement('div');
+                          var strong = document.createElement('strong');
+                          strong.textContent = name
+                          infowincontent.appendChild(strong);
+                          infowincontent.appendChild(document.createElement('br'));
 
-                    var marker = new google.maps.Marker({
-                        position: {lat: 7.111982, lng: -73.215040},
-                        map: map,
-                        icon: img,
-                        title: 'Hospedaje Palonegro',
-                        draggable: false
-                    });
-                    var marker = new google.maps.Marker({
-                        position: {lat: 7.111447, lng: -73.216389},
-                        map: map,
-                        icon: img,
-                        title: 'Hotel Cascade Real',
-                        draggable: false
-                    });                    
+                          var text = document.createElement('text');
+                          text.textContent = address
+                          infowincontent.appendChild(text);
+                          var icon = customLabel[type] || {};
+                          var marker = new google.maps.Marker({
+                            map: map,
+                            position: point,
+                            label: icon.label
+                          });
+                          marker.addListener('click', function() {
+                            infoWindow.setContent(infowincontent);
+                            infoWindow.open(map, marker);
+                          });
+                        });
+                    });                   
                 }
 
 
@@ -193,6 +186,24 @@
                 function error(){
                     $("#map_gral").html("tu navegador no soporta geolocation");
                 }
+
+                function downloadUrl(url, callback) {
+                    var request = window.ActiveXObject ?
+                        new ActiveXObject('Microsoft.XMLHTTP') :
+                        new XMLHttpRequest;
+
+                    request.onreadystatechange = function() {
+                        if (request.readyState == 4) {
+                            request.onreadystatechange = doNothing;
+                            callback(request, request.status);
+                        }
+                    };
+
+                    request.open('GET', url, true);
+                    request.send(null);
+                }
+
+              function doNothing() {}
 
                 // iniciar funcion
                 navigator.geolocation.getCurrentPosition(localizacion,error);

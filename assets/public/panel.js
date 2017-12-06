@@ -29,6 +29,31 @@ $(document).ready(function(){
 		
 	}
 
+    $('.gallery-places').slick({
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 1000,
+          arrows: false
+    });
+
+    $(".ver-disponible").click(function(){
+
+        var selected = $('.tipoUnd').find('option:selected').data('id');
+
+        if(!$(".date1").val().trim()){
+            alert('Debe ingresar una fecha de entrada.');
+            return false;
+        }
+        if(!$(".date2").val().trim()){
+            alert('Debe ingresar un fecha de salida.');
+            return false;
+        }
+
+        var arg=encodeURI($(".codePlace").val())+'/'+encodeURI($(".date1").val())+'/'+encodeURI($(".date2").val())+'/'+encodeURI(selected);
+        window.open('http://localhost/tuyo/index.php/Panel_ini/check_avaliable/'+arg,"_self");
+    });
+
 
 
 });

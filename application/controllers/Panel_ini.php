@@ -8,69 +8,89 @@ class Panel_ini extends CI_Controller {
         parent::__construct();
         $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql'));
         $this->load->library(array('session','form_validation'));
+        $this->load->model('main_model/Items_model','items_model');
     }
 
 
 	public function index()
 	{
 		$this->load->view('head', '', FALSE);
-		$this->load->view('index','', FALSE);
-		$this->load->view('footer', '', FALSE);
+
+        $data=array();
+        $data['categorias'] = $this->items_model->getCat();
+        $data['points'] = '';
+        $this->load->view('index',$data, FALSE);
+
+		$this->load->view('footer','', FALSE);
 	}
 
+    public function getMapData(){
+
+        echo $this->items_model->getMapData();
+    }
 
 	public function cityDetails($city)
 	{
 
-		$data = ['city' => $city , 'detalle' => ''];
-		$this->load->view('head', '', FALSE);
-		$this->load->view('panel_search','', FALSE);
-		$this->load->view('city',$data, FALSE);
+        $this->load->view('head', '', FALSE);
+        $ciudad = $this->items_model->getCity($city);
+        $data1 = ['city' => $ciudad->nom_muni ,'categorias' => $this->items_model->getCat() ];
+        $this->load->view('panel_search',$data1, FALSE);
+        $places = $this->items_model->getDataCity($city);
+        $filtros = $this->items_model->getFilters();
+		$data2 = ['city' => $ciudad->nom_muni ,'places' => $places ,'filtros' => $filtros, 'idcity' => $city ];
+		$this->load->view('city',$data2, FALSE);
 		$this->load->view('footer_gris', '', FALSE);
+        
 	}
 
 
-	public function productDetals($code)
+	public function productDetals($code,$city)
 	{
 
-        if($code=='001'){
-            $data = array('nombre' => 'Villa María Paula'
-                        ,'ubicacion' => 'Ruitoque Alto, Piedecuesta, Santander'
-                        ,'descripcion' => 'Villa María paula es un espacio campestre perfecto para toda clase de 
-                        reuniones y eventos sociales, su cercania con la ciudad de Bucaramanga y Floridablanca permiten 
-                        disfrutar de la naturaleza sin salir de la ciudad.'
-                        ,'lat' => '7.014035', 'lon' => '-73.111061');
-            $img = array('mp1.jpg','mp2.jpg','mp3.jpg','mp4.jpg','mp5.jpg' );
-        }
-        if($code=='002'){
-            $data = array('nombre' => 'Hotel Cascade Real'
-                        ,'ubicacion' => 'Lebrija, Santander'
-                        ,'descripcion' => 'Confortable hotel familiar en Lebrija, Santander. Habitaciones Sencillas, Dobles,
-                        Familiares y multiples. TV por cable, Wifi, servicio de cafeteria y parqueadero 24 horas.'
-                        ,'lat' => '7.111359', 'lon' => '-73.216317');
-            $img = array('img_no.jpg','img_no.jpg','img_no.jpg');
-        }
-        if($code=='003'){
-            $data = array('nombre' => 'Hospedaje Palonegro'
-                        ,'ubicacion' => 'Lebrija, Santander'
-                        ,'descripcion' => 'Confortable hospedaje para descanso, habitaciones con baño privado, TV, Wifi y servicios de cafeteria.
-                        Parqueadero vigilado.'
-                        ,'lat' => '7.111914', 'lon' => '-73.215042');
-            $img = array('img_no.jpg','img_no.jpg','img_no.jpg');
-        }
-        $data['condiciones']='<ul>
-            <li>Debe abonar para confirmar reserva.</li>
-            <li>Pagos en efectivo o por consignación.</li>
-            <li>Hora de entrada 13:00 hrs.</li>
-            <li>No se admiten mascotas.</li>
-            <li>Niños mayores de 6 años pagan entrada.</li>
-        </ul>';
+        $info = $this->items_model->infoEntidad($code);
+        $img = $this->items_model->infoImg($code);
+        $carac = $this->items_model->infoCarac($code);
+        $tipos = $this->items_model->infoUnd($code);
+
+        $data = array(
+                'code' => $code
+                ,'nombre' => $info->nom_entidad
+                ,'ubicacion' => $info->dir_entidad
+                ,'descripcion' => $info->descripcion
+                ,'lat' => $info->latitud
+                ,'lon' => $info->longitud
+                ,'condiciones' => $info->condiciones
+                ,'imagenes' => $img
+                ,'caracteristicas' => $carac
+                ,'tipos' => $tipos);
+
 		$this->load->view('head', '', FALSE);
-		$this->load->view('panel_search','', FALSE);
+        $ciudad = $this->items_model->getCity($city);
+        $data1 = ['city' => $ciudad->nom_muni ,'categorias' => $this->items_model->getCat() ];
+		$this->load->view('panel_search',$data1, FALSE);
 		$this->load->view('detals',$data, FALSE);
+
         $this->load->view('map_modal',$data, FALSE);
 		$this->load->view('footer_gris', '', FALSE);
 	}
+
+
+    public function check_avaliable($entidad,$f1,$f2,$tipo){
+        
+        $rta=$this->items_model->check_avaliable($entidad,$f1,$f2,$tipo);      
+        $info = $this->items_model->infoEntidad(base64_decode($entidad));
+        // $similar = $this->items_model->similarEnti(base64_decode($entidad));
+        $this->load->view('head', '', FALSE);
+        $data1 = ['city' => '' ,'categorias' => $this->items_model->getCat() ];
+        $this->load->view('panel_search',$data1, FALSE);        
+        $filtros = $this->items_model->getFilters();
+        $slide = $this->items_model->galleryEnti(base64_decode($entidad));
+        $data2 = ['rta' => $rta ,'filtros' => $filtros, 'condiciones' => $info->condiciones, 'gallery' => $slide];
+        $this->load->view('lista_busqueda',$data2, FALSE);
+        $this->load->view('footer_gris', '', FALSE); 
+
+    }
 
 }
 

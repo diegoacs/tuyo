@@ -19,6 +19,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="<?php echo base_url("assets/public/css/style.css?n=".rand()); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap-select.css"); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url("assets/css/slick.css"); ?>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 

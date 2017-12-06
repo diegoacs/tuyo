@@ -4,12 +4,34 @@
 var route='http://localhost/cdig/index.php/';
 var linkEntidad='';
 
+function additionalClassSel(cl,add){
+    var selected = $(cl).find('option:selected');
+    var extra = selected.data(add);
+    return extra;
+}
+
+function additionalIdSel(id,add){
+    var selected = $(id).find('option:selected');
+    var extra = selected.data(add);
+    return extra;
+}
+
+
+//encontrar valores de columna 
+function valCol(place,num){
+    return $(place).closest('tr').find('td:eq('+num+')').text();
+}
+
+
 // inicializar tooltips
 $('[data-toggle="tooltip"]').tooltip();
 // clase para campos numericos
 $(".mFor").number(true,2);
 // clase para numeros enteros
 $(".intFor").number(true,0);
+// clase para longitud y latitud
+$(".coorFor").number(true,6);
+
 // validando fechas
 
 function valiDate(date){
@@ -96,11 +118,11 @@ function verifySess(){
 
 //--- 002 FUNCIONES GLOBALES A USAR -----------------------------------------------------------
 function derCeros(id,num,str){
-	str=str.toString(); id=id.toString();
-	while (id.length < num){
-		id=str+id;
-	}
-	return id;
+    str=str.toString(); id=id.toString();
+    while (id.length < num){
+        id=str+id;
+    }
+    return id;
 }
 
 function showMsg(data){
@@ -112,16 +134,16 @@ function showMsg(data){
 
 
 //--- 003 FUNCIONES PARA RESERVAS EN  CALENDARIOS ---------------------------------------------
-	function getCat(){
-		var rta='';
-		$.ajax({
-			type:'POST',
-			url:route+'sys_schedule/sys_habitaciones/getsel',
-			dataType:'text',
-			success: function (data){rta=data;}
-		});
-    	return rta;
-	}
+    function getCat(){
+        var rta='';
+        $.ajax({
+            type:'POST',
+            url:route+'sys_schedule/sys_habitaciones/getsel',
+            dataType:'text',
+            success: function (data){rta=data;}
+        });
+        return rta;
+    }
 
 // --- bootbox.js functions for using ----
 function obserMsg(titulo,callback){
@@ -138,7 +160,7 @@ function obserMsg(titulo,callback){
 
 function adviceMsg(msg,yes,no,callback){
 
-	    bootbox.confirm({
+        bootbox.confirm({
         message: msg,
         size: 'small',
         buttons: {
@@ -159,24 +181,24 @@ function adviceMsg(msg,yes,no,callback){
 
 function alertMsg(msg){
 
-	bootbox.alert({
-	    message: msg,
-	    size: 'small'
-	});
+    bootbox.alert({
+        message: msg,
+        size: 'small'
+    });
 }
 
 function PleaseWait(msg){
-	
-	bootbox.dialog({
-	    message: '<p><i class="fa fa-spin fa-spinner"></i> '+msg+'</p>',
-	    closeButton: false
-	});
+    
+    bootbox.dialog({
+        message: '<p><i class="fa fa-spin fa-spinner"></i> '+msg+'</p>',
+        closeButton: false
+    });
 }
 
 
 $(".choseEnti").click(function(){
-	linkEntidad=$(this).data("linke");
-	window.open(linkEntidad,"_self");
+    linkEntidad=$(this).data("linke");
+    window.open(linkEntidad,"_self");
 });
 
 
@@ -206,8 +228,8 @@ function ajaxRqst(datos,ruta,tipo,dtipo,callback){
        },
        error: function()
        {
-       		alertMsg('Hubo un error en la conexion, comuniquese con su administrador.');
-            return false;												
+            alertMsg('Hubo un error en la conexion, comuniquese con su administrador.');
+            return false;                                               
        }        
     });
 }
@@ -243,15 +265,15 @@ function ajaxRqst2(datos,ruta,tipo,dtipo,callback){
 }
 
 function cleanBox(){
-	$(".cleanBox").each(function(){
-		$(this).val('');
-	});
+    $(".cleanBox").each(function(){
+        $(this).val('');
+    });
 }
 
 function cleanSelect(){
-	$(".cleanSlect").each(function(){
-		$(this).empty();
-	});
+    $(".cleanSlect").each(function(){
+        $(this).empty();
+    });
 }
 
 function cleanClass(Sclass){
