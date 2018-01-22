@@ -19,6 +19,49 @@
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            Desde
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <?php 
+                                echo form_input(array('type' => 'date','id' => 'fechadesde1','class' => 'form-control', 'value' => $fecha1));
+                            ?>
+                        </div>
+                        
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            Hasta
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <?php 
+                                echo form_input(array('type' => 'date','id' => 'fechahasta1','class' => 'form-control', 'value' => $fecha2));
+                            ?>
+                        </div>
+
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            Busco
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <select class="selectpicker form-control filtrocat" name="searchcategory1" data-live-search="true">
+                            <?php echo $categorias; ?>      
+                            </select>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            Lugar
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <?php 
+                                echo form_input(array('type' => 'text','id' => 'ciudad1','class' => 'form-control', 'value' => $ciudad));
+                            ?>
+                        </div>
+
+
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             Calificaciones
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -62,7 +105,7 @@
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <button type="button" class="btn btn-success">
+                            <button type="button" class="btn btn-success filter-char">
                                 <span class="fa fa-search"></span>&nbsp;buscar
                             </button>
                         </div>

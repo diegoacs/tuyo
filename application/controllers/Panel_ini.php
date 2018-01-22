@@ -12,24 +12,65 @@ class Panel_ini extends CI_Controller {
     }
 
     public function searchRta(){
-        $data = array('categoria' => $this->input->post('searchcategory'),
-                    'fecha1' => $this->input->post('searchdate1'),
-                    'fecha2' => $this->input->post('searchdate2'),
-                    'ciudad' => $this->input->post('searchcity'));
 
-        $rta=$this->items_model->check_search($data);      
+        if(count($_POST)>0){
 
-        $this->load->view('head', '', FALSE);
-        $data1 = ['city' => '' ,'categorias' => $this->items_model->getCat() ];
-        $this->load->view('panel_search',$data1, FALSE);        
-        $filtros = $this->items_model->getFilters();
-        $data2 = ['rta' => $rta ,'filtros' => $filtros, 'condiciones' => '', 'gallery' => '','cols' => '5'];
-        $this->load->view('lista_busqueda',$data2, FALSE);
-        $this->load->view('modal_form','', FALSE);
-        $this->load->view('footer_gris', '', FALSE); 
+            $data = array('categoria' => $this->input->post('searchcategory'),
+                        'fecha1' => $this->input->post('searchdate1'),
+                        'fecha2' => $this->input->post('searchdate2'),
+                        'ciudad' => $this->input->post('searchcity'));
+
+            $rta=$this->items_model->check_search($data);      
+
+            if(!trim($data['fecha1'])) $data['fecha1']=date('Y-m-d');
+            if(!trim($data['fecha2'])) $data['fecha2']=date('Y-m-d');
+
+
+            $this->load->view('head', '', FALSE);
+            $data1 = ['city' => $data['ciudad'] ,'categorias' => $this->items_model->getCat() ];
+            $this->load->view('panel_search',$data1, FALSE);        
+            $filtros = $this->items_model->getFilters();
+            $data2 = [
+                'rta' => $rta ,'filtros' => $filtros, 
+                'condiciones' => '', 'gallery' => '',
+                'cols' => '5','categorias' => $this->items_model->getCat(),
+                'fecha1' => $data['fecha1'],
+                'fecha2' => $data['fecha2'],
+                'ciudad' => $data['ciudad']
+            ];
+
+            $this->load->view('lista_busqueda',$data2, FALSE);
+            $this->load->view('modal_form','', FALSE);
+            $this->load->view('footer_gris', '', FALSE); 
+        }
+        else{
+
+            redirect('/Panel_ini','refresh');
+        }
 
     }
 
+    public function filterChar(){
+
+        if(count($_POST)>0){
+
+            $data = array(
+                        'caracteristica' => $this->input->post('char'),
+                        'categoria' => $this->input->post('tipo'),
+                        'fecha1' => $this->input->post('ini'),
+                        'fecha2' => $this->input->post('fin'),
+                        'ciudad' => $this->input->post('city'));
+
+            $rta = $this->items_model->getDataCityChar($data);      
+            echo $rta;
+
+        }
+        else{
+
+            redirect('/Panel_ini','refresh');
+        }
+
+    }
 
 	public function index(){
 
@@ -52,11 +93,13 @@ class Panel_ini extends CI_Controller {
 
         $this->load->view('head', '', FALSE);
         $ciudad = $this->items_model->getCity($city);
+
         $data1 = ['city' => $ciudad->nom_muni ,'categorias' => $this->items_model->getCat() ];
         $this->load->view('panel_search',$data1, FALSE);
+
         $places = $this->items_model->getDataCity($city);
         $filtros = $this->items_model->getFilters();
-		$data2 = ['city' => $ciudad->nom_muni ,'places' => $places ,'filtros' => $filtros, 'idcity' => $city ];
+		$data2 = ['city' => $ciudad->nom_muni ,'places' => $places ,'filtros' => $filtros, 'idcity' => $city, 'categorias' => $this->items_model->getCat() ];
 		$this->load->view('city',$data2, FALSE);
 		$this->load->view('footer_gris', '', FALSE);
         

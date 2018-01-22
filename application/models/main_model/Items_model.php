@@ -60,6 +60,69 @@ class Items_model extends CI_Model {
 
     }
 
+
+    function check_search_filter($data){
+
+        // buscar categoria
+        $sql="select id_categoria from categorias where nom_categoria='".escstr($data['categoria'])."'";
+        $gen=oneRow($sql);
+        $data['categoria']=$gen->id_categoria;
+        // buscar ciudad 
+        $sql="select id_muni from municipio where nom_muni like '%".$this->db->escape_like_str($data['ciudad'])."%' escape '!' ";
+        $gen=getQuery($sql);
+        $city=array();
+        foreach ($gen as $row) {
+            $city[]=$row['id_muni'];
+        }
+
+        if(!trim($data['fecha1'])) $data['fecha1']=date('Ymd');
+        if(!trim($data['fecha2'])) $data['fecha2']=date('Ymd');
+
+        $sql="select count(*)as num,max(u.nom_unidad) as nombre,max(du.id_unidad) as idund,".
+        "max(deta_desc) as descr,max(uc.precio_normal) as precio,du.id_calendario,max(e.nom_entidad) as nom_entidad, ".
+        "max(e.id_entidad) as id_entidad, max(e.id_muni) as id_muni ".
+        "from desc_unidad du left join unidades u on du.id_unidad=u.id_unidad ".
+        "left join calendario c on du.id_calendario=c.id_calendario ".
+        "join unidad_calendario uc on du.id_unidad=uc.id_unidad and du.id_calendario=uc.id_calendario ".
+        "left join entidad e on c.id_entidad=e.id_entidad ".
+        "where du.id_unidad in ( ".
+        "select id_unidad from unidades where id_categoria=".escstr($data['categoria']).") ".
+        "and id_desc not in ( ".
+        "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
+        "' and fecha_fin<='".escstr($data['fecha2'])."') ".
+        "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') ".
+        "and e.tipo='H' group by du.id_unidad,du.id_calendario";
+
+        ver_php($sql);
+        $gen = getQuery($sql);
+        $html='';
+
+        if(nRows($sql)<1){
+            $html.="<tr>".
+            "<td colspan='6'><div class='alert alert-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                No encontramos resultados para su busqueda, intente de nuevo.
+            </div> </td>".
+            "</tr>";
+        }
+        else{
+            foreach ($gen as $r) {
+                $html.="<tr data-id='".base64_encode($r['idund'])."' data-enti='".base64_encode($r['id_entidad'])."'>".
+                "<td style='text-align:center' title='Disponibles en este momento'>".escstr($r['num'])."</td>".
+                "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
+                "<td title='Detalle'>".escstr($r['descr'])."</td>".
+                "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
+                "<td title='Lugar'><a href='".base_url('index.php/Panel_ini/productDetals/'.$r['id_entidad'].'/'.$r['id_muni'])."'>".$r['nom_entidad']."</a></td>".
+                "<td><a class='generarRv btn btn-xs btn-success' data-toggle='modal' href='#formRv'>".
+                "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
+                "</a></td>".
+                "</tr>";
+            }
+        }
+        return $html;
+
+    }
+
     function check_search($data){
 
         // buscar categoria
@@ -74,6 +137,9 @@ class Items_model extends CI_Model {
             $city[]=$row['id_muni'];
         }
 
+        if(!trim($data['fecha1'])) $data['fecha1']=date('Ymd');
+        if(!trim($data['fecha2'])) $data['fecha2']=date('Ymd');
+
         $sql="select count(*)as num,max(u.nom_unidad) as nombre,max(du.id_unidad) as idund,".
         "max(deta_desc) as descr,max(uc.precio_normal) as precio,du.id_calendario,max(e.nom_entidad) as nom_entidad, ".
         "max(e.id_entidad) as id_entidad, max(e.id_muni) as id_muni ".
@@ -86,7 +152,9 @@ class Items_model extends CI_Model {
         "and id_desc not in ( ".
         "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
         "' and fecha_fin<='".escstr($data['fecha2'])."') ".
-        "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') group by du.id_unidad,du.id_calendario";
+        "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') ".
+        "and e.tipo='H' group by du.id_unidad,du.id_calendario";
+
         $gen = getQuery($sql);
         $html='';
 
@@ -191,6 +259,76 @@ class Items_model extends CI_Model {
         "from entidad e left join img_entidades ie ".
         "on e.id_entidad=ie.id_entidad where id_muni='".escstr($city)."' and e.tipo='H' group by e.id_entidad";
         return getQuery($sql);
+
+    }
+
+    function getDataCityChar($data){
+
+        // buscar ciudad 
+        $sql="select id_muni from municipio where nom_muni like '%".$this->db->escape_like_str($data['ciudad'])."%' escape '!' ";
+        $gen=getQuery($sql);
+        $city=array();
+        foreach ($gen as $row) {
+            $city[]=$row['id_muni'];
+        }
+
+        if(!trim($data['fecha1'])) $data['fecha1']=date('Ymd');
+        if(!trim($data['fecha2'])) $data['fecha2']=date('Ymd');
+
+        $sql="select e.id_entidad,max(ie.nombre) as nombre,max(ie.tipo) as tipo,".
+        "max(nom_entidad) as nom_entidad,max(dir_entidad) as dir_entidad,".
+        "max(email_entidad) as email_entidad,max(tel_entidad) as tel_entidad,max(descripcion) as descripcion ".
+        "from desc_unidad du left join unidades u on du.id_unidad=u.id_unidad ".
+        "left join calendario c on du.id_calendario=c.id_calendario ".
+        "join unidad_calendario uc on du.id_unidad=uc.id_unidad and du.id_calendario=uc.id_calendario ".
+        "left join entidad e on c.id_entidad=e.id_entidad ".
+        "join img_entidades ie ".
+        "on e.id_entidad=ie.id_entidad ".
+        "where du.id_unidad in ( ".
+        "select id_unidad from unidades where id_categoria=".escstr($data['categoria']).") ".
+        "and id_desc not in ( ".
+        "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
+        "' and fecha_fin<='".escstr($data['fecha2'])."') ".
+        "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') ".
+        "and e.tipo='H' group by du.id_unidad,du.id_calendario,e.id_entidad";
+        ver_php($sql);
+
+        $gen = getQuery($sql);
+        $html='';
+        foreach ($gen as $row) {
+            $html.="
+            <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca'>
+                <div class='media'>
+                    <div class='media-left'>
+                        <a href='#'>
+                            <img class='media-object img-oferta' 
+                            src='http://localhost/cdig/assets/public/img/img_enti/".$row['id_entidad']."/".
+                            $row['nombre']."_thumb".$row['tipo']."' alt='".$row['nom_entidad']."'>
+                        </a>
+                    </div>
+                    <div class='media-body'>
+                        <h4 class='media-heading'><span class='fa fa-bookmark-o text-title'></span>&nbsp;".$row['nom_entidad']."</h4>
+                        <span class='fa fa-star color-star'></span>
+                        <span class='fa fa-star color-star'></span>
+                        <span class='fa fa-star color-star'></span>
+                        <span class='fa fa-star color-star'></span>
+                        <span class='fa fa-star-o color-star'></span>
+                        4.3
+                        <p class='text-paragraph mright'>".$row['descripcion']."</p>
+                        <br>
+
+                        <a href=".base_url('index.php/Panel_ini/productDetals/'.$row['id_entidad'].'/'.$idcity).">
+                        <span class='fa fa-chevron-circle-right text-title'></span>&nbsp;ver más</a>
+                        <div class='text-right mright'>
+                            <a href='#'><span class='fa fa-comments-o'></span>&nbsp;comentarios</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>";
+        }
+        return $html;
 
     }
 
