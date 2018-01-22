@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    var route = 'http://localhost/tuyo/index.php/';
 	findme();
 
 	function findme(){
@@ -28,6 +28,38 @@ $(document).ready(function(){
 		navigator.geolocation.getCurrentPosition(localizacion,error);
 		
 	}
+
+    $(document).find('.generarRv').click(function(){
+        $("#nund").val($(this).closest('tr').data('id'));
+        $("#nent").val($(this).closest('tr').data('enti'));
+    });
+
+    $(".info-send").click(function(){
+
+         var data = {
+            name: encodeURI($('#names').val()),
+            email: encodeURI($('#email_').val()),
+            telefono: encodeURI($('#telefono').val()),
+            coment: encodeURI($('#comments').val()),
+            und: encodeURI($('#nund').val()),
+            ent: encodeURI($('#nent').val())
+        };
+
+        $.ajax({
+            type:'POST',
+            url:route+'Panel_ini/contact',
+            data:data,
+            dataType:'text',
+            success: function (r){
+                alert(r);
+            },
+            error: function(){
+                alert('Error enviando datos, por favor intente más tarde.')
+            }       
+        });
+
+    });
+
 
     $('.gallery-places').slick({
           slidesToShow: 3,

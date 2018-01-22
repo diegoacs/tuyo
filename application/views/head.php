@@ -46,9 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="<?php echo base_url("index.php/Panel_ini/"); ?>"><span class="fa fa-home"></span>&nbsp;Home</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url("index.php/Panel_ini/cityDetails/Floridablanca"); ?>"><span class="fa fa-search"></span>&nbsp;Busca ofertas</a>
-                    </li>
-                    <li>
                         <a href="#c2"><span class="fa fa-sign-in"></span>&nbsp;Registrate</a>
                     </li>
                     <li>

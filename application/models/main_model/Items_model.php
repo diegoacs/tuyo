@@ -8,6 +8,39 @@ class Items_model extends CI_Model {
         $this->load->database();
     }
 
+
+    function saveInfo($data){
+
+        iniTr();
+        $info = array();
+        // buscar datos de entidad
+        $sql="select nom_entidad from entidad where id_entidad='".escstr(base64_decode($data['ent']))."'";
+        $gen = oneRow($sql);
+        $info['entidad'] = $gen->nom_entidad;
+        // buscar datos de unidad
+        $sql="select nom_unidad from unidades where id_unidad='".escstr(base64_decode($data['und']))."'";
+        $gen = oneRow($sql);
+        $info['unidad'] = $gen->nom_unidad;        
+
+        if(!trim($data['coment'])) $data['coment']='null';
+        else $data['coment']="'".escstr($data['coment'])."'";
+
+        // guardar datos de consulta para futuras promociones
+        $sql="insert into info_contacto (nombres,telefono,email,comentarios,id_entidad,id_unidad) ".
+        "values ('".escstr($data['name'])."','".escstr($data['telefono'])."','".escstr($data['email']).
+        "',".$data['coment'].",'".escstr(base64_decode($data['ent']))."','".escstr(base64_decode($data['und']))."')";
+        if(!exeQuery($sql)){
+            rollTr();
+            $info['rta']='2';
+            return $info;
+        }
+        $info['id']=$this->db->insert_id();
+        $info['rta']='1';
+        endTr();
+        return $info;
+    }
+
+
     function galleryEnti($entidad){
 
         $sql="select ".
@@ -27,6 +60,63 @@ class Items_model extends CI_Model {
 
     }
 
+    function check_search($data){
+
+        // buscar categoria
+        $sql="select id_categoria from categorias where nom_categoria='".escstr($data['categoria'])."'";
+        $gen=oneRow($sql);
+        $data['categoria']=$gen->id_categoria;
+        // buscar ciudad 
+        $sql="select id_muni from municipio where nom_muni like '%".$this->db->escape_like_str($data['ciudad'])."%' escape '!' ";
+        $gen=getQuery($sql);
+        $city=array();
+        foreach ($gen as $row) {
+            $city[]=$row['id_muni'];
+        }
+
+        $sql="select count(*)as num,max(u.nom_unidad) as nombre,max(du.id_unidad) as idund,".
+        "max(deta_desc) as descr,max(uc.precio_normal) as precio,du.id_calendario,max(e.nom_entidad) as nom_entidad, ".
+        "max(e.id_entidad) as id_entidad, max(e.id_muni) as id_muni ".
+        "from desc_unidad du left join unidades u on du.id_unidad=u.id_unidad ".
+        "left join calendario c on du.id_calendario=c.id_calendario ".
+        "join unidad_calendario uc on du.id_unidad=uc.id_unidad and du.id_calendario=uc.id_calendario ".
+        "left join entidad e on c.id_entidad=e.id_entidad ".
+        "where du.id_unidad in ( ".
+        "select id_unidad from unidades where id_categoria=".escstr($data['categoria']).") ".
+        "and id_desc not in ( ".
+        "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
+        "' and fecha_fin<='".escstr($data['fecha2'])."') ".
+        "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') group by du.id_unidad,du.id_calendario";
+        $gen = getQuery($sql);
+        $html='';
+
+        if(nRows($sql)<1){
+            $html.="<tr>".
+            "<td colspan='6'><div class='alert alert-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                No encontramos resultados para su busqueda, intente de nuevo.
+            </div> </td>".
+            "</tr>";
+        }
+        else{
+            foreach ($gen as $r) {
+                $html.="<tr data-id='".base64_encode($r['idund'])."' data-enti='".base64_encode($r['id_entidad'])."'>".
+                "<td style='text-align:center' title='Disponibles en este momento'>".escstr($r['num'])."</td>".
+                "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
+                "<td title='Detalle'>".escstr($r['descr'])."</td>".
+                "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
+                "<td title='Lugar'><a href='".base_url('index.php/Panel_ini/productDetals/'.$r['id_entidad'].'/'.$r['id_muni'])."'>".$r['nom_entidad']."</a></td>".
+                "<td><a class='generarRv btn btn-xs btn-success' data-toggle='modal' href='#formRv'>".
+                "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
+                "</a></td>".
+                "</tr>";
+            }
+        }
+        return $html;
+
+    }
+
+
     function check_avaliable($entidad,$f1,$f2,$tipo){
 
         $entidad=base64_decode($entidad);
@@ -45,20 +135,29 @@ class Items_model extends CI_Model {
         "and id_desc not in ( select id_desc from reservas where id_estado in ('01','02') ".
         "and id_calendario='".escstr($calendario)."' and (fecha_inicio>='".escstr($f1)."' and fecha_fin<='".escstr($f2)."') ".
         "group by id_desc)";
-        
         $gen = getQuery($sql);
         $html='';
 
-        foreach ($gen as $r) {
+        if(nRows($sql)<1){
             $html.="<tr>".
-            "<td style='text-align:center' title='Disponibles en este momento' data-id='".escstr($tipo)."'>".escstr($r['num'])."</td>".
-            "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
-            "<td title='Detalle'>".escstr($r['descr'])."</td>".
-            "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
-            "<td><button type='button' class='generarRv btn btn-xs btn-success'>".
-            "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
-            "</button></td>".
+            "<td colspan='5'><div class='alert alert-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                No encontramos resultados para su busqueda, intente de nuevo.
+            </div> </td>".
             "</tr>";
+        }
+        else{
+            foreach ($gen as $r) {
+                $html.="<tr data-id='".base64_encode($tipo)."' data-enti='".base64_encode($entidad)."'>".
+                "<td style='text-align:center' title='Disponibles en este momento' >".escstr($r['num'])."</td>".
+                "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
+                "<td title='Detalle'>".escstr($r['descr'])."</td>".
+                "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
+                "<td><a data-toggle='modal' href='#formRv' class='generarRv btn btn-xs btn-success'>".
+                "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
+                "</a></td>".
+                "</tr>";
+            }
         }
         return $html;
     }

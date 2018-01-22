@@ -16,37 +16,44 @@
                             <h3>y disfruta tus vacaciones al máximo</h3>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            <button type="button" class="btn btn-info">
-                                <span class="fa fa-search"></span>&nbsp;buscar ahora
-                            </button>
-                            <br><br>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 panel-radi">
 
-                            <div class="form-horizontal">
+                            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url('index.php/Panel_ini/searchRta'); ?>">
                                     <div class="form-group">
                                         <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-map-marker text-danger"></span>&nbsp;Destino</label>
                                         <div class="col-sm-12 col-md-8">
-                                            <input type="text" id="input" class="form-control">
+                                            <input type="text" id="input" class="form-control" name="searchcity">
                                         </div>
                                     </div>                                
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-calendar-check-o text-primary"></span>&nbsp;Fecha</label>
+                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-calendar-check-o text-primary"></span>&nbsp;Desde</label>
                                         <div class="col-sm-12 col-md-8">
-                                        <input type="date" class="form-control" id="">
+                                        <input type="date" class="form-control" name="searchdate1">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-calendar-check-o text-primary"></span>&nbsp;Hasta</label>
+                                        <div class="col-sm-12 col-md-8">
+                                        <input type="date" class="form-control" name="searchdate2">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-h-square text-info"></span>&nbsp;Busco</label>
                                         <div class="col-sm-12 col-md-8">
-                                            <select class="selectpicker form-control" data-live-search="true">
+                                            <select class="selectpicker form-control" name="searchcategory" data-live-search="true">
                                                 <?php echo $categorias; ?>
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-12 col-md-offset-4 col-sm-12 col-md-8">
+                                            <button type="submit" class="btn btn-info searchbtn">
+                                                <span class="fa fa-search"></span>&nbsp;buscar
+                                            </button>
                                         </div>
                                     </div>
                             </div>

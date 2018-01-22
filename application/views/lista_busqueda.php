@@ -74,14 +74,18 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Disponibles</th>
-                                                <th colspan="4">Detalles</th>
+                                                <th colspan="<?php echo $cols; ?>">Detalles</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -101,13 +105,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <h3>Condiciones de servicio</h3>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <?php echo $condiciones; ?>
-                                    <br><br><br><br>
-                                </div>
+                                <?php echo $condiciones; ?>
                                 <br><br>
 <!--                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="panel panel-default">

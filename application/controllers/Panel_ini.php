@@ -6,14 +6,33 @@ class Panel_ini extends CI_Controller {
 
 	function __construct(){
         parent::__construct();
-        $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql'));
+        $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha'));
         $this->load->library(array('session','form_validation'));
         $this->load->model('main_model/Items_model','items_model');
     }
 
+    public function searchRta(){
+        $data = array('categoria' => $this->input->post('searchcategory'),
+                    'fecha1' => $this->input->post('searchdate1'),
+                    'fecha2' => $this->input->post('searchdate2'),
+                    'ciudad' => $this->input->post('searchcity'));
 
-	public function index()
-	{
+        $rta=$this->items_model->check_search($data);      
+
+        $this->load->view('head', '', FALSE);
+        $data1 = ['city' => '' ,'categorias' => $this->items_model->getCat() ];
+        $this->load->view('panel_search',$data1, FALSE);        
+        $filtros = $this->items_model->getFilters();
+        $data2 = ['rta' => $rta ,'filtros' => $filtros, 'condiciones' => '', 'gallery' => '','cols' => '5'];
+        $this->load->view('lista_busqueda',$data2, FALSE);
+        $this->load->view('modal_form','', FALSE);
+        $this->load->view('footer_gris', '', FALSE); 
+
+    }
+
+
+	public function index(){
+
 		$this->load->view('head', '', FALSE);
 
         $data=array();
@@ -29,8 +48,7 @@ class Panel_ini extends CI_Controller {
         echo $this->items_model->getMapData();
     }
 
-	public function cityDetails($city)
-	{
+	public function cityDetails($city){
 
         $this->load->view('head', '', FALSE);
         $ciudad = $this->items_model->getCity($city);
@@ -45,8 +63,7 @@ class Panel_ini extends CI_Controller {
 	}
 
 
-	public function productDetals($code,$city)
-	{
+	public function productDetals($code,$city){
 
         $info = $this->items_model->infoEntidad($code);
         $img = $this->items_model->infoImg($code);
@@ -86,10 +103,73 @@ class Panel_ini extends CI_Controller {
         $this->load->view('panel_search',$data1, FALSE);        
         $filtros = $this->items_model->getFilters();
         $slide = $this->items_model->galleryEnti(base64_decode($entidad));
-        $data2 = ['rta' => $rta ,'filtros' => $filtros, 'condiciones' => $info->condiciones, 'gallery' => $slide];
+
+        // condiciones 
+        $condicion="<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><h3>Condiciones de servicio</h3></div>".
+        "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>".$info->condiciones."<br><br><br><br></div>";
+
+        $data2 = ['rta' => $rta ,'filtros' => $filtros, 'condiciones' =>$condicion, 'gallery' => $slide , 'cols' => '4'];
         $this->load->view('lista_busqueda',$data2, FALSE);
+        $this->load->view('modal_form','', FALSE);
         $this->load->view('footer_gris', '', FALSE); 
 
+    }
+
+    public function contact(){
+        
+            $this->form_validation->set_rules('name', 'nombres', 'required|trim|min_length[2]|max_length[150]|xss_clean');
+            $this->form_validation->set_rules('telefono', 'telefono', 'required|trim|min_length[5]|max_length[15]|xss_clean');
+            $this->form_validation->set_rules('email', 'email', 'required|trim|min_length[5]|max_length[30]|xss_clean');
+            $this->form_validation->set_rules('coment', 'coment', 'max_length[500]|xss_clean');
+
+            //lanzamos mensajes de error si es que los hay
+            if($this->form_validation->run() == FALSE) {
+                die('Verifique los datos en su formulario, datos obligatorios: Nombres, E-mail y teléfono.');
+            }
+            else {
+
+                $data = array('name' => $this->input->post('name'),
+                    'telefono' => $this->input->post('telefono'),
+                    'email' => $this->input->post('email'),
+                    'coment' => $this->input->post('coment'),
+                    'und' => $this->input->post('und'),
+                    'ent' => $this->input->post('ent')
+                );
+
+                $rta = $this->items_model->saveInfo($data);
+
+                if($rta['rta']=='2'){
+                    die('Error enviando datos, intente mas tarde.');
+                }
+                $e_mail ='diegocaste7@hotmail.com';
+
+                $to = $e_mail;
+                $subject = "Información para alquiler No. ".$rta['id'];
+
+                $message = "<html><head><title>Información de alquiler</title></head>".
+                "<body><p> Tuyo.com</p><br> Hola Administrador<br><span>".
+                "Tienes una nueva solicitud de alquier para ".$rta['entidad'].
+                " para unidad: ".$rta['unidad'].
+                "<p>".
+                "Nombre de contacto: ".$data['name'].
+                "Telefono de contacto: ".$data['telefono'].
+                "Email de contacto: ".$data['email'].
+                "Comentarios: ".$data['coment'].
+                "</p>".
+                "</body></html>";
+
+                // Always set content-type when sending HTML email
+                $headers = "MIME-Version: 1.0" . "\r\n";
+                $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+                // More headers
+                $headers .= 'From: <no-responder@tuyo.com>' . "\r\n";
+                //$headers .= 'Cc: castellanossantamaria@gmail.com' . "\r\n";
+
+                // mail($to,$subject,$message,$headers);
+
+                die('gracias, pronto nos contactaremos con usted para ofrecerle los servicios.');
+            }
     }
 
 }
