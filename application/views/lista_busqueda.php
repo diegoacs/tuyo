@@ -131,7 +131,7 @@
                                                 <th colspan="<?php echo $cols; ?>">Detalles</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class='outside-rta'>
                                 <?php echo $rta; ?>
                                         </tbody>
                                     </table>

@@ -61,8 +61,9 @@ class Panel_ini extends CI_Controller {
                         'fecha2' => $this->input->post('fin'),
                         'ciudad' => $this->input->post('city'));
 
-            $rta = $this->items_model->getDataCityChar($data);      
-            echo $rta;
+            if($this->input->post('cy')=='N') echo $this->items_model->check_search_filter($data); 
+            else echo $this->items_model->getDataCityChar($data);      
+
 
         }
         else{
@@ -151,7 +152,14 @@ class Panel_ini extends CI_Controller {
         $condicion="<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'><h3>Condiciones de servicio</h3></div>".
         "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>".$info->condiciones."<br><br><br><br></div>";
 
-        $data2 = ['rta' => $rta ,'filtros' => $filtros, 'condiciones' =>$condicion, 'gallery' => $slide , 'cols' => '4'];
+        $data2 = ['rta' => $rta ,'filtros' => $filtros,
+                 'condiciones' =>$condicion, 'gallery' => $slide , 
+                 'cols' => '4','categorias' => $this->items_model->getCat(),
+                'fecha1' => $f1,
+                'fecha2' => $f2,
+                'ciudad' => ''
+                ];
+
         $this->load->view('lista_busqueda',$data2, FALSE);
         $this->load->view('modal_form','', FALSE);
         $this->load->view('footer_gris', '', FALSE); 

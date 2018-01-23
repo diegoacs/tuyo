@@ -126,7 +126,7 @@
 						</div>
 
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<button type="button" class="btn btn-success filter-char">
+							<button type="button" class="btn btn-success filter-char-city">
 								<span class="fa fa-search"></span>&nbsp;buscar
 							</button>
 						</div>

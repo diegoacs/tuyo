@@ -18,7 +18,7 @@ $(document).ready(function(){
         var extra = selected.data('id');
 
 
-        var form='char='+encodeURI(chr)+'&city='+encodeURI($('#ciudad1').val());
+        var form='cy=N&char='+encodeURI(chr)+'&city='+encodeURI($('#ciudad1').val());
             form+='&tipo='+encodeURI(extra);
             form+='&ini='+encodeURI($("#fechadesde1").val())+'&fin='+encodeURI($("#fechahasta1").val());
 
@@ -38,6 +38,40 @@ $(document).ready(function(){
         
     });
 
+    $(".filter-char-city").click(function () {
+       
+        var chr = [];
+        $('.caracteristica').each(function(){
+
+            if(this.checked){
+
+                chr.push($(this).data('id'));
+            }
+        })
+
+        var selected = $('.filtrocat').find('option:selected');
+        var extra = selected.data('id');
+
+
+        var form='cy=S&char='+encodeURI(chr)+'&city='+encodeURI($('#ciudad1').val());
+            form+='&tipo='+encodeURI(extra);
+            form+='&ini='+encodeURI($("#fechadesde1").val())+'&fin='+encodeURI($("#fechahasta1").val());
+
+        $.ajax({
+            url:route+'Panel_ini/filterChar',
+            type:'POST',
+            data:form,
+            success: function (r){  
+                $(".outside-rta").html(r);
+            },
+
+            error: function (r){
+                alert('error: filtrando busqueda.');
+            }
+        });
+        
+        
+    });
 
 	function findme(){
 

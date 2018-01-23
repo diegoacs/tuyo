@@ -64,9 +64,9 @@ class Items_model extends CI_Model {
     function check_search_filter($data){
 
         // buscar categoria
-        $sql="select id_categoria from categorias where nom_categoria='".escstr($data['categoria'])."'";
-        $gen=oneRow($sql);
-        $data['categoria']=$gen->id_categoria;
+        // $sql="select id_categoria from categorias where nom_categoria='".escstr($data['categoria'])."'";
+        // $gen=oneRow($sql);
+        // $data['categoria']=$gen->id_categoria;
         // buscar ciudad 
         $sql="select id_muni from municipio where nom_muni like '%".$this->db->escape_like_str($data['ciudad'])."%' escape '!' ";
         $gen=getQuery($sql);
@@ -85,15 +85,19 @@ class Items_model extends CI_Model {
         "left join calendario c on du.id_calendario=c.id_calendario ".
         "join unidad_calendario uc on du.id_unidad=uc.id_unidad and du.id_calendario=uc.id_calendario ".
         "left join entidad e on c.id_entidad=e.id_entidad ".
+        "join carac_entidad ce on e.id_entidad=ce.id_entidad ".
         "where du.id_unidad in ( ".
         "select id_unidad from unidades where id_categoria=".escstr($data['categoria']).") ".
         "and id_desc not in ( ".
         "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
         "' and fecha_fin<='".escstr($data['fecha2'])."') ".
         "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') ".
-        "and e.tipo='H' group by du.id_unidad,du.id_calendario";
+        "and e.tipo='H' ";
 
-        ver_php($sql);
+        if(trim($data['caracteristica'])) $sql="and ce.id_caracter in (".$data['caracteristica'].") ";
+
+        $sql.="group by du.id_unidad,du.id_calendario";
+
         $gen = getQuery($sql);
         $html='';
 
@@ -277,24 +281,39 @@ class Items_model extends CI_Model {
 
         $sql="select e.id_entidad,max(ie.nombre) as nombre,max(ie.tipo) as tipo,".
         "max(nom_entidad) as nom_entidad,max(dir_entidad) as dir_entidad,".
-        "max(email_entidad) as email_entidad,max(tel_entidad) as tel_entidad,max(descripcion) as descripcion ".
+        "max(email_entidad) as email_entidad,max(tel_entidad) as tel_entidad,".
+        "max(descripcion) as descripcion,max(id_muni) as idcity ".
         "from desc_unidad du left join unidades u on du.id_unidad=u.id_unidad ".
         "left join calendario c on du.id_calendario=c.id_calendario ".
         "join unidad_calendario uc on du.id_unidad=uc.id_unidad and du.id_calendario=uc.id_calendario ".
         "left join entidad e on c.id_entidad=e.id_entidad ".
         "join img_entidades ie ".
         "on e.id_entidad=ie.id_entidad ".
+        "join carac_entidad ce ".
+        "on e.id_entidad=ce.id_entidad ".
         "where du.id_unidad in ( ".
         "select id_unidad from unidades where id_categoria=".escstr($data['categoria']).") ".
         "and id_desc not in ( ".
         "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
         "' and fecha_fin<='".escstr($data['fecha2'])."') ".
-        "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') ".
-        "and e.tipo='H' group by du.id_unidad,du.id_calendario,e.id_entidad";
-        ver_php($sql);
+        "group by id_desc) and activo = 'S' and e.id_muni in (".implode(',',$city).") ".
+        "and e.tipo='H' ";
+
+        if(trim($data['caracteristica'])) $sql="and ce.id_caracter in (".$data['caracteristica'].") ";
+
+        $sql.="group by du.id_unidad,du.id_calendario";
+
 
         $gen = getQuery($sql);
-        $html='';
+
+        if(nRows($sql)<1){
+            $html="<br> <div class='alert alert-info'>".
+                "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".
+                "No encontramos resultados para su busqueda, intente de nuevo.".
+                "</div> ";
+        }
+        else $html='';
+
         foreach ($gen as $row) {
             $html.="
             <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca'>
@@ -317,7 +336,7 @@ class Items_model extends CI_Model {
                         <p class='text-paragraph mright'>".$row['descripcion']."</p>
                         <br>
 
-                        <a href=".base_url('index.php/Panel_ini/productDetals/'.$row['id_entidad'].'/'.$idcity).">
+                        <a href=".base_url('index.php/Panel_ini/productDetals/'.$row['id_entidad'].'/'.$row['idcity']).">
                         <span class='fa fa-chevron-circle-right text-title'></span>&nbsp;ver más</a>
                         <div class='text-right mright'>
                             <a href='#'><span class='fa fa-comments-o'></span>&nbsp;comentarios</a>
