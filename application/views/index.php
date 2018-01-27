@@ -224,7 +224,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                    <h3><span class="fa fa-user-o text-title"></span>&nbsp;<b>Unete a nosotros</b></h3>
+                    <h3>
+                        
+                        <?php
+                            $text="<span class='fa fa-user-o text-title'></span>&nbsp;<b>Unete a nosotros</b>";
+                            echo anchor(base_url().'index.php/Signup/mainregister', $text, array(
+                                                                                                 'style'=>'text-decoration:none;color:inherit;'));
+                        ?>
+
+                    </h3>
                 </div>
             </div>
             <br><br>
@@ -250,7 +258,7 @@
                         <div class="desc">
                             <h3><span class="fa fa-heart text-title"></span>&nbsp;Compartenos</h3>
                             <p>
-                                comparte con tus amigos la mejor experiencia, buscanos en las redes sociales.
+                                Comparte con tus amigos la mejor experiencia, buscanos en las redes sociales.
                             </p>
                         </div>
                 </div>             

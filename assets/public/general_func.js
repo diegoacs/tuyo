@@ -1,8 +1,29 @@
 
 
 //--- 001 VARIABLES GLOBALES A USAR -----------------------------------------------------------
-var route='http://localhost/cdig/index.php/';
+var route='http://localhost/tuyo/index.php/';
 var linkEntidad='';
+
+function capLock(e){
+    kc=e.keyCode?e.keyCode:e.which;
+    sk=e.shiftKey?e.shiftKey:((kc==16)?true:false);
+    if(((kc>=65&&kc<=90)&&!sk)||((kc>=97&&kc<=122)&&sk )) document.getElementById('caplock').style.display = 'block';
+    else document.getElementById('caplock').style.display = 'none';
+}
+
+function getMultipleVals(id,data){
+
+        var valores = [];
+        $.each($(id+" option:selected"), function(){            
+            valores.push($(this).data(data));
+        });
+        return valores.join("/");
+}
+
+function openWindow(link,tipo){
+    window.open(link,tipo);
+}
+
 
 function additionalClassSel(cl,add){
     var selected = $(cl).find('option:selected');
@@ -30,7 +51,7 @@ $(".mFor").number(true,2);
 // clase para numeros enteros
 $(".intFor").number(true,0);
 // clase para longitud y latitud
-$(".coorFor").number(true,6);
+$(".coorFor").number(true,16);
 
 // validando fechas
 
@@ -175,6 +196,7 @@ function adviceMsg(msg,yes,no,callback){
         },
         callback: function (result) {
             if(result) callback(true);
+            else callback(false);
         }
     });
 }
@@ -263,6 +285,15 @@ function ajaxRqst2(datos,ruta,tipo,dtipo,callback){
        }        
     });
 }
+
+function ajax_rqs(datos,ruta,tipo,dtipo,callback){
+
+  $.ajax({
+      type:tipo,url:ruta,data:datos,dataType:dtipo,success: function (rt){callback(rt);},error: function(){callback('ERRINC');}
+  });
+
+}
+
 
 function cleanBox(){
     $(".cleanBox").each(function(){

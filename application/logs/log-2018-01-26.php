@@ -1,0 +1,18 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+ERROR - 2018-01-26 16:07:35 --> Query error: Table 'web_project.chaptcha' doesn't exist - Invalid query: select id_address from chaptcha where word='25XkD'  and id_address='::1' and captcha_time > 1517000255
+ERROR - 2018-01-26 16:08:33 --> Query error: Table 'web_project.chaptcha' doesn't exist - Invalid query: select id_address from chaptcha where word='25XkD'  and id_address='::1' and captcha_time > 1517000313
+ERROR - 2018-01-26 16:09:55 --> Query error: Table 'web_project.chaptcha' doesn't exist - Invalid query: select id_address from chaptcha where word='25XkD'  and id_address='::1' and captcha_time > 1517000395
+ERROR - 2018-01-26 16:11:24 --> Query error: Table 'web_project.chaptcha' doesn't exist - Invalid query: select id_address from chaptcha where word='fAFmM'  and id_address='::1' and captcha_time > 1517000484
+ERROR - 2018-01-26 16:12:12 --> Query error: Unknown column 'id_address' in 'field list' - Invalid query: select id_address from captcha where word='fAFmM'  and id_address='::1' and captcha_time > 1517000532
+ERROR - 2018-01-26 16:13:46 --> Severity: Notice --> Undefined index: usr /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/models/sign_model/Signup_model.php 91
+ERROR - 2018-01-26 16:13:46 --> Severity: Notice --> Undefined variable: codigo /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/models/sign_model/Signup_model.php 91
+ERROR - 2018-01-26 16:13:46 --> Severity: Notice --> Undefined variable: row /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/models/sign_model/Signup_model.php 92
+ERROR - 2018-01-26 16:13:46 --> Severity: Notice --> Trying to get property of non-object /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/models/sign_model/Signup_model.php 92
+ERROR - 2018-01-26 16:44:29 --> Severity: Parsing Error --> syntax error, unexpected 'funcion' (T_STRING), expecting variable (T_VARIABLE) /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/controllers/Signup.php 140
+ERROR - 2018-01-26 16:44:43 --> Severity: Parsing Error --> syntax error, unexpected '2' (T_LNUMBER), expecting variable (T_VARIABLE) or '$' /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/models/sign_model/Signup_model.php 29
+ERROR - 2018-01-26 16:45:43 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from codes_public where code_verifica='PDQlWD'  and activo='N'' at line 1 - Invalid query: select usuario from from codes_public where code_verifica='PDQlWD'  and activo='N'
+ERROR - 2018-01-26 16:46:13 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '='S' where usuario='castelhanos7@windowslive.com' and activo='N' and code_verifi' at line 1 - Invalid query: update codes_public set='S' where usuario='castelhanos7@windowslive.com' and activo='N' and code_verifica='PDQlWD'
+ERROR - 2018-01-26 16:59:36 --> Severity: Parsing Error --> syntax error, unexpected '(', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/controllers/Signup.php 149
+ERROR - 2018-01-26 17:35:36 --> Severity: Warning --> Illegal string offset 'rute' /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/libraries/Css_js.php 27
+ERROR - 2018-01-26 17:35:36 --> Severity: Notice --> Undefined variable: js /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/controllers/Panel_ini.php 86
+ERROR - 2018-01-26 17:40:11 --> Severity: Notice --> Undefined variable: js /Applications/XAMPP/xamppfiles/htdocs/tuyo/application/controllers/Panel_ini.php 86

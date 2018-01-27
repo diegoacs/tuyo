@@ -7,7 +7,7 @@ class Panel_ini extends CI_Controller {
 	function __construct(){
         parent::__construct();
         $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha'));
-        $this->load->library(array('session','form_validation'));
+        $this->load->library(array('session','form_validation','css_js'));
         $this->load->model('main_model/Items_model','items_model');
     }
 
@@ -41,7 +41,8 @@ class Panel_ini extends CI_Controller {
 
             $this->load->view('lista_busqueda',$data2, FALSE);
             $this->load->view('modal_form','', FALSE);
-            $this->load->view('footer_gris', '', FALSE); 
+            $js=$this->css_js->js(array('rute'=>'public/panel.js?n='.rand()));
+            $this->load->view('footer_gris', array('js'=>$js), FALSE); 
         }
         else{
 
@@ -81,8 +82,8 @@ class Panel_ini extends CI_Controller {
         $data['categorias'] = $this->items_model->getCat();
         $data['points'] = '';
         $this->load->view('index',$data, FALSE);
-
-		$this->load->view('footer','', FALSE);
+        $js=$this->css_js->js(array('rute'=>'public/panel.js?n='.rand()));
+        $this->load->view('footer', array('js'=>$js), FALSE); 
 	}
 
     public function getMapData(){
@@ -102,7 +103,8 @@ class Panel_ini extends CI_Controller {
         $filtros = $this->items_model->getFilters();
 		$data2 = ['city' => $ciudad->nom_muni ,'places' => $places ,'filtros' => $filtros, 'idcity' => $city, 'categorias' => $this->items_model->getCat() ];
 		$this->load->view('city',$data2, FALSE);
-		$this->load->view('footer_gris', '', FALSE);
+        $js=$this->css_js->js(array('rute'=>'public/panel.js?n='.rand()));
+        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
         
 	}
 
@@ -133,7 +135,8 @@ class Panel_ini extends CI_Controller {
 		$this->load->view('detals',$data, FALSE);
 
         $this->load->view('map_modal',$data, FALSE);
-		$this->load->view('footer_gris', '', FALSE);
+        $js=$this->css_js->js(array('rute'=>'public/panel.js?n='.rand()));
+        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
 	}
 
 
@@ -162,7 +165,8 @@ class Panel_ini extends CI_Controller {
 
         $this->load->view('lista_busqueda',$data2, FALSE);
         $this->load->view('modal_form','', FALSE);
-        $this->load->view('footer_gris', '', FALSE); 
+        $js=$this->css_js->js(array('rute'=>'public/panel.js?n='.rand()));
+        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
 
     }
 

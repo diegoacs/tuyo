@@ -15,6 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <title>Tuyo.com - todo lo que quieres lo encuenta aquí</title>
 
+    <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("assets/js/jquery-3.1.0.min.js"); ?>"></script>
+    <script type="text/javascript" charset="UTF-8" src="<?php echo base_url("assets/js/jquery.numbers.min.js"); ?>"></script>
     <!-- Bootstrap core CSS -->
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -46,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="<?php echo base_url("index.php/Panel_ini/"); ?>"><span class="fa fa-home"></span>&nbsp;Home</a>
                     </li>
                     <li>
-                        <a href="#c2"><span class="fa fa-sign-in"></span>&nbsp;Registrate</a>
+                        <a href="<?php echo base_url("index.php/Signup/mainregister"); ?>"><span class="fa fa-sign-in"></span>&nbsp;Registrate</a>
                     </li>
                     <li>
                         <a href="<?php echo base_url("index.php/Panel_ini/#c4"); ?>"><span class="fa fa-envelope-o"></span>&nbsp;Contacto</a>

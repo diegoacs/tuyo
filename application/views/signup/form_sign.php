@@ -11,7 +11,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-file-o"></span>
+								<span class="fa fa-file-o text-title"></span>
 								Condiciones del servicio</h3>
 						</div>
 						<div class="panel-body">
@@ -33,7 +33,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-pencil"></span>&nbsp;
+								<span class="fa fa-pencil text-title"></span>&nbsp;
 								Registro de usuario
 							</h3>
 						</div>
@@ -76,7 +76,7 @@
 								<div class='form-group'>
 
 									<label class='control-label col-xs-12 col-md-3'>
-									<span class="fa fa-calendar"></span>&nbsp;
+									<span class="fa fa-calendar text-title"></span>&nbsp;
 									Fecha nacimiento
 									</label>
 
@@ -93,8 +93,8 @@
 								<div class='form-group'>
 
 									<label class='control-label col-xs-12 col-md-3'>
-									<span class="fa fa-envelope-o"></span>&nbsp;
-									Correo
+									<span class="fa fa-envelope-o text-title"></span>&nbsp;
+									Correo electrónico
 									</label>
 
 									<div class='col-xs-12 col-md-4'>
@@ -106,7 +106,7 @@
 									</div>
 
 									<label class='control-label col-xs-12 col-md-2'>
-									<span class="fa fa-phone"></span>&nbsp;
+									<span class="fa fa-phone text-title"></span>&nbsp;
 									Teléfono
 									</label>
 
@@ -122,7 +122,7 @@
 								<div class='form-group'>
 
 									<label class='control-label col-xs-12 col-md-3'>
-									<span class="fa fa-home"></span>&nbsp;
+									<span class="fa fa-home text-title"></span>&nbsp;
 									Dirección
 									</label>
 
@@ -143,11 +143,47 @@
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 
+										<?php 
+											echo $captcha['image'];
+										?>
+										
+									</div>
+
+								</div>
+
+								<div class="form-group">
+									
+									<label class="control-label col-xs-12 col-md-3">Escribe el código,
+										así sabremos que no eres un robot
+									</label>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+										
+										<?php
+
+											echo form_input(array('type' => 'text',
+																  'maxlength' => 6,
+																  'class' => 'form-control',
+																  'id' => 'captchacode'));		 
+
+										?>
+										
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+										
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+
 										<?php echo form_checkbox(array('id'=>'info',
 																		'value'=>'informacion',
-																		'checked'=>false)).'&nbsp;'.
-										'<span class="fa fa-envelope-o"></span>&nbsp;'.
-										'Deseo recibir información de promociones y novedades a mi correo electrónico.' ?>
+																		'checked'=>false)).
+										'Deseo recibir información de promociones y novedades a mi correo electrónico.' 
+										?>
 										
 									</div>
 								</div>
@@ -159,11 +195,11 @@
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 
-										<?php echo form_checkbox(array('id'=>'info',
+										<?php echo form_checkbox(array('id'=>'accept',
 																		'value'=>'acepto',
-																		'checked'=>true)).'&nbsp;'.
-										'<span class="fa fa-check text-success"></span>&nbsp;'.
-										'Acepto las condiciones del servicio.' ?>
+																		'checked'=>true)).
+										'Acepto las condiciones del servicio.' 
+										?>
 										
 									</div>
 								</div>

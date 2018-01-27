@@ -1,5 +1,23 @@
 <?php
 
+
+function random_code($num=8){
+
+    $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $strLength = strlen($str);
+    $codigo = '';
+    
+    for ($i = 0; $i < $num; $i++) {
+
+        $codigo .= $str[rand(0, $strLength - 1)];
+    
+    }
+
+    return $codigo;
+
+}
+
+
 function ver_php($string){
 
   if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')

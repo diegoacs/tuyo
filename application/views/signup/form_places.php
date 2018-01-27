@@ -9,14 +9,31 @@
 				
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 
-					<nav>
-						<ul style="list-style-type: none">
-							<li><span class="fa fa-pencil"></span>&nbsp;seccion 1</li>
-							<li><span class="fa fa-pencil"></span>&nbsp;seccion 1</li>
-							<li><span class="fa fa-pencil"></span>&nbsp;seccion 1</li>
-							<li><span class="fa fa-pencil"></span>&nbsp;seccion 1</li>
-						</ul>
-					</nav>
+					<div class="desc">
+						
+						<nav>
+							<ul style="list-style-type: none">
+								<li><span class="fa fa-user"></span>&nbsp;Información personal</li>
+								<li><span class="fa fa-h-square"></span>&nbsp;Información general</li>
+								<li><span class="fa fa-bed"></span>&nbsp;Información horarios</li>
+								<li><span class="fa fa-bed"></span>&nbsp;Información habitaciones</li>
+								<li><span class="fa fa-coffee"></span>&nbsp;Servicios y caracteristicas</li>
+							</ul>
+						</nav>
+
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"></h3>
+						</div>
+						<div class="panel-body">
+							<a class="btn btn-primary" data-toggle="modal" href='#modal-id'>
+								<span class="fa fa-file-o"></span>&nbsp;
+								condiciones del servicio
+							</a>
+						</div>
+					</div>
 					
 				</div>
 
@@ -26,7 +43,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class='fa fa-user'></span>&nbsp;
+								<span class='fa fa-user text-title'></span>&nbsp;
 								Información personal
 							</h3>
 						</div>
@@ -76,7 +93,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-h-square"></span>
+								<span class="fa fa-h-square text-title"></span>
 								Información general
 							</h3>
 						</div>
@@ -103,17 +120,13 @@
 								<div class="form-group">
 									
 									<label class="label-control col-xs-12 col-md-2">
-										<span class="fa fa-envelope-o"></span>&nbsp;
+										<span class="fa fa-bars"></span>&nbsp;
 										Tipo
 									</label>
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
-
-											echo form_dropdown('',array('1' => 'hotel',
-																		'2'=> 'zona recreacional',
-																		'3'=>'chalet'), '',array('id' =>'tipoentidad',
-																								 'class' =>'form-control')
-											);
+										
+											echo $tipo_establecimiento;
 										?>
 									</div>
 
@@ -128,19 +141,19 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_input(array('type'=>'text','id'=>'nombreentidad',
+											echo form_input(array('type'=>'text','id'=>'direccionentidad',
 																  'class'=>'form-control'));
 										?>
 									</div>
 
 									<label class="label-control col-xs-12 col-md-2">
-										<span class="fa fa-building"></span>&nbsp;
+										<span class="fa fa-phone"></span>&nbsp;
 										Teléfono
 									</label>
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_input(array('type'=>'text','id'=>'nombreentidad',
+											echo form_input(array('type'=>'text','id'=>'telefonoentidad',
 																  'class'=>'form-control'));
 										?>
 									</div>
@@ -156,7 +169,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_input(array('type'=>'text','id'=>'nombreentidad',
+											echo form_input(array('type'=>'text','id'=>'emailentidad',
 																  'class'=>'form-control'));
 										?>
 									</div>
@@ -168,10 +181,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_dropdown('',array('1' => 'Colombia',
-																		), '',array('id' =>'tipoentidad',
-																								 'class' =>'form-control')
-											);
+											echo $pais;
 										?>
 									</div>
 
@@ -188,10 +198,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_dropdown('',array('1' => 'Santander',
-																		), '',array('id' =>'tipoentidad',
-																								 'class' =>'form-control')
-											);
+											echo $departamento;
 										?>
 									</div>
 
@@ -203,12 +210,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_dropdown('',array('1' => 'Floridablanca',
-																		'2' => 'Bucaramanga',
-																		'3'	=> 'Giron'
-																		), '',array('id' =>'tipoentidad',
-																								 'class' =>'form-control')
-											);
+											echo $ciudad;
 										?>
 									</div>
 
@@ -226,7 +228,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-bed"></span>&nbsp;
+								<span class="fa fa-bed text-title"></span>&nbsp;
 								Información de horarios
 							</h3>
 						</div>
@@ -292,7 +294,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-bed"></span>&nbsp;
+								<span class="fa fa-bed text-title"></span>&nbsp;
 								Información habitaciones y espacios
 							</h3>
 						</div>
@@ -321,7 +323,7 @@
 										<?php
 
 											echo form_input(array('type'=>'text','id'=>'cantidadhab',
-																  'class'=>'form-control'));
+																  'class'=>'form-control mFor'));
 										?>
 									</div>
 
@@ -338,11 +340,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_dropdown('',array('1' => 'Hotel',
-																		'2'=> 'Espacios deportivos',
-																		'3'=>'Espacios recreativos'), '',array('id' =>'categorias',
-																								 'class' =>'form-control')
-											);
+											echo $categoria;
 										?>
 									</div>
 
@@ -353,12 +351,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_dropdown('',array('1' => 'Habitacion sencilla',
-																		'2'=> 'Habitacion doble',
-																		'3'=>'Cancha sintetica',
-																		'4'=>'Salon de eventos'), '',array('id' =>'unidades',
-																								 'class' =>'form-control')
-											);
+											echo $unidad;
 										?>
 									</div>
 
@@ -374,11 +367,9 @@
 										<?php
 
 											echo form_input(array('type'=>'text','id'=>'capacidad',
-																  'class'=>'form-control'));
+																  'class'=>'form-control mFor'));
 										?>
 									</div>
-
-									<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
 
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-dollar"></span>&nbsp;
@@ -388,16 +379,8 @@
 										<?php
 
 											echo form_input(array('type'=>'text','id'=>'preciounidad',
-																  'class'=>'form-control'));
+																  'class'=>'form-control mFor'));
 										?>
-									</div>
-
-								</div>
-
-								<div class="form-group">
-									
-									<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-										
 									</div>
 
 									<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
@@ -407,7 +390,8 @@
 											echo form_button(array('type'=>'button',
 																	'class' => 'btn btn-primary',
 																	'content' => 
-																	"<span class='fa fa-plus-circle'></span>&nbsp;agregar"));
+																	"<span class='fa fa-plus-circle'></span>&nbsp;agregar",
+																	'id' => 'add-room'));
 
 										?>
 
@@ -415,28 +399,24 @@
 
 								</div>
 
+
 								<div class="form-group">
 									
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 										
 										<div class="table-responsive">
-											<table class="table table-hover table-bordered">
+											<table class="table table-hover table-bordered table-concept">
 												<thead>
 													<tr>
 														<th>Cantidad</th>
 														<th>Nombre</th>
+														<th>Tipo</th>
 														<th>Personas</th>
 														<th>Precio</th>
 														<th>Acciones</th>
 													</tr>
 												</thead>
-												<tbody>
-													<tr><td>3</td><td>Habitacion sencilla</td><td>1</td><td>35,000.00</td><td>
-													<button type="button" class="btn btn-danger btn-xs">
-														<span class="fa fa-close"></span>
-													</button>
-													</td></tr>
-												</tbody>
+												<tbody class="table-concept-show"></tbody>
 											</table>
 										</div>
 
@@ -456,7 +436,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-coffee"></span>&nbsp;
+								<span class="fa fa-coffee text-title"></span>&nbsp;
 								Servicios y caracteristicas
 							</h3>
 						</div>
@@ -470,14 +450,10 @@
 										<span class="fa fa-coffee"></span>&nbsp;
 										Caracteristica
 									</label>
-									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 										<?php
 
-											echo form_dropdown('',array('1' => 'Wifi',
-																		'2'=> 'Parqueadero',
-																		'3'=>'Bar'), '',array('id' =>'servicios',
-																								 'class' =>'form-control')
-											);
+											echo $caracteristicas;
 										?>
 									</div>
 
@@ -507,7 +483,6 @@
 										<?php echo form_checkbox(array('id'=>'info',
 																		'value'=>'acepto',
 																		'checked'=>true)).'&nbsp;'.
-										'<span class="fa fa-check text-success"></span>&nbsp;'.
 										'Acepto las condiciones del servicio.' 
 										?>
 										
@@ -552,4 +527,33 @@
 		
 	</div>
 
+</div>
+
+
+
+<div class="modal fade" id="modal-id">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">
+					<span class="fa fa-pencil-square text-title"></span>&nbsp;
+					Condiciones del servicio
+				</h4>
+			</div>
+			<div class="modal-body">
+
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur cumque deserunt, molestiae eum ratione vel error earum id provident sequi culpa voluptate, ducimus dolores amet, nihil voluptatum harum atque hic.
+
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus impedit laudantium consequatur dignissimos, quo quos ex id molestiae obcaecati neque quis quasi ducimus, veritatis itaque, sapiente, dolorem. Id, ut nemo.
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">
+					<span class="fa fa-close"></span>&nbsp;
+					Cerrar
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
