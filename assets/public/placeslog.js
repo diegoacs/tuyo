@@ -1,6 +1,87 @@
 $(document).ready(function(){
 
 
+    //get all values from form
+    function obtainValues(){
+
+        //crear array para guardar filas
+
+        var fila = { datos: [] };
+
+        fila['nombre'] = encodeURI($("#nombreusr").val());
+
+        fila['mail'] = encodeURI($("#mailuser").val());
+
+        fila['entidad'] = encodeURI($("#nombreentidad").val());
+
+        fila['tipo'] = encodeURI($("#tipo_establecimiento").val());
+
+        fila['telefono'] = encodeURI($("#telefonoentidad").val());
+
+        fila['mailentidad'] = encodeURI($("#emailentidad").val());
+
+        fila['pais'] = encodeURI($("#pais").val());
+
+        fila['dept'] = encodeURI($("#departamento").val());
+
+        fila['ciudad'] = encodeURI($("#ciudad").val());
+
+        fila['direccion'] = encodeURI($("#direccionentidad").val());
+
+        var geo = encodeURI($("#latlng").val()).split(',');
+
+        fila['lat'] = geo[0];
+
+        fila['long'] = geo[1];
+
+        fila['entrada'] = encodeURI($("#entrada").val());
+
+        fila['desde'] = encodeURI($("#salidadesde").val());
+
+        fila['hasta'] = encodeURI($("#salidahasta").val());
+
+        fila['caract'] = encodeURI($("#caracteristicas").val());
+
+        // habitaciones creadas
+
+        $(".table-concept .table-concept-show tr").each(function(){
+
+            var obj = {};
+
+            obj['cantidad'] = $(this).find('.cantidad').text();
+            obj['categoria'] = $(this).find('.categoria').data('id');
+            obj['unidad'] = $(this).find('.tipo').data('id');
+            obj['personas'] = $(this).find('.personas').text();
+            obj['precio'] = $(this).find('.precio').text();
+            obj['nombre'] = $(this).find('.nombre').text();
+
+            fila.datos.push(obj);
+
+        });
+
+        // adicionales
+
+        var add = '';
+
+        $('.adicional').each(function(){
+
+            if($(this).is(':checked')) add += ','+$(this).val();
+
+        });
+
+        fila['add'] = add ;
+        
+        return fila;
+
+    }
+
+    $('#selall').click(function() {
+        $('#caracteristicas option').prop('selected', true);
+    });
+
+    $('#desall').click(function() {
+        $('#caracteristicas option').prop('selected', false);
+    });
 
     $("#pais").change(function(){
 
@@ -31,13 +112,30 @@ $(document).ready(function(){
         });
     });
 
+    $("#categoria").change(function(){
+
+        ajax_rqs('id='+encodeURI($(this).val()),route+'Signup/changeund','POST','text',function(r){
+            if(r!='ERRINC'){
+                var rta=r.split(String.fromCharCode(9));
+                if(rta[0]=='1'){
+                    $("#unidad").html(rta[1]);
+                }
+                else alert(rta[1]);
+            }
+            else alert('Error en proceso.');        
+        });
+    });
 
     function addRow(vals){
 
         var row="<tr>";
         row+="<td class='cantidad chgn'>"+parseInt(vals[0],10)+"</td>";
         row+="<td class='nombre chgt'>"+vals[1]+"</td>";
-        row+="<td class='tipo' data-id='"+vals[5]+"'>"+vals[4]+"</td>";        
+        row+="<td class='categoria' data-id='"+vals[7]+"'>"+vals[6]+"</td>";        
+        row+="<td class='tipo' data-id='"+vals[5]+"'>";
+        row+="<select class='selhidden' style='display:none'>"+$('#unidad').html()+"<select>";
+        row+="<span class='name_und'>"+vals[4]+"</span>";
+        row+="</td>";        
         row+="<td class='personas chgn'>"+parseInt(vals[2],10)+"</td>";
         row+="<td class='precio chgn'>"+parseFloat(vals[3])+"</td>";
         row+="<td class='acciones'><button class='btn btn-xs btn-danger eliminar'>";
@@ -67,7 +165,9 @@ $(document).ready(function(){
         $('#capacidad').val(),
         $('#preciounidad').val(),
         $('#unidad option:selected').text(),
-        $('#unidad option:selected').val()
+        $('#unidad option:selected').val(),
+        $('#categoria option:selected').text(),
+        $('#categoria option:selected').val()
 
         ];
 
@@ -111,6 +211,18 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('click','.table-concept-show .tipo',function(){
+
+        $(this).find('.name_und').text('');
+
+        $(this).find('.selhidden').val($(this).data('id'));
+
+        $(this).find('.selhidden').show();
+
+        $(this).find('.selhidden').focus();
+
+    });
+
     // finish modify
     $(document).on('keypress','.table-concept-show .chgtext',function(e){
 
@@ -132,6 +244,20 @@ $(document).ready(function(){
             
             $(this).closest('td').html($(this).val());
         
+        }
+
+    });
+
+    $(document).on('keypress','.table-concept-show .selhidden',function(e){
+
+        if(e.keyCode==13){
+
+
+            $(this).closest('.tipo').find('.name_und').text($('option:selected',this ).text());
+
+            $(this).closest('.tipo').attr('data-id',$('option:selected',this ).val());
+        
+            $(this).hide();
         }
 
     });
@@ -173,13 +299,42 @@ $(document).ready(function(){
 
         }
 
-        if($('.table-concept-show tr').length < 1){
+        if(!validate_4()){
 
-            alert("Debe al menos ingresar información de una habitación.")
+            alert("Existen campos vacios en panel ubicación geografica.")
+            return false;
+
         }
 
+        if($('.table-concept-show tr').length < 1){
 
+            alert("Debe al menos ingresar información de una habitación.");
+            return false;
+        }
 
+        var form = obtainValues();
+
+        ajax_rqs({ 'data': JSON.stringify(form) },route+'Signup/savenewplace','POST','text',function(r){
+
+            if(r!='ERRINC'){
+
+                $('.texto-msg').html(''); 
+
+                var rta=r.split(String.fromCharCode(9));
+
+                if(rta[0]=='1'){
+
+                    alert(rta[1]);
+                }
+                else {
+
+                    $('.texto-msg').html(rta[1]); 
+
+                }
+            }
+            else alert('Error en proceso.');  
+
+        });
 
     });
 
@@ -187,18 +342,18 @@ $(document).ready(function(){
 
     function validate_1(){
 
-        if(!$.trim($('#nombreusr').val()) || !$.trim($('#mailusr').val())) return false;
+        if(!$.trim($('#nombreusr').val()) || !$.trim($('#mailuser').val())) return false;
         else return true;
     }
 
     function validate_2(){
 
         var rta;
-        if(!$.trim($('#nombreentidad').val()) || !$.trim($('#direccionentidad').val())) rta false;
-        else rta true;
+        if(!$.trim($('#nombreentidad').val())) rta=false;
+        else rta=true;
 
-        if(!$.trim($('#telefonoentidad').val()) || !$.trim($('#emailentidad').val())) rta false;
-        else rta true;
+        if(!$.trim($('#telefonoentidad').val()) || !$.trim($('#emailentidad').val())) rta=false;
+        else rta=true;
 
         return rta;
     }
@@ -206,51 +361,27 @@ $(document).ready(function(){
     function validate_3(){
 
         var rta;
-        if(!$.trim($('#entrada').val())) rta false;
-        else rta true;
+        if(!$.trim($('#entrada').val())) rta=false;
+        else rta=true;
 
-        if(!$.trim($('#salidadesde').val()) || !$.trim($('#salidahasta').val())) rta false;
-        else rta true;
+        if(!$.trim($('#salidadesde').val()) || !$.trim($('#salidahasta').val())) rta=false;
+        else rta=true;
 
         return rta;
     }
 
+    function validate_4(){
 
-	// $('#saveentidad').click(function(){
+        var rta;
+        if(!$.trim($('#direccionentidad').val())) rta=false;
+        else rta=true;
 
+        if(!$.trim($('#latlng').val())) rta=false;
+        else rta=true;
 
- //        if(!$('#info').is(':checked')){
+        return rta;
 
- //            alert('Debe aceptar las condiciones del servicio.');
- //            return false;
+    }
 
- //        }
-
-        
- //        if($('#accept').is(':checked'))var form='cond=1';
- //        else var form='cond=0';
- //        if($('#info').is(':checked'))form+='&info=1&';
- //        else form+='&info=0&'
-
-	// 	form += 'nombres='+encodeURI($('#nombres').val())+'&apellidos='+encodeURI($('#apellidos').val());
-	//     form += '&fecha='+encodeURI($('#fechanac').val())+'&email='+encodeURI($('#email').val());
-	// 	form += '&telefono='+encodeURI($('#telefono').val())+'&direccion='+encodeURI($('#direccion').val());
-	// 	form += '&codigo='+encodeURI($('#captchacode').val());
-
- //        ajax_rqs(form,route+'Signup/registerUsr','POST','text',function(r){
- //            if(r!='ERRINC'){
- //                var rta=r.split(String.fromCharCode(9));
- //                if(rta[0]=='1'){
- //                    alert('Registro exitoso, valide los datos en su correo electrónico.');
- //                }
- //                else alert(rta[1]);
- //            }
- //            else alert('Error en proceso.');        
- //        });
-
-
-
-
-	// });
 
 });

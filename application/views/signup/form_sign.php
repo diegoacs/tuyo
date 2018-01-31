@@ -136,6 +136,52 @@
 
 								</div>	
 
+
+								<div class="form-group">
+									
+									<label class='control-label col-xs-12 col-md-3'>
+									<span class="fa fa-location-arrow text-title"></span>&nbsp;
+									Pais
+									</label>
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+										<?php
+
+											echo $pais;
+										?>
+									</div>
+
+									<label class='control-label col-xs-12 col-md-3'>
+									<span class="fa fa-location-arrow text-title"></span>&nbsp;
+									Departamento
+									</label>
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+										<?php
+
+											echo $departamento;
+										?>
+									</div>
+
+								</div>
+
+								<div class="form-group">
+
+									<label class='control-label col-xs-12 col-md-3'>
+									<span class="fa fa-location-arrow text-title"></span>&nbsp;
+									Ciudad
+									</label>
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+										<?php
+
+											echo $ciudad;
+										?>
+									</div>
+
+
+								</div>
+
+
+
+
 								<div class="form-group">
 									
 									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">

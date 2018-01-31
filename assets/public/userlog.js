@@ -37,4 +37,34 @@ $(document).ready(function(){
 
 	});
 
+
+    $("#pais").change(function(){
+
+        ajax_rqs('id='+encodeURI($(this).val()),route+'Signup/changepais','POST','text',function(r){
+            if(r!='ERRINC'){
+                var rta=r.split(String.fromCharCode(9));
+                if(rta[0]=='1'){
+                    $("#departamento").html(rta[1]);
+                }
+                else alert(rta[1]);
+            }
+            else alert('Error en proceso.');        
+        });
+
+    });
+
+    $("#departamento").change(function(){
+
+        ajax_rqs('id='+encodeURI($(this).val()),route+'Signup/changedept','POST','text',function(r){
+            if(r!='ERRINC'){
+                var rta=r.split(String.fromCharCode(9));
+                if(rta[0]=='1'){
+                    $("#ciudad").html(rta[1]);
+                }
+                else alert(rta[1]);
+            }
+            else alert('Error en proceso.');        
+        });
+    });
+
 });

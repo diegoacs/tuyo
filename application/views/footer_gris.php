@@ -24,7 +24,7 @@
     <script type="text/javascript" src="<?php echo base_url("assets/js/slick.min.js"); ?>"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyDP5opBg3ZbeX96OI9l7Zh_Mc1iK7_NIBs&callback=initMap" > </script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyDP5opBg3ZbeX96OI9l7Zh_Mc1iK7_NIBs&region=ES&callback=initMap" > </script>
     <script src="<?php echo base_url('assets/public/general_func.js?n='.rand()); ?>"></script>
     
     <?php

@@ -130,22 +130,6 @@
 										?>
 									</div>
 
-								</div>
-
-								<div class="form-group">
-									
-									<label class="label-control col-xs-12 col-md-2">
-										<span class="fa fa-building"></span>&nbsp;
-										Dirección
-									</label>
-									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-										<?php
-
-											echo form_input(array('type'=>'text','id'=>'direccionentidad',
-																  'class'=>'form-control'));
-										?>
-									</div>
-
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-phone"></span>&nbsp;
 										Teléfono
@@ -159,6 +143,7 @@
 									</div>
 
 								</div>
+
 
 								<div class="form-group">
 									
@@ -223,8 +208,69 @@
 						</div>
 					</div>
 
-					<!-- info general hotel -->
+					
+					<!-- mapa google -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<span class="fa fa-location-arrow text-title"></span>
+								Ubicación geografica
+							</h3>
+						</div>	
+						<div class="panel-body">
 
+							<div class="form-horizontal">
+								
+								<div class="form-group">
+									
+									<label class="label-control col-xs-12 col-md-2">
+										<span class="fa fa-building"></span>&nbsp;
+										Dirección
+									</label>
+									<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+										<?php
+
+											echo form_input(array('type'=>'text','id'=>'direccionentidad',
+																  'class'=>'form-control'));
+										?>
+									</div>
+
+								</div>
+
+
+								<div class="form-group">
+
+									<label class="label-control col-xs-12 col-md-2">
+										<span class="fa fa-map-marker text-danger"></span>&nbsp;
+										Coodernadas
+									</label>	
+									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							    		<input id="latlng" type="text" class="form-control">							
+									</div>							
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+										<button id="getGeo" type="button" class="btn btn-info">
+											obtener dirección
+										</button>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div id='map_canvas' style='width:auto;height:230px;'></div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<?php
+							echo form_input(array('type'=>'hidden','id'=>'latitude'));
+							echo form_input(array('type'=>'hidden','id'=>'longe'));
+						?>
+
+					</div>
+
+					<!-- info general hotel -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">
@@ -240,7 +286,7 @@
 									
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-clock-o"></span>&nbsp;
-										Entrada
+										Check-in
 									</label>
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
@@ -257,7 +303,7 @@
 									
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-clock-o"></span>&nbsp;
-										Salida desde
+										Check-out desde
 									</label>
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
@@ -269,7 +315,7 @@
 
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-clock-o"></span>&nbsp;
-										Salida hasta
+										Check-out hasta
 									</label>
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
@@ -288,6 +334,7 @@
 
 						</div>
 					</div>
+
 
 
 					<!-- info habitaciones -->
@@ -410,6 +457,7 @@
 													<tr>
 														<th>Cantidad</th>
 														<th>Nombre</th>
+														<th>Categoria</th>
 														<th>Tipo</th>
 														<th>Personas</th>
 														<th>Precio</th>
@@ -444,6 +492,8 @@
 							
 							<div class="form-horizontal">
 
+
+
 								<div class="form-group">
 									
 									<label class="label-control col-xs-12 col-md-2">
@@ -456,9 +506,160 @@
 											echo $caracteristicas;
 										?>
 									</div>
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+										<?php
+
+											echo form_button(array('type'=>'button',
+																	'class'=>'btn btn-primary',
+																	'id' =>'selall',
+																	'content' =>
+																	"<span class='fa fa-check'></span>&nbsp;todos"));
+										?>
+
+										<?php
+
+											echo form_button(array('type'=>'button',
+																	'class'=>'btn btn-danger',
+																	'id' =>'desall',
+																	'content' =>
+																	"<span class='fa fa-check'></span>&nbsp;ninguno"));
+										?>
+									</div>
 
 								</div>
 
+								<div class="form-group">
+									
+									<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+									<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+										<span class="fa fa-lightbulb-o text-warning"></span>&nbsp;
+										Puede seleccionar multiples opciones, mantenga presionado Ctrl y haga click en las opciones.
+									</div>
+
+								</div>
+
+							</div>
+
+
+						</div>
+					</div>
+
+					<!-- adicionales -->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<span class="fa fa-coffee text-title"></span>&nbsp;
+								Adicionales
+							</h3>
+						</div>
+						<div class="panel-body">
+							
+							<div class="form-horizontal">
+
+								<div class="form-group">
+									
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'1',
+											'checked'=>false)).'&nbsp;'.
+											'Traslado a aeropuerto.' 
+										?>
+
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'2',
+											'checked'=>false)).'&nbsp;'.
+											'Salón de eventos.' 
+										?>
+
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'3',
+											'checked'=>false)).'&nbsp;'.
+											'Zona de juegos infantiles.' 
+										?>
+
+									</div>
+
+
+								</div>
+
+								<div class="form-group">
+									
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'4',
+											'checked'=>false)).'&nbsp;'.
+											'Restaurante.' 
+										?>
+
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'5',
+											'checked'=>false)).'&nbsp;'.
+											'Actividades de senderismo/caminata.' 
+										?>
+
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'6',
+											'checked'=>false)).'&nbsp;'.
+											'Guarda equipaje.' 
+										?>
+
+									</div>
+
+
+								</div>
+
+								<div class="form-group">
+									
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'7',
+											'checked'=>false)).'&nbsp;'.
+											'Gimnasio.' 
+										?>
+
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'8',
+											'checked'=>false)).'&nbsp;'.
+											'Aire Acondicionado.' 
+										?>
+
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+										<?php echo form_checkbox(array('class'=>'adicional',
+											'value'=>'9',
+											'checked'=>false)).'&nbsp;'.
+											'Barbacoa.' 
+										?>
+
+									</div>
+
+
+								</div>
 							</div>
 
 
@@ -485,6 +686,16 @@
 																		'checked'=>true)).'&nbsp;'.
 										'Acepto las condiciones del servicio.' 
 										?>
+										
+									</div>
+
+								</div>
+
+								<div class="form-group">
+									
+									<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+
+									<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 texto-msg">
 										
 									</div>
 

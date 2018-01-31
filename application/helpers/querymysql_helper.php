@@ -57,4 +57,11 @@ function nullStr($str){
     return "'".$str."'";
 }
 
+function lastid(){
+    $CI =& get_instance();
+    $last=$CI->db->insert_id();
+    if($last) return $last;
+    else return false;
+}
+
 ?>

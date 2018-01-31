@@ -7,29 +7,132 @@
 			
 			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
 
-				<p style="font-size: 35px;" class="text-title">
-					Registrate con nosotros
-				</p>
-				<p style="font-size: 15px">
-					registra tu lugar, recibe las mejores ofertas.
-				</p>
-				<br>
-				<p>
-					
-					<?php
-						$text="<span class='fa fa-user'></span>&nbsp;";
-						echo anchor(base_url().'index.php/Signup/users', $text.'registrate como usuario', array('class'=>'btn btn-primary'));
-					?>
-					
-				</p>
-				<p>
-					
-					<?php
-						$text="<span class='fa fa-home'></span>&nbsp;";
-						echo anchor(base_url().'index.php/Signup/places', $text.'registra tu lugar', array('class'=>'btn btn-primary'));
-					?>
-					
-				</p>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+						<p style="font-size: 35px;" class="text-title">
+							Registrate con nosotros
+						</p>
+						<p style="font-size: 15px">
+							registra tu lugar, recibe las mejores ofertas.
+						</p>
+						<br>
+						<p>
+							
+							<?php
+								$text="<span class='fa fa-user'></span>&nbsp;";
+								echo anchor(base_url().'index.php/Signup/users', $text.'registrate como usuario', array('class'=>'btn btn-primary'));
+							?>
+							
+						</p>
+						<p>
+							
+							<?php
+								$text="<span class='fa fa-home'></span>&nbsp;";
+								echo anchor(base_url().'index.php/Signup/places', $text.'registra tu lugar', array('class'=>'btn btn-primary'));
+							?>
+							
+						</p>
+						
+					</div>
+				</div>
+
+					<br><br>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									<span class="fa fa-key text-title"></span>&nbsp;
+									Usuarios registrados
+								</h3>
+							</div>
+							<div class="panel-body">
+
+								<?php
+
+									echo form_open('Signup/enterapp',array(
+
+										'id' => 'enter',
+										'class' => 'form-horizontal'
+									));
+								?>
+
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-md-2">Nombre</label>
+
+										<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+											
+											<?php
+
+												echo form_input(array('type' => 'text', 
+													'class' => 'form-control',
+													'name' => 'enter_form',
+													'id' => 'enter_form'
+												));	
+
+											?>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-md-2">Password</label>
+
+										<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+											
+											<?php
+
+												echo form_input(array('type' => 'password', 
+													'class' => 'form-control',
+													'name' => 'pass_form',
+													'id' => 'pass_form'
+												));	
+
+											?>
+
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<div class="col-xs-12 col-md-2"></div>
+										<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+											
+											<?php
+
+												echo form_button(
+													array(
+														'type' => 'submit',
+														'content' => 'entrar',
+														'class' => 'btn btn-primary',
+														'id' => 'enter-btn'
+													)
+												);
+
+											?>
+
+										</div>
+									</div>
+
+
+								<?php
+
+									echo form_close();
+								?>
+								
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+
+
+
 				
 			</div>
 

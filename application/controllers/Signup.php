@@ -13,6 +13,115 @@ class Signup extends CI_Controller {
 
 	}
 
+
+	public function savenewplace(){
+
+
+		//decodifica json
+
+        $data = json_decode($this->input->post('data'));
+
+        $info=array('info'=>array(),
+        			'habitaciones' => array()
+        		);
+        
+        // datos unicos
+
+        $info['info']['nombre']=urldecode($data->nombre);
+        $info['info']['mail']=urldecode($data->mail);
+
+        $info['info']['entidad']=urldecode($data->entidad);
+        $info['info']['tipo']=urldecode($data->tipo);
+        $info['info']['telefono']=urldecode($data->telefono);
+        $info['info']['mailentidad']=urldecode($data->mailentidad);
+        $info['info']['direccion']=urldecode($data->direccion);        
+        $info['info']['ciudad']=urldecode($data->ciudad);
+        $info['info']['lat']=floatval($data->lat);
+        $info['info']['long']=floatval($data->long);
+
+        $info['info']['entrada']=urldecode($data->entrada);
+        $info['info']['desde']=urldecode($data->desde);
+        $info['info']['hasta']=urldecode($data->hasta);
+        $info['info']['caract']=urldecode($data->caract);
+        $info['info']['adicionales']=urldecode(trim($data->add,','));
+
+
+        if(strtotime($info['info']['desde'])>strtotime($info['info']['hasta'])){
+
+        	die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Revise las horas de check-out.</p>");
+        }
+
+        // enviar datos a validacion
+        $this->form_validation->set_data($info['info']);
+
+		$config = array(
+
+		    array('field' => 'nombre','label' => 'nombre de usuario','rules' => 'required|trim|min_length[2]|max_length[60]|xss_clean'),
+		    array('field' => 'mail','label' => 'correo de usuario','rules' => 'required|trim|min_length[2]|max_length[60]|valid_email|xss_clean'),
+		    array('field' => 'entidad','label' => 'nombre de entidad','rules' => 'required|trim|min_length[2]|max_length[60]|xss_clean'),
+		    array('field' => 'tipo','label' => 'tipo de entidad','rules' => 'required|trim|xss_clean'),
+		    array('field' => 'telefono','label' => 'telefono de entidad','rules' => 'required|trim|min_length[2]|max_length[15]|xss_clean'),
+		    array('field' => 'mailentidad','label' => 'correo de entidad','rules' => 'required|trim|min_length[2]|max_length[60]|valid_email|xss_clean'),
+		    array('field' => 'ciudad','label' => 'ciudad','rules' => 'required|trim|xss_clean'),
+		    array('field' => 'lat','label' => 'latitud','rules' => 'required|trim|decimal|xss_clean'),
+		    array('field' => 'long','label' => 'longitud','rules' => 'required|trim|decimal|xss_clean'),
+		    array('field' => 'entrada','label' => 'check-in','rules' => 'required|trim|min_length[5]|max_length[8]|xss_clean'),
+		    array('field' => 'desde','label' => 'check-out desde','rules' => 'required|trim|min_length[5]|max_length[8]|xss_clean'),
+		    array('field' => 'hasta','label' => 'check-out hasta','rules' => 'required|trim|min_length[5]|max_length[8]|xss_clean'),
+		    array('field' => 'caract','label' => 'caracteristicas','rules' => 'required|trim|min_length[1]|max_length[60]|xss_clean'),
+		    array('field' => 'adicionales','label' => 'servicios adicionales','rules' => 'required|trim|min_length[1]|max_length[200]|xss_clean'),
+		    array('field' => 'direccion','label' => 'direccion de entidad','rules' => 'required|trim|min_length[1]|max_length[60]|xss_clean')
+
+		);
+
+		$this->form_validation->set_rules($config);
+
+        if($this->form_validation->run() == FALSE) {
+
+            die('2'.chr(9).validation_errors("<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;",'</p>'));
+
+        }
+
+        $habitaciones=$data->datos;
+        
+        $cantidad=array();
+        $categoria=array();
+        $unidad=array();
+        $personas=array();
+        $precio=array();
+		$nombre=array();
+
+        foreach ($habitaciones as $value) {
+
+            $cantidad[]=$value->cantidad;
+            $categoria[]=$value->categoria;
+            $unidad[]=$value->unidad;
+            $personas[]=$value->personas;
+            $precio[]=$value->precio;
+            $nombre[]=urldecode($value->nombre);
+
+        }
+
+        if(empty($cantidad)){
+
+        	die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Debe ingresar al menos una habitación.</p>");
+        }
+
+        $info['habitaciones']['cantidad']=$cantidad;
+        $info['habitaciones']['categoria']=$categoria;
+        $info['habitaciones']['unidad']=$unidad;
+        $info['habitaciones']['personas']=$personas;
+        $info['habitaciones']['precio']=$precio;
+        $info['habitaciones']['nombre']=$nombre;
+
+      	$rta = $this->signup_model->savenewplace($info);
+        
+        echo $rta;
+
+
+	}
+
+
 	public function mainregister()
 	{
 
@@ -28,9 +137,27 @@ class Signup extends CI_Controller {
 
 		$this->load->view('head','',false);
 
-		//pasamos a la vista el título y el captcha que hemos creado
- 		$data = array('captcha' => $this->newcaptcha());
 
+		//seccion geografica
+		$pais=$this->signup_model->pais();
+		$departamento=$this->signup_model->departamento($pais['default']);
+		$ciudad=$this->signup_model->ciudad($departamento['default']);
+
+		$data = ['pais' =>
+
+			form_dropdown('pais', $pais['data'],$pais['default'],array('id'=>'pais','class'=>'form-control')),
+
+				'departamento' =>
+			form_dropdown('departamento', $departamento['data'],$departamento['default'],array('id'=>'departamento','class'=>'form-control')),
+
+				'ciudad' =>
+			form_dropdown('ciudad', $ciudad['data'],$ciudad['default'],array('id'=>'ciudad','class'=>'form-control')),
+			
+				'captcha' => $this->newcaptcha()
+
+		 ];
+
+		//pasamos a la vista el título y el captcha que hemos creado
 		$this->load->view('signup/form_sign',$data,false);
         $js=$this->css_js->js(array('rute'=>'public/userlog.js?n='.rand()));
         $this->load->view('footer_gris', array('js'=>$js), FALSE); 
@@ -69,10 +196,26 @@ class Signup extends CI_Controller {
 
 	}
 
+	function changeund(){
+
+		$rta=$this->signup_model->unidad($this->input->post('id'));
+
+		$html='';
+		foreach ($rta['data'] as $key => $value) {
+
+			$html.="<option value='".$key."'>".$value."</option>";
+			
+		}
+
+		echo '1'.chr(9).$html;
+
+	}
+
 	public function places()
 	{
 
 		$this->load->view('head','',false);
+		$this->load->view('signup/maps');
 
 		//seccion geografica
 		$pais=$this->signup_model->pais();
@@ -102,7 +245,7 @@ class Signup extends CI_Controller {
 			form_dropdown('unidad', $unidad['data'],$unidad['default'],array('id'=>'unidad','class'=>'form-control')),
 
 				'caracteristicas' =>
-			form_dropdown('caracteristicas', $caract['data'],$caract['default'],array('id'=>'caracteristicas','class'=>'form-control','multiple'=>'multiple')),
+			form_dropdown('caracteristicas', $caract['data'],$caract['default'],array('id'=>'caracteristicas','class'=>'form-control','multiple'=>'multiple','size'=>'15')),
 
 				'tipo_establecimiento' =>
 			form_dropdown('tipo_establecimiento', $establecimiento['data'],$establecimiento['default'],array('id'=>'tipo_establecimiento','class'=>'form-control'))
