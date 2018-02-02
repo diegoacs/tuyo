@@ -10,6 +10,140 @@ class Signup extends CI_Controller {
 		$this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha','string'));
         $this->load->library(array('session','form_validation','css_js','sendmail','encryptpass'));
         $this->load->model('sign_model/Signup_model','signup_model');
+        $this->load->model('places_model/Places_model','places_model');
+
+	}
+
+
+
+	public function enterapp()
+	{
+
+		$this->form_validation->set_rules('enter_form', 'usuario', 'trim|required|xss_clean|min_length[2]|valid_email|max_length[60]');
+		$this->form_validation->set_rules('pass_form', 'password', 'trim|required|xss_clean|min_length[5]|max_length[60]');
+
+        if($this->form_validation->run() == FALSE) {
+
+
+	        $this->load->view('head','',false);
+			$this->load->view('signup/mainregister','',false);
+	        $js=$this->css_js->js(array('rute'=>'public/userlog.js?n='.rand()));
+	        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+        }
+
+        else{
+        	
+	        $rta = $this->signup_model->enter_site(array(
+	        								$this->input->post('enter_form'),
+	        								$this->input->post('pass_form')));
+
+	        if(!$rta){
+
+	        	$this->session->set_flashdata('error_usr','Error en acceso, verifique si su contraseña es correcta o si su usuario esta habilitado.');
+	        	$this->load->view('head','',false);
+				$this->load->view('signup/mainregister','',false);
+		        $js=$this->css_js->js(array('rute'=>'public/userlog.js?n='.rand()));
+		        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+	        }
+	        else{
+
+
+	        	$this->session->set_userdata(array(
+
+	        		'nombres' => $rta->nombres,
+	        		'user' => $rta->email,
+	        		'active' => $rta->activo
+	        	));
+
+	        	redirect(base_url().'index.php/Signup/enter_panel','refresh');
+	        }
+
+        }
+
+	}
+
+
+	public function enter_panel()
+	{
+
+		if($this->session->has_userdata('user')){
+
+			if($this->session->active == 'N') {
+			
+				$this->session->unset_userdata(array(
+									'nombres','user','active'
+										));
+				$this->session->set_flashdata('error_usr','Error en acceso, su usuario no esta habilitado.');
+				$this->index();
+			}
+			else {
+
+		    	$this->load->view('head','',false);
+		    	$this->load->view('signup/maps');
+
+				//seccion geografica
+
+		    	$entidades = $this->places_model->entidades($this->session->user);
+
+		    	$info = $this->places_model->generaldata($entidades['entidad']);
+
+		    	$lugar = $this->places_model->getlugar($info->id_muni);
+
+
+				$pais=$this->signup_model->pais();
+				$departamento=$this->signup_model->departamento($lugar->id_pais);
+				$ciudad=$this->signup_model->ciudad($lugar->id_dept);
+
+				//seccion hotel
+				$categoria=$this->signup_model->categoria();
+				$unidad=$this->signup_model->unidad($categoria['default']);
+				$caract=$this->signup_model->caracteristicas();
+				$establecimiento=$this->signup_model->establecimientos();
+
+				$data = [
+
+					'default' => array($entidades['entidad'],$entidades['nombre']),
+
+					'entidades' => $entidades['data'],
+
+					'pais' =>
+
+					form_dropdown('pais', $pais['data'],$lugar->id_pais,array('id'=>'pais','class'=>'form-control')),
+
+						'departamento' =>
+					form_dropdown('departamento', $departamento['data'],$lugar->id_dept,array('id'=>'departamento','class'=>'form-control')),
+
+						'ciudad' =>
+					form_dropdown('ciudad', $ciudad['data'],$lugar->id_muni,array('id'=>'ciudad','class'=>'form-control')),
+
+						'categoria' =>
+					form_dropdown('categoria', $categoria['data'],$categoria['default'],array('id'=>'categoria','class'=>'form-control')),
+
+						'unidad' =>
+					form_dropdown('unidad', $unidad['data'],$unidad['default'],array('id'=>'unidad','class'=>'form-control')),
+
+						'caracteristicas' =>
+					form_dropdown('caracteristicas', $caract['data'],$caract['default'],array('id'=>'caracteristicas','class'=>'form-control','multiple'=>'multiple','size'=>'15')),
+
+						'tipo_establecimiento' =>
+					form_dropdown('tipo_establecimiento', $establecimiento['data'],$establecimiento['default'],array('id'=>'tipo_establecimiento','class'=>'form-control')),
+
+						'rta' => 
+					array($info->nom_entidad,$info->tel_entidad,$info->email_entidad,$info->dir_entidad,$info->geo)
+
+				 ];
+
+		    	$datos_form = $this->load->view('signup/data_place',$data,true);
+				$this->load->view('general/panel_admin',array('datos_form' => $datos_form));
+		        $js=$this->css_js->js(array('rute'=>'public/place.js?n='.rand()));
+		        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+			}
+
+		}
+		else $this->index();
 
 	}
 
@@ -121,6 +255,15 @@ class Signup extends CI_Controller {
 
 	}
 
+	public function index()
+	{
+
+		$this->load->view('head','',false);
+		$this->load->view('signup/mainregister','',false);
+        $js=$this->css_js->js(array('rute'=>'public/userlog.js?n='.rand()));
+        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+	}
 
 	public function mainregister()
 	{
@@ -248,11 +391,15 @@ class Signup extends CI_Controller {
 			form_dropdown('caracteristicas', $caract['data'],$caract['default'],array('id'=>'caracteristicas','class'=>'form-control','multiple'=>'multiple','size'=>'15')),
 
 				'tipo_establecimiento' =>
-			form_dropdown('tipo_establecimiento', $establecimiento['data'],$establecimiento['default'],array('id'=>'tipo_establecimiento','class'=>'form-control'))
+			form_dropdown('tipo_establecimiento', $establecimiento['data'],$establecimiento['default'],array('id'=>'tipo_establecimiento','class'=>'form-control')),
+
+				'rta' => array('','','','','')
 
 		 ];
 
-		$this->load->view('signup/form_places',$data,false);
+
+		$data_form = $this->load->view('signup/data_place',$data,true);
+		$this->load->view('signup/form_places',array('data_form' => $data_form));
         $js=$this->css_js->js(array('rute'=>'public/placeslog.js?n='.rand()));
         $this->load->view('footer_gris', array('js'=>$js), FALSE); 
 
@@ -355,6 +502,30 @@ class Signup extends CI_Controller {
 
 
 		$rta = $this->signup_model->verifycode($code);
+
+		if($rta=='1') {
+			$msg="Usuario activado, enviamos sus datos de acceso al correo electronico.";
+			$type='success';
+		}
+		else {
+			$msg="Hubo problemas con la activación de usuario, verifique si su codigo ha sido usado antes.";	
+			$type='danger';
+		}
+
+		$this->load->view('head','',false);
+		$this->load->view('signup/msg_theme',array('msg'=>$msg,'type'=>$type),false);
+        $js=$this->css_js->js(array('rute'=>'public/userlog.js?n='.rand()));
+        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+
+
+	}
+
+
+	public function placesactivation($code){
+
+
+		$rta = $this->signup_model->verifycodeplaces($code);
 
 		if($rta=='1') {
 			$msg="Usuario activado, enviamos sus datos de acceso al correo electronico.";

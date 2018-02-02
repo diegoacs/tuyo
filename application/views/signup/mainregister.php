@@ -45,8 +45,8 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<span class="fa fa-key text-title"></span>&nbsp;
-									Usuarios registrados
+									<span class="fa fa-home text-title"></span>&nbsp;
+									Mi sitio
 								</h3>
 							</div>
 							<div class="panel-body">
@@ -61,9 +61,12 @@
 								?>
 
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-md-2">Nombre</label>
+										<label class="control-label col-xs-12 col-md-3">
+											<span class="fa fa-envelope-o"></span>&nbsp;
+											Nombre
+										</label>
 
-										<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+										<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 											
 											<?php
 
@@ -79,9 +82,12 @@
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-md-2">Password</label>
+										<label class="control-label col-xs-12 col-md-3">
+											<span class="fa fa-key"></span>&nbsp;
+											Password										
+										</label>
 
-										<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+										<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 											
 											<?php
 
@@ -98,8 +104,8 @@
 
 
 									<div class="form-group">
-										<div class="col-xs-12 col-md-2"></div>
-										<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+										<div class="col-xs-12 col-md-3"></div>
+										<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 											
 											<?php
 
@@ -117,6 +123,23 @@
 										</div>
 									</div>
 
+
+									<div class="form-group">
+										<div class="col-xs-12 col-md-3"></div>
+										<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+											<?php
+
+												echo validation_errors("<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;",'</p>');
+											?>
+                                        <?php if($this->session->flashdata('error_usr')){
+                                            echo "<div class='alert alert-danger alert-dismissible' role='alert'>".
+                                            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>".
+                                            "<span aria-hidden='true'>&times;</span></button>".
+                                            "<span class='fa fa-exclamation-triangle'></span>&nbsp;".$this->session->flashdata('error_usr').
+                                            "</div>";
+                                        }?>											
+										</div>
+									</div>
 
 								<?php
 

@@ -9,6 +9,41 @@ class Signup_model extends CI_Model {
     	$this->load->database();
     }
 
+    function enter_site($data)
+    {
+
+        $user = $data[0];
+        $pass = $data[1];
+
+        $sql="select authcode from entidad_auth_users where usuario='".escstr($user)."'";
+        if(nRows($sql)<1){
+            redirect(base_url().'index.php/Signup/','refresh');
+        }
+        $gen = oneRow($sql);
+        $pss = $gen->authcode;
+
+        if (crypt(escstr($pass), $pss) == $pss){
+
+            $sql="select nombres,email,activo from users_entidad_public where email='".escstr($user)."'";
+
+            if(nRows($sql)<1){
+
+                return false;
+                die();
+            }
+
+            return oneRow($sql);
+            die();
+
+        }
+        else {
+
+            return false;
+            die();
+        }
+
+    }
+
     function pais()
     {
     	$sql="select id_pais,nom_pais from pais order by id_pais asc";
@@ -214,6 +249,16 @@ class Signup_model extends CI_Model {
 
     		// aca va lo del correo
 
+            // enviando correo
+
+            // $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
+            //       $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+            // $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
+            // $this->sendmail->send($datamail);
+
+
+
     		//envio password a usuario
     		endTr();
     		return '1';
@@ -224,6 +269,72 @@ class Signup_model extends CI_Model {
     		endTr();
     		return '2';
     	}
+
+    }
+
+    function verifycodeplaces($code)
+    {
+
+        iniTr();
+        $sql="select usuario from codes_entidad_public where code_verifica='".escstr($code)."' ".
+        " and activo='N'";
+        if(nRows($sql)>0){
+
+            $gen = oneRow($sql);
+            $usr = $gen->usuario;
+
+            $sql="select id_user from users_entidad_public where email='".escstr($usr)."'";
+            $gn = oneRow($sql);
+            $ref = $gn->id_user;
+
+            $pass = random_code(8);
+
+            ver_php($pass);
+
+            $encrypted = $this->encryptpass->generate_pass(array('password'=>$pass , 'key' => '$2y$10$'));
+
+            $sql="insert into entidad_auth_users (usuario,authcode,id_reference) values ".
+            "('".escstr($usr)."','".$encrypted."',".$ref.")";
+            if(!exeQuery($sql)){
+                
+                rollTr();
+                return '2';
+            }
+
+            $sql="update codes_entidad_public set activo='S' where usuario='".escstr($usr)."' and activo='N' and code_verifica='".escstr($code)."'";
+            if(!exeQuery($sql)){
+                
+                rollTr();
+                return '2';
+            }
+
+            $sql="update users_entidad_public activo='S' where email='".escstr($usr)."'";
+            if(!exeQuery($sql)){
+                
+                rollTr();
+                return '2';
+            }
+
+            // aca va lo del correo
+
+            // enviando correo
+
+            // $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
+            //       $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+            // $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
+            // $this->sendmail->send($datamail);
+
+            //envio password a usuario
+            endTr();
+            return '1';
+
+        }
+        else{
+
+            endTr();
+            return '2';
+        }
 
     }
 
@@ -505,6 +616,19 @@ class Signup_model extends CI_Model {
             rollTr();
             die('2'.chr(9).'Error: registrando cobro.');
         }       
+
+
+
+        // asociar entidad a usuario
+
+        $sql="insert into entidades_usuario (usuario,id_entidad) values ".
+        "('".escstr($data['info']['mail'])."','".escstr($identi)."')";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: asociando entidades.');
+        } 
 
         
 
