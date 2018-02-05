@@ -28,6 +28,8 @@ $(document).ready(function(){
 
         fila['direccion'] = encodeURI($("#direccionentidad").val());
 
+        fila['postal'] = encodeURI($("#postal").val());
+
         var geo = encodeURI($("#latlng").val()).split(',');
 
         fila['lat'] = geo[0];
@@ -36,11 +38,23 @@ $(document).ready(function(){
 
         fila['entrada'] = encodeURI($("#entrada").val());
 
+        fila['salida'] = encodeURI($("#salida").val());
+
         fila['desde'] = encodeURI($("#salidadesde").val());
 
         fila['hasta'] = encodeURI($("#salidahasta").val());
 
-        fila['caract'] = encodeURI($("#caracteristicas").val());
+        // caracteristicas
+
+        var cart = '';
+
+        $('.caracter').each(function(){
+
+            if($(this).is(':checked')) cart += ','+$(this).val();
+
+        });
+
+        fila['caract'] = cart;
 
         // habitaciones creadas
 
@@ -325,8 +339,6 @@ $(document).ready(function(){
                 if(rta[0]=='1'){
 
                     alert(rta[1]);
-
-                    reload.location
                 }
                 else {
 

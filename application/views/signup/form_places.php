@@ -92,6 +92,10 @@
 					<?php 
 
 						echo $data_form;
+
+						echo $unidades_form;
+
+						echo $caract_form;
 					?>
 
 					<!-- info guardar -->

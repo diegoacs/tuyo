@@ -1,4 +1,19 @@
 <script type="text/javascript">
+
+    var route='http://localhost/tuyo/index.php/';
+    function getAddressParts(obj) {
+
+        var address = [];
+
+        obj.address_components.forEach( function(el) {
+            address[el.types[0]] = el.short_name;
+        });
+
+        return address;
+
+    } //getAddressParts()
+
+
             var map = null;
             var infoWindow = null;
             var geocoder = null;
@@ -72,14 +87,49 @@
                     geocoder.geocode({'location': latlng}, function(results, status) {
                         if (status === 'OK') {
 
-                            if (results[1]) {
+                            var addressParts =  getAddressParts(results[0]);
 
-                                document.getElementById('direccionentidad').value=results[1].formatted_address;
+                            var city = addressParts.locality;
 
-                            } 
-                            else {
-                                document.getElementById('direccionentidad').value='';
-                            }
+                            var state = addressParts.administrative_area_level_1;
+
+                            var country = addressParts.country;
+
+                            var postal = addressParts.postal_code;
+
+                            $("#postal").val(postal);
+
+                            xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+
+                                    var rtx = this.responseText;
+                                    var rta =rtx.split(String.fromCharCode(9));
+
+                                    setTimeout(function(){ 
+
+                                        $("#departamento").val(rta[1]);
+                                        $("#departamento").change();
+
+                                    }, 2000);
+                                    setTimeout(function(){ 
+
+                                        $("#ciudad").val(rta[2]);
+                                        $("#ciudad").change();
+
+                                    }, 4000);
+
+                                }
+                            };
+
+                            if(city == undefined) var stat='0';
+                            else var stat ='1';
+
+                            var rta ='country='+country+'&state='+state+'&city='+city+'&stat='+stat;
+                            xhttp.open("GET", route+"Signup/getPositions?"+rta, true);
+                            xhttp.send();
+
+                            
 
                         } 
                         else {

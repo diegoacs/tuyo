@@ -213,6 +213,31 @@ class Signup_model extends CI_Model {
     }
 
 
+    function adicionales()
+    {
+
+        $sql="select id_adicional,nombre from adicionales ".
+        "order by id_adicional asc";
+        $gen = getQuery($sql);
+
+        $rta=array('default'=>'','data' =>'');
+
+        $n=0;
+        foreach ($gen as $row) {
+
+            if($n==0) $rta['default']=$row['id_adicional'];
+
+            $rta['data'][$row['id_adicional']]=$row['nombre'];
+
+            $n++;
+            
+        }
+
+        return $rta;        
+
+    }
+
+
     function verifycode($code)
     {
 
@@ -474,13 +499,13 @@ class Signup_model extends CI_Model {
         $identi=$gen->id+1;
 
         $sql="insert into entidad (id_entidad,nom_entidad,tel_entidad,dir_entidad,".
-        "email_entidad,id_muni,longitud,latitud,tipo) values ".
+        "email_entidad,id_muni,longitud,latitud,tipo,postal) values ".
 
         "('".escstr(str_pad($identi,3,'0',STR_PAD_LEFT))."','".escstr($data['info']['entidad']).
         "','".escstr($data['info']['telefono'])."','".escstr($data['info']['direccion']).
         "','".escstr($data['info']['mailentidad'])."',".escstr($data['info']['ciudad']).
         ",".escstr($data['info']['long']).",".escstr($data['info']['lat']).
-        ",'H')";
+        ",'H','".escstr($data['info']['postal'])."')";
 
         if(!exeQuery($sql)){
 
@@ -604,12 +629,12 @@ class Signup_model extends CI_Model {
         foreach ($categoria as $val) {
             
             $vals[] = "('".escstr(str_pad($calendario,3,'0',STR_PAD_LEFT))."',".escstr($val).",'C',".
-            "'".escstr($data['info']['desde'])."','".escstr($data['info']['hasta'])."','1')";
+            "'".escstr($data['info']['desde'])."','".escstr($data['info']['hasta'])."','1','".escstr($data['info']['entrada'])."','".escstr($data['info']['salida'])."')";
 
         }
 
         $sql = "insert into tipo_cobro (id_calendario,id_categoria,".
-        "tipo_cobro,hora,hrs_despues,hrs_min) values ".implode(',',$vals);
+        "tipo_cobro,hora,hrs_despues,hrs_min,checkin_inicio,checkin_fin) values ".implode(',',$vals);
 
         if(!exeQuery($sql)){
 
