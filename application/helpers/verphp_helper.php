@@ -34,6 +34,25 @@ function ver_php($string){
   fclose($file);
 }
 
+function rute_img(){
+  $rute='';
+  if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+  {
+    //for windows
+    $rute = "D:/servidoreco/www/cdig/assets/public/img/img_enti/";
+  }
+  elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'LIN'){
+    //for linux
+    $rute = "/home/innovade/img_enti/";
+  }
+  else
+  {
+    //for mac
+    $rute = base_url().'img_enti/';
+  }
+  return $rute;
+}
+
 function get_rute(){
   $rute='';
   if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')

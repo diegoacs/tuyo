@@ -36,3 +36,26 @@
 
 						</div>
 					</div>
+
+
+					<div class="modal fade" id="modal-img">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<?php
+
+										echo form_input(array('type' => 'hidden',
+														'value' => '',
+														'class' => 'id-img-see'));
+
+									?>
+									<img class='img-responsive watch-img' src="" alt="">
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger delete-img">Eliminar</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>

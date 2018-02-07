@@ -6,13 +6,100 @@ class Places_admin extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha','string'));
+		$this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha','string','html'));
         $this->load->library(array('session','form_validation','css_js','sendmail','encryptpass'));
         $this->load->model('sign_model/Signup_model','signup_model');
         $this->load->model('places_model/Places_model','places_model');
 
 	}
 
+
+    public function uploadFile(){
+
+        if(!empty($_FILES['archivo']['name'])){
+
+            $config['upload_path'] = '/applications/xampp/htdocs/tuyo/img_enti/'.$this->session->actual;
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|GIF|JPG|PNG|JPEG';
+            $config['max_size'] = 2048;
+            $config['file_name'] = escstr($this->input->post('nomimg'));
+            //Load upload library and initialize configuration
+
+            // si no existe directorio crear directorio
+            if (!is_dir($config['upload_path'])) {
+                mkdir($config['upload_path'], 0777, true);
+            }
+
+            $this->load->library('upload',$config);
+            $this->upload->initialize($config);
+
+            if($this->upload->do_upload('archivo')){
+
+                $uploadData = $this->upload->data();
+                $picture = $uploadData['file_name'];
+                $ext = $uploadData['file_ext'];
+            }
+            else{
+
+                echo "Error de archivo: revise especificaciones o tamaño.";
+                die();
+
+            }
+
+        }
+        else{
+
+            echo "Error: no se ha encontrado archivo al momento de subir.";
+            die();
+
+        }
+
+            // crear imagen temporal 
+            $infoconf['image_library'] = 'gd2';
+            $infoconf['source_image'] = $config['upload_path'].'/'.escstr($this->input->post('nomimg')).$ext;
+            $infoconf['create_thumb'] = TRUE;
+            $infoconf['maintain_ratio'] = TRUE;
+            $infoconf['width'] = 50;
+            $infoconf['height'] = 50;
+            $this->load->library('image_lib', $infoconf);
+            $this->image_lib->initialize($infoconf);
+
+            if(!$this->image_lib->resize()){
+                echo "Error creando thumb.";
+                die();
+            }
+
+
+
+        //Prepare array of user data
+        $dataUpload = array(
+        'nomimg' => escstr($this->input->post('nomimg')),
+        'tipo' => $ext );
+        return $this->places_model->uploadFile($dataUpload);
+        die();
+
+    }
+
+
+	public function deleteimg()
+	{
+
+		echo $this->places_model->deleteimg($this->input->post('id'));
+
+	}
+
+	public function obtainImg()
+	{
+
+		echo $this->places_model->obtainImg();
+
+	}
+
+	public function text_add()
+	{
+
+		echo $this->places_model->text_add();
+
+	}
 
 	public function addHabs(){
 
@@ -204,6 +291,8 @@ class Places_admin extends CI_Controller {
 
 	        $info['info']['add']=urldecode($data->add);
 	        $info['info']['caract']=urldecode($data->caract);
+	        $info['info']['desc']=urldecode($data->desc);
+	        $info['info']['condi']=urldecode($data->condi);
 
 
 	        $rta = $this->places_model->updatetipo3($info);
@@ -434,6 +523,7 @@ class Places_admin extends CI_Controller {
 
 				if($close=='N') $add.="</div>";
 
+				$desc = $this->places_model->descripcion($entidades['entidad']);
 
 				$data = [
 
@@ -447,7 +537,12 @@ class Places_admin extends CI_Controller {
 
 				 ];
 
-		    	$datos_form = $this->load->view('signup/data_caracteristicas',$data,true);
+				$gallery = $this->places_model->obtainImg(); 
+
+				$adicionales = $this->places_model->text_add();
+
+		    	$datos_form = $this->load->view('general/place_gallery',array('desc' => $desc, 'gallery' => $gallery),true).
+		    	$this->load->view('signup/data_caracteristicas',$data,true);
 
 				$this->load->view('general/panel_admin',array('datos_form' => $datos_form , 'tipo' => '3'));
 

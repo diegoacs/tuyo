@@ -1,6 +1,86 @@
 $(document).ready(function(){
 
 
+    $('.img-gallery').slick({
+
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 800,
+        arrows: false,
+
+    });
+
+
+    $('.img-linked').click(function(){
+
+        var src = $(this).find('.img-mini').attr('src');
+        var id = $(this).find('.img-mini').data('id');
+        $('.id-img-see').val(id);
+        $('.watch-img').attr('src',src);
+    });
+
+
+    $(".delete-img").click(function(){
+
+        ajax_rqs('id='+encodeURI($('.id-img-see').val()),route+'Places_admin/deleteimg','POST','text',function(r){
+            if(r!='ERRINC'){
+                var rta=r.split(String.fromCharCode(9));
+                if(rta[0]=='1'){
+                    location.reload();
+                }
+            }
+            else alert('Error en proceso.');        
+        });
+
+    });
+
+
+    $(".saveImg").click(function(){
+        uploadAjax();
+    });
+
+    function uploadAjax(){
+
+        if($("#nomimg").val()==''){
+            alertMsg('Ingrese un nombre al archivo.');
+            return false;
+        }
+
+        if($("#getimg").val()==''){
+            alertMsg('Falta seleccionar archivo.');
+            return false;
+        }
+
+        var inputFileImage = document.getElementById("getimg");
+        var file = inputFileImage.files[0];
+        var data = new FormData();
+        data.append('nomimg',$("#nomimg").val());
+        data.append('archivo',file);
+
+        $.ajax({
+
+            url:route+'Places_admin/uploadFile',
+            type:'POST',
+            contentType:false,
+            enctype: 'multipart/form-data',
+            data:data,
+            processData:false,
+            cache:false,
+            success: function (data){
+                location.reload();
+            },
+            error: function(r){
+                alert(r);
+            }
+
+        });
+
+    }
+
+
+
+
     $("#pais").change(function(){
 
         ajax_rqs('id='+encodeURI($(this).val()),route+'Signup/changepais','POST','text',function(r){
@@ -308,6 +388,10 @@ $(document).ready(function(){
         });
 
         fila['add'] = add ;
+
+        fila['desc'] = $('#desc').val();
+
+        fila['condi'] = $('#condi').val();
         
         return fila;
 

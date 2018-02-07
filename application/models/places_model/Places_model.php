@@ -8,6 +8,111 @@ class Places_model extends CI_Model {
     	$this->load->database();
     }
 
+
+    function descripcion($id)
+    {
+
+        $sql="select descripcion,condiciones from entidad where id_entidad='".escstr($id)."'";
+        $gen =oneRow($sql);
+
+        return array($gen->descripcion,$gen->condiciones);
+
+    }
+
+
+    function uploadFile($data){
+
+        iniTr();
+        $sql="insert into img_entidades (nombre,tipo,id_entidad) ".
+        "values ('".escstr($data['nomimg'])."','".escstr($data['tipo'])."','".$this->session->actual."')";
+
+        if(!exeQuery($sql)){
+            rollTr();
+            die('Error insertando.');
+        }
+        endTr();
+        echo "Archivo subido con éxito.";
+        die();
+
+    }
+
+    function text_add()
+    {
+
+        $sql="select condiciones,descripcion from entidad where id_entidad='".escstr($this->session->actual)."'";
+        $gen = oneRow($sql);
+
+        return array($gen->condiciones,$gen->descripcion);
+
+    }
+
+
+    function deleteimg($id)
+    {
+
+
+
+        iniTr();
+
+        $filepath = '/applications/xampp/htdocs/tuyo/img_enti/'.$this->session->actual.'/';
+
+        $sql="select nombre,tipo from img_entidades where id_img=".escstr($id);
+        $gen=oneRow($sql);
+
+        $file = $gen->nombre.$gen->tipo;
+        $filethumb = $filepath.$gen->nombre.'_thumb'.$gen->tipo;
+        $filepath = $filepath.$file;
+
+        if (is_file($filepath)){
+            unlink($filepath);
+        }
+
+        if (is_file($filethumb)){
+            unlink($filethumb);
+        }
+
+        $sql="delete from img_entidades where id_img=".escstr($id)." and id_entidad='".escstr($this->session->actual)."'";
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error al eliminar.');
+
+        }
+
+        //eliminar de 
+
+        endTr();
+        die('1'.chr(9).'exito');
+
+    }
+
+    function obtainImg()
+    {
+
+        $sql="select id_img,nombre,tipo from img_entidades ".
+        "where id_entidad='".escstr($this->session->actual)."'";
+
+        $gen = getQuery($sql);
+
+        $html = '' ;
+
+        foreach ($gen as $row) {
+
+            $html.="<div><a class='img-linked' data-toggle='modal' href='#modal-img'>".img(array(
+                'class' => 'img-mini',
+                'src' =>rute_img().$this->session->actual.'/'.$row['nombre'].$row['tipo'],
+                'alt' => $row['nombre'],
+                'width' =>'150', 'height' =>'120',
+                'data-id' => $row['id_img']
+            ))."</a></div>";
+            
+        }
+
+        return $html;
+
+    }
+
+
     function changehorarios($data)
     {
     	iniTr();
@@ -379,6 +484,16 @@ class Places_model extends CI_Model {
         	
         }
 
+
+        //condiciones 
+
+        $sql="update entidad set condiciones='".escstr($data['info']['condi']).
+        "',descripcion='".escstr($data['info']['desc'])."' where id_entidad='".escstr($entidad)."'";
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: Actualizando entidad.');
+        }
 
         endTr();
 
