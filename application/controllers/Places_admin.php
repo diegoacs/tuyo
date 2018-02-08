@@ -13,6 +13,12 @@ class Places_admin extends CI_Controller {
 
 	}
 
+	public function log_out()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url().'index.php/Signup','refresh');	
+
+	}
 
     public function uploadFile(){
 
@@ -212,7 +218,13 @@ class Places_admin extends CI_Controller {
 
 	public function index()
 	{
-		
+
+		if($this->session->has_userdata('actual')){
+
+			redirect(base_url().'index.php/Signup/enter_panel/'.$this->session->actual,'refresh');
+
+		}
+		else redirect(base_url().'index.php/Signup','refresh');	
 	}
 
 	public function updatetipo1()

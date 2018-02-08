@@ -36,11 +36,13 @@
 							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 
 								<?php
-									echo form_button(array('id' => 'close_session',
-														   'name' => 'close_session',
-														   'class' => 'btn btn-danger',
-														   'content' =>"<span class='fa fa-close'></span>&nbsp;cerrar sesion"	
-															));
+
+									echo anchor(base_url().'index.php/Signup/log_out/', 
+										"<span class='fa fa-close'></span>&nbsp;cerrar sesion", 
+										array('id' => 'close_session',
+												'name' => 'close_session',
+												'class' => 'btn btn-danger'));
+
 								?>
 
 							</div>

@@ -15,6 +15,15 @@ class Signup extends CI_Controller {
 	}
 
 
+
+	public function log_out()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url().'index.php/Signup','refresh');	
+
+	}
+
+
 	public function getPositions()
 	{
 

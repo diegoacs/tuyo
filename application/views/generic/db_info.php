@@ -38,22 +38,24 @@
 
 								<?php
 
+									$f=1;
 
 									foreach ($html as $value) {
 
 
 							            echo "<div class='panel-heading'>
 							                <h4 class='panel-title'>
-							                    <a data-toggle='collapse' data-parent='#accordion' href='#".$value['nombre']."'>".$value['nombre']."</a>
+							                    <a data-toggle='collapse' data-parent='#accordion' href='#".$value['nombre']."'>".$f.' - '.$value['nombre']."</a>
 							                </h4>
 							            </div>
-							            <div id='".$value['nombre']."' class='panel-collapse collapse'>
+							            <div id='".$value['nombre']."' class='panel-collapse collapse in'>
 							                <div class='panel-body'>
 												".$value['content']."
 							                </div>
 							            </div>";
 										
-										
+										$f++;
+
 									}
 
 
