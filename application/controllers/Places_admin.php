@@ -13,6 +13,7 @@ class Places_admin extends CI_Controller {
 
 	}
 
+
 	public function log_out()
 	{
 		$this->session->sess_destroy();
@@ -20,11 +21,12 @@ class Places_admin extends CI_Controller {
 
 	}
 
+
     public function uploadFile(){
 
         if(!empty($_FILES['archivo']['name'])){
 
-            $config['upload_path'] = '/applications/xampp/htdocs/tuyo/img_enti/'.$this->session->actual;
+            $config['upload_path'] = '/home/solutio3/public_html/sui/assets/public/img/img_enti/'.$this->session->actual;
             $config['allowed_types'] = 'gif|jpg|png|jpeg|GIF|JPG|PNG|JPEG';
             $config['max_size'] = 2048;
             $config['file_name'] = escstr($this->input->post('nomimg'));
@@ -218,13 +220,14 @@ class Places_admin extends CI_Controller {
 
 	public function index()
 	{
-
-		if($this->session->has_userdata('actual')){
+	    
+	    if($this->session->has_userdata('actual')){
 
 			redirect(base_url().'index.php/Signup/enter_panel/'.$this->session->actual,'refresh');
 
 		}
 		else redirect(base_url().'index.php/Signup','refresh');	
+		
 	}
 
 	public function updatetipo1()

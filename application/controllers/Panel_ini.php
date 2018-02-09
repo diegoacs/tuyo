@@ -7,7 +7,9 @@ class Panel_ini extends CI_Controller {
 	function __construct(){
         parent::__construct();
         $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha'));
-        $this->load->library(array('session','form_validation','css_js'));
+        $this->load->library(array('session','form_validation'));
+        $this->load->library('css_js',null,'css_js');
+
         $this->load->model('main_model/Items_model','items_model');
     }
 
@@ -179,7 +181,7 @@ class Panel_ini extends CI_Controller {
 
             //lanzamos mensajes de error si es que los hay
             if($this->form_validation->run() == FALSE) {
-                die('Verifique los datos en su formulario, datos obligatorios: Nombres, E-mail y teléfono.');
+                die('Verifique los datos en su formulario, datos obligatorios: Nombres, E-mail y tel茅fono.');
             }
             else {
 
@@ -196,20 +198,20 @@ class Panel_ini extends CI_Controller {
                 if($rta['rta']=='2'){
                     die('Error enviando datos, intente mas tarde.');
                 }
-                $e_mail ='diegocaste7@hotmail.com';
 
-                $to = $e_mail;
-                $subject = "Información para alquiler No. ".$rta['id'];
+                $to ='juan.jenner@gmail.com';
+                
+                $subject = "Informaci贸n para alquiler No. ".$rta['id'];
 
-                $message = "<html><head><title>Información de alquiler</title></head>".
+                $message = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb18030\"><title>Informaci贸n de alquiler</title></head>".
                 "<body><p> Tuyo.com</p><br> Hola Administrador<br><span>".
                 "Tienes una nueva solicitud de alquier para ".$rta['entidad'].
                 " para unidad: ".$rta['unidad'].
                 "<p>".
-                "Nombre de contacto: ".$data['name'].
-                "Telefono de contacto: ".$data['telefono'].
-                "Email de contacto: ".$data['email'].
-                "Comentarios: ".$data['coment'].
+                "Nombre de contacto: ".$data['name']."<br>".
+                "Telefono de contacto: ".$data['telefono']."<br>".
+                "Email de contacto: ".$data['email']."<br>".
+                "Comentarios: ".$data['coment']."<br>".
                 "</p>".
                 "</body></html>";
 
@@ -221,7 +223,7 @@ class Panel_ini extends CI_Controller {
                 $headers .= 'From: <no-responder@tuyo.com>' . "\r\n";
                 //$headers .= 'Cc: castellanossantamaria@gmail.com' . "\r\n";
 
-                // mail($to,$subject,$message,$headers);
+                mail($to,$subject,$message,$headers);
 
                 die('gracias, pronto nos contactaremos con usted para ofrecerle los servicios.');
             }

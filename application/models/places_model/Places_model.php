@@ -54,7 +54,7 @@ class Places_model extends CI_Model {
 
         iniTr();
 
-        $filepath = '/applications/xampp/htdocs/tuyo/img_enti/'.$this->session->actual.'/';
+        $filepath = '/home/solutio3/public_html/sui/assets/public/img/img_enti/'.$this->session->actual.'/';
 
         $sql="select nombre,tipo from img_entidades where id_img=".escstr($id);
         $gen=oneRow($sql);
@@ -239,7 +239,7 @@ class Places_model extends CI_Model {
         // enviando correo
 
         // $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
-        //       $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+        //       $msg = "<html><head><meta http-equiv="Content-Type" content="text/html; charset=gb18030"><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
 
         // $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
         // $this->sendmail->send($datamail);

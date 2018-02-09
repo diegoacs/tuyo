@@ -276,11 +276,10 @@ class Signup_model extends CI_Model {
 
             // enviando correo
 
-            // $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
-            //       $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+            $msg = "<html><head><title>Envio de usuario y contraseña</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$usr."<br><span>Queremos darte la bienvenida a tuyo.com, usa tu usuario y contraseña para ingresar</span><br>usuario:".$usr."&nbsp;contraseña:".$pass."</body></html>";
 
-            // $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
-            // $this->sendmail->send($datamail);
+            $datamail = ['mail' =>escstr($usr),'subject'=>'Envio de contraseña para acceso','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+            $this->sendmail->send($datamail);
 
 
 
@@ -314,8 +313,6 @@ class Signup_model extends CI_Model {
 
             $pass = random_code(8);
 
-            ver_php($pass);
-
             $encrypted = $this->encryptpass->generate_pass(array('password'=>$pass , 'key' => '$2y$10$'));
 
             $sql="insert into entidad_auth_users (usuario,authcode,id_reference) values ".
@@ -333,7 +330,7 @@ class Signup_model extends CI_Model {
                 return '2';
             }
 
-            $sql="update users_entidad_public activo='S' where email='".escstr($usr)."'";
+            $sql="update users_entidad_public set activo='S' where email='".escstr($usr)."'";
             if(!exeQuery($sql)){
                 
                 rollTr();
@@ -344,11 +341,10 @@ class Signup_model extends CI_Model {
 
             // enviando correo
 
-            // $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
-            //       $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+               $msg = "<html><head><title>Credenciales de usuario y entidad</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$usr."<br><span>Queremos darte la bienvenida a tuyo.com, </span><br>usuario:".$usr." contraseña:".$pass."</body></html>";
 
-            // $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
-            // $this->sendmail->send($datamail);
+             $datamail = ['mail' =>escstr($usr),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+            $this->sendmail->send($datamail);
 
             //envio password a usuario
             endTr();
@@ -431,8 +427,10 @@ class Signup_model extends CI_Model {
 		}
 
 		//generar activacion
+		
+		$codigo =random_code(6);
 		$sql="insert into codes_public (usuario,code_verifica) values ".
-		"('".escstr($data['ema'])."','".escstr(random_code(6))."')";
+		"('".escstr($data['ema'])."','".escstr($codigo)."')";
 
 		if(!exeQuery($sql)){
 
@@ -446,11 +444,11 @@ class Signup_model extends CI_Model {
 
 		// enviando correo
 
-		// $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
-        //       $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+		$link_activa=base_url('index.php/Signup/verifyactivation/'.$codigo);
+        $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".escstr($data['nom'])." ".escstr($data['ape'])."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
 
-		// $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
-		// $this->sendmail->send($datamail);
+		$datamail = ['mail' =>escstr($data['ema']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+		$this->sendmail->send($datamail);
 
 
 		endTr();
@@ -482,8 +480,11 @@ class Signup_model extends CI_Model {
         }
 
         //generar activacion
+        
+        $codigo = random_code(6);
+        
         $sql="insert into codes_entidad_public (usuario,code_verifica) values ".
-        "('".escstr($data['info']['mail'])."','".escstr(random_code(6))."')";
+        "('".escstr($data['info']['mail'])."','".escstr($codigo)."')";
 
         if(!exeQuery($sql)){
 
@@ -663,11 +664,11 @@ class Signup_model extends CI_Model {
 
         // enviando correo
 
-        // $link_activa=base_url('index.php/sys_consultas/Sign_in/activeCta/'.base64_encode($data['usr'].'/'.$codigo));
-        //       $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$row->nombres."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+        $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
+       $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
 
-        // $datamail = ['mail' =>escstr($data['ema']),'subjet'=>'Activación de cuenta usuario','msg'=>$msg,'from'='<no-responder@tuyo.com>' ];
-        // $this->sendmail->send($datamail);
+        $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+        $this->sendmail->send($datamail);
 
 
         //
