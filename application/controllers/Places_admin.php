@@ -251,6 +251,7 @@ class Places_admin extends CI_Controller {
 	        $info['info']['lat']=floatval($data->lat);
 	        $info['info']['long']=floatval($data->long);
 	        $info['info']['postal']=urldecode($data->postal);
+	        $info['info']['estb']=urldecode(trim($data->estb,','));
 
 
 	        // enviar datos a validacion

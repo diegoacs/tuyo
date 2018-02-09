@@ -28,17 +28,6 @@
 								<div class="form-group">
 									
 									<label class="label-control col-xs-12 col-md-2">
-										<span class="fa fa-bars"></span>&nbsp;
-										Tipo
-									</label>
-									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-										<?php
-										
-											echo $tipo_establecimiento;
-										?>
-									</div>
-
-									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-phone"></span>&nbsp;
 										Teléfono
 									</label>
@@ -49,11 +38,6 @@
 										?>
 									</div>
 
-								</div>
-
-
-								<div class="form-group">
-									
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-envelope-o"></span>&nbsp;
 										Correo
@@ -64,7 +48,11 @@
 																  'class'=>'form-control','value' => $rta[2]));
 										?>
 									</div>
+								</div>
 
+
+								<div class="form-group">
+									
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-location-arrow"></span>&nbsp;
 										País
@@ -75,12 +63,6 @@
 										?>
 									</div>
 
-
-									
-								</div>
-
-								<div class="form-group">
-									
 									<label class="label-control col-xs-12 col-md-2">
 										<span class="fa fa-location-arrow"></span>&nbsp;
 										Departamento
@@ -90,6 +72,11 @@
 											echo $departamento;
 										?>
 									</div>
+									
+								</div>
+
+								<div class="form-group">
+									
 
 
 									<label class="label-control col-xs-12 col-md-2">
@@ -110,6 +97,28 @@
 
 						</div>
 					</div>
+
+
+					<!-- checks establecimientos -->
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+							<span class="fa fa-bars text-title"></span>&nbsp;
+								Tipo establecimiento
+							</h3>
+						</div>
+						<div class="panel-body">
+
+							<?php
+
+								echo $tipo_establecimiento;
+
+							?>
+							
+						</div>
+					</div>
+
 
 					
 					<!-- mapa google -->

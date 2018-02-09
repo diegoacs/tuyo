@@ -84,6 +84,18 @@ $(document).ready(function(){
         });
 
         fila['add'] = add ;
+
+        // establecimiento
+
+        var estb = '';
+
+        $('.establecimiento').each(function(){
+
+            if($(this).is(':checked')) estb += ','+$(this).val();
+
+        });
+
+        fila['estb'] = estb ;
         
         return fila;
 
@@ -282,10 +294,16 @@ $(document).ready(function(){
 
     $("#saveentidad").click(function(){
 
-
         if(!$("#info").is(':checked')){
 
             alert('Debe aceptar las condiciones del servicio.');
+            return false;
+
+        }
+
+        if($('.establecimiento:checked').length < 1){
+
+            alert('Debe elegir al menos un tipo de establecimiento.');
             return false;
 
         }
@@ -390,8 +408,13 @@ $(document).ready(function(){
         if(!$.trim($('#direccionentidad').val())) rta=false;
         else rta=true;
 
+        if($('#latlng').val().indexOf(',') == '-1') rta=false;
+        else rta=true;
+
         if(!$.trim($('#latlng').val())) rta=false;
         else rta=true;
+
+
 
         return rta;
 

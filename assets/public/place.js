@@ -355,6 +355,16 @@ $(document).ready(function(){
         fila['lat'] = geo[0];
 
         fila['long'] = geo[1];
+
+        var cart = '';
+
+        $('.establecimiento').each(function(){
+
+            if($(this).is(':checked')) cart += ','+$(this).val();
+
+        });
+
+        fila['estb'] = cart;
         
         return fila;
 
@@ -399,6 +409,13 @@ $(document).ready(function(){
 
     $('#saveInfo').click(function(){
 
+
+        if($('.establecimiento:checked').length < 1){
+
+            alert('Debe elegir al menos un tipo de establecimiento.');
+            return false;
+
+        }
 
         if(!validate_2()){
 
@@ -513,6 +530,9 @@ $(document).ready(function(){
 
         var rta;
         if(!$.trim($('#direccionentidad').val())) rta=false;
+        else rta=true;
+
+        if($('#latlng').val().indexOf(',') == '-1') rta=false;
         else rta=true;
 
         if(!$.trim($('#latlng').val())) rta=false;

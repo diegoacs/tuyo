@@ -341,10 +341,12 @@ class Signup_model extends CI_Model {
 
             // enviando correo
 
-               $msg = "<html><head><title>Credenciales de usuario y entidad</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$usr."<br><span>Queremos darte la bienvenida a tuyo.com, </span><br>usuario:".$usr." contraseña:".$pass."</body></html>";
+            ver_php($pass);
 
-             $datamail = ['mail' =>escstr($usr),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
-            $this->sendmail->send($datamail);
+            //    $msg = "<html><head><title>Credenciales de usuario y entidad</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$usr."<br><span>Queremos darte la bienvenida a tuyo.com, </span><br>usuario:".$usr." contraseña:".$pass."</body></html>";
+
+            //  $datamail = ['mail' =>escstr($usr),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+            // $this->sendmail->send($datamail);
 
             //envio password a usuario
             endTr();
@@ -620,6 +622,27 @@ class Signup_model extends CI_Model {
             die('2'.chr(9).'Error: registrando adicionales.');
         }
 
+
+        // configurar estb
+
+        $caract=explode(',',$data['info']['estb']);
+
+        $vals=array();
+
+        foreach ($caract as $val) {
+
+            $vals[] = "(".escstr($val).",'".escstr($identi)."')";
+ 
+        }
+
+        $sql="insert into establecimientos_entidad (id_establecimiento,id_entidad) values ".implode(',', $vals);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando tipos establecimientos.');
+        }
+
         
         // configurar cobro
 
@@ -664,11 +687,13 @@ class Signup_model extends CI_Model {
 
         // enviando correo
 
-        $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
-       $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+        ver_php($codigo);
 
-        $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
-        $this->sendmail->send($datamail);
+       //  $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
+       // $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+       //  $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+       //  $this->sendmail->send($datamail);
 
 
         //

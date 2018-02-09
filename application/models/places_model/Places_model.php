@@ -416,6 +416,32 @@ class Places_model extends CI_Model {
             die('2'.chr(9).'Error: Actualizando entidad.');
         }
 
+        $sql="delete from establecimientos_entidad where id_entidad='".escstr($entidad)."'";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: Actualizando establecimientos de entidad.');
+        }
+
+        if(trim($data['info']['estb'])){
+            
+            $ca = explode(',',trim($data['info']['estb'],','));
+
+            foreach ($ca as $value) {
+
+                $sql="insert into establecimientos_entidad (id_establecimiento,id_entidad) values (".escstr($value).",'".escstr($entidad)."')";
+                
+                if(!exeQuery($sql)){
+
+                    rollTr();
+                    die('2'.chr(9).'Error: Actualizando establecimientos.');
+                }
+
+            }
+
+        }
+
         endTr();
 
         die('1'.chr(9).'Entidad actualizada.');
@@ -561,6 +587,33 @@ class Places_model extends CI_Model {
     }
 
 
+    function establesentidad($entidad)
+    {
+
+        $sql="select id_establecimiento,nombre from tipos_establecimientos ".
+        "order by id_establecimiento asc";
+        $gen = getQuery($sql);
+
+        $rta=array('default'=>'','data' =>'','checked' => array());
+
+        $n=0;
+        foreach ($gen as $row) {
+
+            $sql="select id_establecimiento from establecimientos_entidad ".
+            "where id_entidad='".escstr($entidad)."' and id_establecimiento=".escstr($row['id_establecimiento']);
+            if(nRows($sql)>0) $rta['checked'][]=$row['id_establecimiento'];
+
+            if($n==0) $rta['default']=$row['id_establecimiento'];
+
+            $rta['data'][$row['id_establecimiento']]=$row['nombre'];
+
+            $n++;
+            
+        }
+
+        return $rta;        
+
+    }
 
 
     function unidadescalendario($calendario)

@@ -132,7 +132,51 @@ class Signup extends CI_Controller {
 				$pais=$this->signup_model->pais();
 				$departamento=$this->signup_model->departamento($lugar->id_pais);
 				$ciudad=$this->signup_model->ciudad($lugar->id_dept);
-				$establecimiento=$this->signup_model->establecimientos();
+
+				$caract=$this->places_model->establesentidad($entidades['entidad']);
+
+				$n=1;
+
+				$text=''; $close='N';
+				foreach ($caract['data'] as $key => $value) {
+
+					if(in_array($key,$caract['checked'])) $chk = true;
+					else $chk = false;
+
+					if($n<2){
+
+						$text.="<div class='row'><div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>".
+						form_checkbox(array('class'=>'establecimiento',
+							'value'=>$key,
+							'checked'=>$chk)).'&nbsp;'.
+							$value.		
+						"</div>";
+						$close='N';
+						$n++;
+
+					}
+					else{
+
+						$text.="<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>".
+						form_checkbox(array('class'=>'establecimiento',
+							'value'=>$key,
+							'checked'=>$chk)).'&nbsp;'.
+							$value.		
+						"</div>";
+
+						if($n==4){
+
+							$n=1;
+							$text.="</div>";
+							$close='S';
+						}
+						else $n++;
+
+					}
+					
+				}
+
+				if($close=='N') $text.="</div>";
 
 
 				$data = [
@@ -151,8 +195,7 @@ class Signup extends CI_Controller {
 						'ciudad' =>
 					form_dropdown('ciudad', $ciudad['data'],$lugar->id_muni,array('id'=>'ciudad','class'=>'form-control')),
 
-						'tipo_establecimiento' =>
-					form_dropdown('tipo_establecimiento', $establecimiento['data'],$establecimiento['default'],array('id'=>'tipo_establecimiento','class'=>'form-control')),
+						'tipo_establecimiento' => $text,
 
 						'rta' => 
 					array($info->nom_entidad,$info->tel_entidad,$info->email_entidad,$info->dir_entidad,$info->geo,$info->postal)
@@ -205,6 +248,7 @@ class Signup extends CI_Controller {
         
         $info['info']['caract']=urldecode(trim($data->caract,','));
         $info['info']['adicionales']=urldecode(trim($data->add,','));
+        $info['info']['estb']=urldecode(trim($data->estb,','));
 
 
         if(strtotime($info['info']['desde'])>strtotime($info['info']['hasta'])){
@@ -481,9 +525,48 @@ class Signup extends CI_Controller {
 
 		if($close=='N') $add.="</div>";
 
-
-
 		$establecimiento=$this->signup_model->establecimientos();
+
+		$n=1;
+
+		$estb=''; $close='N';
+		foreach ($establecimiento['data'] as $key => $value) {
+
+			if($n<2){
+
+				$estb.="<div class='row'><div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>".
+				form_checkbox(array('class'=>'establecimiento',
+					'value'=>$key,
+					'checked'=>false)).'&nbsp;'.
+					$value.		
+				"</div>";
+				$close='N';
+				$n++;
+
+			}
+			else{
+
+				$estb.="<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>".
+				form_checkbox(array('class'=>'establecimiento',
+					'value'=>$key,
+					'checked'=>false)).'&nbsp;'.
+					$value.		
+				"</div>";
+
+				if($n==4){
+
+					$n=1;
+					$estb.="</div>";
+					$close='S';
+				}
+				else $n++;
+
+			}
+			
+		}
+
+		if($close=='N') $estb.="</div>";
+
 
 		$data = ['pais' =>
 
@@ -505,8 +588,7 @@ class Signup extends CI_Controller {
 
 				'adicionales' => $add,
 
-				'tipo_establecimiento' =>
-			form_dropdown('tipo_establecimiento', $establecimiento['data'],$establecimiento['default'],array('id'=>'tipo_establecimiento','class'=>'form-control')),
+				'tipo_establecimiento' => $estb,
 
 				'rta' => array('','','','','','','','','','')
 
