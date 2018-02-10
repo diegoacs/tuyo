@@ -49,7 +49,7 @@ class Signup_model extends CI_Model {
     	$sql="select id_pais,nom_pais from pais order by id_pais asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -73,7 +73,7 @@ class Signup_model extends CI_Model {
     	"where id_pais=$pais order by id_dept asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -97,7 +97,7 @@ class Signup_model extends CI_Model {
     	"where id_dept=$dep order by id_muni asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -122,7 +122,7 @@ class Signup_model extends CI_Model {
     	"order by id_establecimiento asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -146,7 +146,7 @@ class Signup_model extends CI_Model {
     	"order by id_categoria asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -171,7 +171,7 @@ class Signup_model extends CI_Model {
     	"where id_categoria=$categoria order by id_unidad asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -195,7 +195,7 @@ class Signup_model extends CI_Model {
     	"order by id_caracter asc";
     	$gen = getQuery($sql);
 
-    	$rta=array('default'=>'','data' =>'');
+    	$rta=array('default'=>'','data' =>array());
 
     	$n=0;
     	foreach ($gen as $row) {
@@ -220,7 +220,7 @@ class Signup_model extends CI_Model {
         "order by id_adicional asc";
         $gen = getQuery($sql);
 
-        $rta=array('default'=>'','data' =>'');
+        $rta=array('default'=>'','data' =>array());
 
         $n=0;
         foreach ($gen as $row) {
