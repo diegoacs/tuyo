@@ -32,6 +32,33 @@
 						</div>
 
 						<div class="form-group">
+							
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+								<?php
+
+									if($this->session->has_userdata('perfil')){
+
+										if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
+
+											echo anchor(base_url().'index.php/Signup/addplace/', 
+												"<span class='fa fa-plus-circle'></span>&nbsp;agregar establecimiento", 
+												array('id' => 'add_place',
+													'name' => 'add_place',
+													'class' => 'btn btn-success'));
+
+										}
+
+									}
+
+								?>
+								
+							</div>
+
+						</div>
+
+
+						<div class="form-group">
 				
 							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 
@@ -131,7 +158,11 @@
 											anchor(
 												base_url().'index.php/Places_admin/settingsmenu/'.$default[0], 
 												"<span class='fa fa-home text-title'></span>&nbsp;caracteristicas",
-												array('id'=>'conf_hab','class'=>'btn btn-default'))
+												array('id'=>'conf_hab','class'=>'btn btn-default')).
+											form_button(array('type' => 'button',
+															'id' => 'deletestb',
+															'class' => 'btn btn-default',
+															'content' =>'<span class=\'fa fa-close text-title\'></span>&nbsp;eliminar'))
 										;
 
 									?>

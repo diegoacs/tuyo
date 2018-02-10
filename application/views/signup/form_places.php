@@ -28,10 +28,52 @@
 							<h3 class="panel-title"></h3>
 						</div>
 						<div class="panel-body">
-							<a class="btn btn-primary" data-toggle="modal" href='#modal-id'>
-								<span class="fa fa-file-o"></span>&nbsp;
-								condiciones del servicio
-							</a>
+
+							<div class="form-horizontal">
+								
+								<div class="form-group">
+		
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										
+										<a class="btn btn-primary" data-toggle="modal" href='#modal-id'>
+											<span class="fa fa-file-o"></span>&nbsp;
+											condiciones del servicio
+										</a>
+
+									</div>
+
+								</div>
+
+								<div class="form-group">
+
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										
+										<?php
+
+											if($this->session->has_userdata('user')){
+
+												if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
+
+														echo anchor(base_url().'index.php/Signup/enter_panel/', 
+															"<span class='fa fa-home'></span>&nbsp;volver a mis lugares", 
+															array('id' => 'back_places',
+																'name' => 'back_places',
+																'class' => 'btn btn-primary'));
+												}
+
+											}
+
+										?>
+										
+									</div>
+									
+								</div>
+
+
+							</div>
+
+
+
 						</div>
 					</div>
 					
@@ -140,11 +182,27 @@
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 										<?php
 
-											echo form_button(array('type'=>'button',
-																	'class'=>'btn btn-primary',
-																	'id' =>'saveentidad',
-																	'content' =>
-																	"<span class='fa fa-save'></span>&nbsp;guardar establecimiento"));
+											if($this->session->has_userdata('user')){
+
+												if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
+
+													echo form_button(array('type'=>'button',
+																			'class'=>'btn btn-primary',
+																			'id' =>'addentidad',
+																			'content' =>
+																			"<span class='fa fa-save'></span>&nbsp;agregar nuevo establecimiento"));
+												}
+
+											}
+											else{
+												
+												echo form_button(array('type'=>'button',
+																		'class'=>'btn btn-primary',
+																		'id' =>'saveentidad',
+																		'content' =>
+																		"<span class='fa fa-save'></span>&nbsp;guardar establecimiento"));
+
+											}
 										?>
 									</div>
 

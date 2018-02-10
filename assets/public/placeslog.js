@@ -371,6 +371,79 @@ $(document).ready(function(){
     });
 
 
+    $("#addentidad").click(function(){
+
+        if(!$("#info").is(':checked')){
+
+            alert('Debe aceptar las condiciones del servicio.');
+            return false;
+
+        }
+
+        if($('.establecimiento:checked').length < 1){
+
+            alert('Debe elegir al menos un tipo de establecimiento.');
+            return false;
+
+        }
+
+        // validaciones por paneles
+
+        if(!validate_2()){
+
+            alert("Existen campos vacios en panel información general.")
+            return false;
+
+        }
+
+        if(!validate_3()){
+
+            alert("Existen campos vacios en panel información de horarios.")
+            return false;
+
+        }
+
+        if(!validate_4()){
+
+            alert("Existen campos vacios en panel ubicación geografica.")
+            return false;
+
+        }
+
+        if($('.table-concept-show tr').length < 1){
+
+            alert("Debe al menos ingresar información de una habitación.");
+            return false;
+        }
+
+        var form = obtainValues();
+
+        ajax_rqs({ 'data': JSON.stringify(form) },route+'Signup/addnewplace','POST','text',function(r){
+
+            if(r!='ERRINC'){
+
+                $('.texto-msg').html(''); 
+
+                var rta=r.split(String.fromCharCode(9));
+
+                if(rta[0]=='1'){
+
+                    alert(rta[1]);
+
+                    location.reload(route+'Signup/enter_panel');
+                }
+                else {
+
+                    $('.texto-msg').html(rta[1]); 
+
+                }
+            }
+            else alert('Error en proceso.');  
+
+        });
+
+    });
+
 
     function validate_1(){
 

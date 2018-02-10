@@ -24,7 +24,7 @@ class Signup_model extends CI_Model {
 
         if (crypt(escstr($pass), $pss) == $pss){
 
-            $sql="select nombres,email,activo from users_entidad_public where email='".escstr($user)."'";
+            $sql="select nombres,email,activo,perfil from users_entidad_public where email='".escstr($user)."'";
 
             if(nRows($sql)<1){
 
@@ -700,6 +700,229 @@ class Signup_model extends CI_Model {
 
         endTr();
         die('1'.chr(9).'Registro exitoso, active su cuenta.');
+        
+    } 
+
+
+    function addnewplace($data)
+    {
+
+        iniTr();
+
+
+        if(!$this->session->has_userdata('user')){
+
+            endTr();
+            die('2'.chr(9).'No existe usuario en session.');
+
+        }
+
+
+        //crear entidad 
+
+        $sql="select max(id_entidad+0) as id from entidad ";
+        $gen=oneRow($sql);
+        $identi=$gen->id+1;
+
+        $sql="insert into entidad (id_entidad,nom_entidad,tel_entidad,dir_entidad,".
+        "email_entidad,id_muni,longitud,latitud,tipo,postal) values ".
+
+        "('".escstr(str_pad($identi,3,'0',STR_PAD_LEFT))."','".escstr($data['info']['entidad']).
+        "','".escstr($data['info']['telefono'])."','".escstr($data['info']['direccion']).
+        "','".escstr($data['info']['mailentidad'])."',".escstr($data['info']['ciudad']).
+        ",".escstr($data['info']['long']).",".escstr($data['info']['lat']).
+        ",'H','".escstr($data['info']['postal'])."')";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando entidad.');
+        }
+
+
+        $id=lastid();
+
+        $sql = "select id_entidad from entidad where codigo=".$id;
+        $gen = oneRow($sql);
+        $identi = str_pad($gen->id_entidad,3,'0',STR_PAD_LEFT);  
+
+        //crear calendario
+
+        $sql="select max(id_calendario+0) as id from calendario ";
+        $gen=oneRow($sql);
+        $calendario=$gen->id+1;
+
+        $sql="insert into calendario (id_calendario,nom_calendario,".
+        "id_entidad,usr_cal,fch_cal,hrs_cal) ".
+        "values ('".escstr(str_pad($calendario,3,'0',STR_PAD_LEFT))."','".escstr($data['info']['entidad'])."'".
+        ",'".escstr($identi)."','VIAWEB','".date('Ymd')."','".date('H:i:s')."')";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando calendario.');
+        }
+
+        // configurar habitaciones
+
+        for($u=0; $u<count($data['habitaciones']['unidad']); $u++){
+
+            $sql="insert into unidad_calendario ".
+            "(id_unidad,id_calendario,deta_unidad,".
+            "precio_normal,capacidad) values ".
+            "('".escstr($data['habitaciones']['unidad'][$u])."','".escstr(str_pad($calendario,3,'0',STR_PAD_LEFT))."',".
+            "'".escstr($data['habitaciones']['nombre'][$u])."',".
+            escstr($data['habitaciones']['precio'][$u]).",".escstr($data['habitaciones']['personas'][$u]).")";
+
+            if(!exeQuery($sql)){
+
+                rollTr();
+                die('2'.chr(9).'Error: registrando unidades en calendario.');
+            }
+
+            for($j=0; $j<$data['habitaciones']['cantidad'][$u]; $j++){
+
+                $sql="insert into desc_unidad".
+                "(nom_desc,deta_desc,id_unidad,".
+                "id_calendario,activo,capacidad) values ".
+                "('".escstr($data['habitaciones']['nombre'][$u])."',".
+                "'".escstr($data['habitaciones']['nombre'][$u])."',".
+                "'".escstr($data['habitaciones']['unidad'][$u])."',".
+                "'".escstr(str_pad($calendario,3,'0',STR_PAD_LEFT))."',".
+                "'S',".escstr($data['habitaciones']['personas'][$u]).")";
+
+                if(!exeQuery($sql)){
+
+                    rollTr();
+                    die('2'.chr(9).'Error: registrando descripcion de unidades.');
+                }
+
+            }
+
+
+
+        }
+
+
+
+        //configurar adicionales
+
+        $caract=explode(',',$data['info']['caract']);
+
+        $vals=array();
+
+        foreach ($caract as $val) {
+
+            $vals[] = "(".escstr($val).",'".escstr($identi)."')";
+ 
+        }
+
+        $sql="insert into carac_entidad (id_caracter,id_entidad) values ".implode(',', $vals);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando caracteristicas.');
+        }
+        
+        // configurar caracteristicas
+
+        $caract=explode(',',$data['info']['adicionales']);
+
+        $vals=array();
+
+        foreach ($caract as $val) {
+
+            $vals[] = "(".escstr($val).",'".escstr($identi)."')";
+ 
+        }
+
+        $sql="insert into adicionales_entidad (id_adicional,id_entidad) values ".implode(',', $vals);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando adicionales.');
+        }
+
+
+        // configurar estb
+
+        $caract=explode(',',$data['info']['estb']);
+
+        $vals=array();
+
+        foreach ($caract as $val) {
+
+            $vals[] = "(".escstr($val).",'".escstr($identi)."')";
+ 
+        }
+
+        $sql="insert into establecimientos_entidad (id_establecimiento,id_entidad) values ".implode(',', $vals);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando tipos establecimientos.');
+        }
+
+        
+        // configurar cobro
+
+        $categoria = array_unique($data['habitaciones']['categoria']);
+
+        $vals=array();
+
+        foreach ($categoria as $val) {
+            
+            $vals[] = "('".escstr(str_pad($calendario,3,'0',STR_PAD_LEFT))."',".escstr($val).",'C',".
+            "'".escstr($data['info']['desde'])."','".escstr($data['info']['hasta'])."','1','".escstr($data['info']['entrada'])."','".escstr($data['info']['salida'])."')";
+
+        }
+
+        $sql = "insert into tipo_cobro (id_calendario,id_categoria,".
+        "tipo_cobro,hora,hrs_despues,hrs_min,checkin_inicio,checkin_fin) values ".implode(',',$vals);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando cobro.');
+        }       
+
+
+
+        // asociar entidad a usuario
+
+        $sql="insert into entidades_usuario (usuario,id_entidad) values ".
+        "('".escstr($this->session->user)."','".escstr($identi)."')";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: asociando entidades.');
+        } 
+
+        
+
+        //destruir variable de session
+
+        // $this->session->unset_userdata('authcode');
+
+        // enviando correo
+
+        // ver_php($codigo);
+
+       //  $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
+       // $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+       //  $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+       //  $this->sendmail->send($datamail);
+
+
+        //
+
+        endTr();
+        die('1'.chr(9).'Registro exitoso, establecimiento creado.');
         
     } 
 
