@@ -80,7 +80,14 @@
 				</div>
 
 				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+
+
 					
+			<?php
+
+				if(!$this->session->has_userdata('user')){
+			?>
+			
 					<!-- info personal -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -130,6 +137,13 @@
 
 						</div>
 					</div>
+					
+			<?php		
+
+				}
+
+			?>
+
 					
 					<?php 
 

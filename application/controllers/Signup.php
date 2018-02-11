@@ -538,6 +538,14 @@ class Signup extends CI_Controller {
 	public function places()
 	{
 
+
+		if($this->session->has_userdata('user')){
+
+			redirect(base_url().'index.php/Signup/enter_panel','refresh');
+
+		}
+
+
 		$this->load->view('head','',false);
 		$this->load->view('signup/maps');
 

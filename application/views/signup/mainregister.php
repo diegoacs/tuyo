@@ -63,7 +63,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-md-3">
 											<span class="fa fa-envelope-o"></span>&nbsp;
-											Nombre
+											E-mail
 										</label>
 
 										<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">

@@ -14,6 +14,46 @@ class Places_admin extends CI_Controller {
 	}
 
 
+	public function myprofile()
+	{
+
+
+
+		if($this->session->has_userdata('user')){
+
+			if($this->session->active == 'N') {
+			
+				$this->session->unset_userdata(array(
+									'nombres','user','active'
+										));
+				$this->session->set_flashdata('error_usr','Error en acceso, su usuario no esta habilitado.');
+				$this->index();
+			}
+			else {
+
+		    	$this->load->view('head','',false);
+
+		    	$personal=$this->load->view('general/profile/personal','',true);
+		    	$password=$this->load->view('general/profile/password','',true);
+
+				$this->load->view('general/profile',array('personal_data'=> $personal, 'pass_data' => $password));
+		        $js=$this->css_js->js(array('rute'=>'public/config.js?n='.rand()));
+		        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+			}
+
+		}
+		else {
+
+			redirect(base_url().'index.php/Signup','refresh');
+		}
+
+
+
+
+	}
+
+
 	public function log_out()
 	{
 		$this->session->sess_destroy();

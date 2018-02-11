@@ -31,31 +31,70 @@
 
 						</div>
 
+						<?php
+							
+							if($this->session->has_userdata('perfil')){
+
+						?>
+
+
 						<div class="form-group">
 							
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-								<?php
+						
 
-									if($this->session->has_userdata('perfil')){
+									<?php
 
-										if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
+									echo anchor(base_url().'index.php/Places_admin/myprofile/', 
+										"<span class='fa fa-user'></span>&nbsp;Mi perfil", 
+										array('id' => 'add_place',
+											'name' => 'add_place',
+											'class' => 'btn btn-primary'));
 
-											echo anchor(base_url().'index.php/Signup/addplace/', 
-												"<span class='fa fa-plus-circle'></span>&nbsp;agregar establecimiento", 
-												array('id' => 'add_place',
-													'name' => 'add_place',
-													'class' => 'btn btn-success'));
+									?>
 
-										}
-
-									}
-
-								?>
-								
 							</div>
 
 						</div>
+							
+
+						<?php
+
+								if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
+						?>
+						<div class="form-group">
+							
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+						
+
+									<?php
+
+									echo anchor(base_url().'index.php/Signup/addplace/', 
+										"<span class='fa fa-plus-circle'></span>&nbsp;agregar establecimiento", 
+										array('id' => 'add_place',
+											'name' => 'add_place',
+											'class' => 'btn btn-success'));
+
+									?>
+
+							</div>
+
+						</div>
+										
+						<?php
+								}
+
+						?>
+								
+						
+
+						<?php
+
+							}
+
+						?>
 
 
 						<div class="form-group">

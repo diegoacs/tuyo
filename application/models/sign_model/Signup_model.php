@@ -276,12 +276,14 @@ class Signup_model extends CI_Model {
 
             // enviando correo
 
-            $msg = "<html><head><title>Envio de usuario y contraseña</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$usr."<br><span>Queremos darte la bienvenida a tuyo.com, usa tu usuario y contraseña para ingresar</span><br>usuario:".$usr."&nbsp;contraseña:".$pass."</body></html>";
+            $msg = "<!DOCTYPE html><html><head><title></title></head>".
+            "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
+            "<p>Hola ".$usr."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
+            "<p>Usa tu usuario: <b>".$usr."</b></p><p>Usa tu contraseña: <b>".$pass."</b></p>".
+            "<p>Asi podras ingresar a tu cuenta</p></body></html>";
 
             $datamail = ['mail' =>escstr($usr),'subject'=>'Envio de contraseña para acceso','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
             $this->sendmail->send($datamail);
-
-
 
     		//envio password a usuario
     		endTr();
@@ -343,7 +345,11 @@ class Signup_model extends CI_Model {
 
             ver_php($pass);
 
-            //    $msg = "<html><head><title>Credenciales de usuario y entidad</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$usr."<br><span>Queremos darte la bienvenida a tuyo.com, </span><br>usuario:".$usr." contraseña:".$pass."</body></html>";
+            // $msg = "<!DOCTYPE html><html><head><title></title></head>".
+            // "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
+            // "<p>Hola ".$usr."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
+            // "<p>Usa tu usuario: <b>".$usr."</b></p><p>Usa tu contraseña: <b>".$pass."</b></p>".
+            // "<p>Asi podras ingresar a tu cuenta</p></body></html>";
 
             //  $datamail = ['mail' =>escstr($usr),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
             // $this->sendmail->send($datamail);
@@ -447,7 +453,14 @@ class Signup_model extends CI_Model {
 		// enviando correo
 
 		$link_activa=base_url('index.php/Signup/verifyactivation/'.$codigo);
-        $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".escstr($data['nom'])." ".escstr($data['ape'])."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+        $msg = "<!DOCTYPE html><html><head><title></title></head>".
+        "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
+        "<p>Hola ".escstr($data['nom'])." ".escstr($data['ape'])."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
+        "<p>Queremos darte la bienvenida a nuestro sitio, para activar tu cuenta haz click <a target='_blank' href='".$link_activa."'>aqui</a></p>".
+        "<p>Asi podras ingresar a tu cuenta</p></body></html>";
+
+        // $msg = "<html><head><title>Activación de usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".escstr($data['nom'])." ".escstr($data['ape'])."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
 
 		$datamail = ['mail' =>escstr($data['ema']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
 		$this->sendmail->send($datamail);
@@ -689,8 +702,15 @@ class Signup_model extends CI_Model {
 
         ver_php($codigo);
 
+
        //  $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
        // $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+        $msg = "<!DOCTYPE html><html><head><title></title></head>".
+        "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
+        "<p>Hola ".$data['info']['nombre']."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
+        "<p>Queremos darte la bienvenida a nuestro sitio, para activar tu cuenta haz click <a target='_blank' href='".$link_activa."'>aqui</a></p>".
+        "<p>Asi podras ingresar a tu cuenta</p></body></html>";
 
        //  $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
        //  $this->sendmail->send($datamail);
@@ -914,6 +934,13 @@ class Signup_model extends CI_Model {
 
        //  $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
        // $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
+
+        $msg = "<!DOCTYPE html><html><head><title></title></head>".
+        "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
+        "<p>Hola ".$data['info']['nombre']."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
+        "<p>Queremos darte la bienvenida a nuestro sitio, para activar tu cuenta haz click <a target='_blank' href='".$link_activa."'>aqui</a></p>".
+        "<p>Asi podras ingresar a tu cuenta</p></body></html>";
+
 
        //  $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
        //  $this->sendmail->send($datamail);
