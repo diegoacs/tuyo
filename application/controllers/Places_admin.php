@@ -13,6 +13,276 @@ class Places_admin extends CI_Controller {
 
 	}
 
+	public function updateAdmin()
+	{
+
+		$ids = trim($this->input->post('ids'),',');
+
+		if(!trim($ids)){
+
+			die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Debe seleccionar al menos una entidad</p>");
+		}
+
+
+		$info=array();
+        
+        // datos unicos
+
+        $info['user']=urldecode($this->input->post('user'));
+        $info['profile']=urldecode($this->input->post('profile'));
+        $info['ids']=urldecode($this->input->post('ids'));
+
+
+
+        // enviar datos a validacion
+        $this->form_validation->set_data($info);
+
+		$config = array(
+
+		    array('field' => 'user','label' => 'Usuario','rules' => 'required|trim|xss_clean'),
+		    array('field' => 'profile','label' => 'Perfil','rules' => 'required|trim|xss_clean'),
+		    array('field' => 'ids','label' => 'Entidades','rules' => 'required|trim|xss_clean')
+
+		);
+
+		$this->form_validation->set_rules($config);
+
+        if($this->form_validation->run() == FALSE) {
+
+            die('2'.chr(9).validation_errors("<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;",'</p>'));
+
+        }
+
+        $rta = $this->places_model->updateAdmin($info);
+
+        $rta = explode(chr(9),$rta);
+
+        if($rta[0] == '2'){
+
+        	die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;".$rta[1]."</p>");
+
+        }
+
+
+		die('1'.chr(9).'Actualizado.');
+	}
+
+	public function updatePass()
+	{
+
+
+
+			$info=array();
+	        
+	        // datos unicos
+
+	        $info['np']=urldecode($this->input->post('np'));
+	        $info['npr']=urldecode($this->input->post('npr'));
+	        $info['old']=urldecode($this->input->post('old'));
+
+
+
+	        // enviar datos a validacion
+	        $this->form_validation->set_data($info);
+
+			$config = array(
+
+			    array('field' => 'old','label' => 'Contraseña anterior','rules' => 'required|trim|xss_clean'),
+			    array('field' => 'np','label' => 'Nueva contraseña','rules' => 'required|trim|min_length[6]|max_length[60]|xss_clean'),
+			    array('field' => 'npr','label' => 'Repetir nueva contraseña','rules' => 'required|trim|min_length[6]|max_length[60]|xss_clean|matches[np]')
+
+			);
+
+			$this->form_validation->set_rules($config);
+
+	        if($this->form_validation->run() == FALSE) {
+
+	            die('2'.chr(9).validation_errors("<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;",'</p>'));
+
+	        }
+
+
+	        $rta = $this->places_model->updatePass($info);
+
+	        $rta = explode(chr(9),$rta);
+
+	        if($rta[0] == '2'){
+
+	            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;".$rta[1]."</p>");
+
+	        }
+
+	        die('1'.chr(9).'exito');
+
+	}
+
+
+	public function updateInfo()
+	{
+
+
+
+			$info=array();
+	        
+	        // datos unicos
+
+	        $info['nom']=urldecode($this->input->post('nom'));
+	        $info['mail']=urldecode($this->input->post('mail'));
+
+
+
+	        // enviar datos a validacion
+	        $this->form_validation->set_data($info);
+
+			$config = array(
+
+			    array('field' => 'nom','label' => 'nombre de usuario','rules' => 'required|trim|min_length[2]|max_length[60]|xss_clean'),
+			    array('field' => 'mail','label' => 'correo de usuario','rules' => 'required|trim|min_length[2]|max_length[60]|valid_email|xss_clean')
+
+			);
+
+			$this->form_validation->set_rules($config);
+
+	        if($this->form_validation->run() == FALSE) {
+
+	            die('2'.chr(9).validation_errors("<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;",'</p>'));
+
+	        }
+
+
+	        $rta = $this->places_model->updateInfo($info);
+
+	        $rta = explode(chr(9),$rta);
+
+	        if($rta[0] == '2'){
+
+	            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;".$rta[1]."</p>");
+
+	        }
+
+	        die('1'.chr(9).'exito');
+
+	}
+
+
+	public function adminusers()
+	{
+
+
+
+		if($this->session->has_userdata('user')){
+
+			if($this->session->active == 'N') {
+			
+				$this->session->unset_userdata(array(
+									'nombres','user','active'
+										));
+				$this->session->set_flashdata('error_usr','Error en acceso, su usuario no esta habilitado.');
+				$this->index();
+			}
+			else {
+
+				if($this->session->perfil == 'A'){
+
+			    	$this->load->view('head','',false);
+
+			    	if($this->input->get('id')){
+
+			    		$habiuser = $this->places_model->usershab($this->input->get('id'));
+
+			    	}
+
+			    	else $habiuser = $this->places_model->usershab();
+
+			    	$caract = $this->places_model->entidades_asigna($habiuser['default']);
+
+			    	$perfil = $this->places_model->perfil_asigna($habiuser['default']);
+
+			    	$n=1;
+
+					$text=''; $close='N';
+					foreach ($caract['data'] as $key => $value) {
+
+						if(in_array($key,$caract['checked'])) $chk = true;
+						else $chk = false;
+
+						if($n<2){
+
+							$text.="<div class='row'><div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>".
+							form_checkbox(array('class'=>'entidades',
+								'value'=>$key,
+								'checked'=>$chk)).'&nbsp;'.
+								$value.		
+							"</div>";
+							$close='N';
+							$n++;
+
+						}
+						else{
+
+							$text.="<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>".
+							form_checkbox(array('class'=>'entidades',
+								'value'=>$key,
+								'checked'=>$chk)).'&nbsp;'.
+								$value.		
+							"</div>";
+
+							if($n==4){
+
+								$n=1;
+								$text.="</div>";
+								$close='S';
+							}
+							else $n++;
+
+						}
+						
+					}
+
+					if($close=='N') $text.="</div>";
+
+
+
+			    	$data = ['usuarios' =>
+
+			    		form_dropdown('users-select', $habiuser['data'], $habiuser['default'],array('id' => 'usuarios-select','class' => 'form-control')),
+
+			    		'perfiles' => form_dropdown('user-perfil', $perfil['data'],$perfil['default'],array('id' =>'user-perfil','class' => 'form-control')),
+
+			    		'entidades' => $text
+
+			    	 ];
+
+
+
+
+			    	$personal=$this->load->view('general/profile/users',$data,true);
+			    	$password='';
+
+					$this->load->view('general/profile',array('personal_data'=> $personal, 'pass_data' => $password));
+			        $js=$this->css_js->js(array('rute'=>'public/config.js?n='.rand()));
+			        $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+				}
+				else {
+
+					redirect(base_url().'index.php/Signup','refresh');
+
+				}
+
+			}
+
+		}
+		else {
+
+			redirect(base_url().'index.php/Signup','refresh');
+		}
+
+
+
+
+	}
+
 
 	public function myprofile()
 	{

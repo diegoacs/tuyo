@@ -43,21 +43,6 @@
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 
-							</div>
-
-						</div>
-							
-
-						<?php
-
-								if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
-						?>
-						<div class="form-group">
-							
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-						
-
 									<?php
 
 									echo anchor(base_url().'index.php/Signup/enter_panel/', 
@@ -71,15 +56,14 @@
 							</div>
 
 						</div>
-										
-						<?php
-								}
-
-						?>
-								
 						
 
 						<?php
+
+								if($this->session->perfil == 'A' || $this->session->perfil == 'P'){
+
+								}
+
 
 							}
 
@@ -136,15 +120,26 @@
 
 			?>
 
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="texto-msg1"></div>
+				</div>
+			</div>
+
 			<?php
 
 				echo $pass_data;
 
 			?>
 
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="texto-msg2"></div>
+				</div>
+			</div>
 			
 		</div>
-
+		
 
 	</div>
 	

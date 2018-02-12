@@ -47,7 +47,7 @@
 									<?php
 
 									echo anchor(base_url().'index.php/Places_admin/myprofile/', 
-										"<span class='fa fa-user'></span>&nbsp;Mi perfil", 
+										"<span class='fa fa-user'></span>&nbsp;mi perfil", 
 										array('id' => 'add_place',
 											'name' => 'add_place',
 											'class' => 'btn btn-primary'));
@@ -87,7 +87,37 @@
 								}
 
 						?>
-								
+
+
+
+						<?php
+
+								if($this->session->perfil == 'A'){
+						?>
+						<div class="form-group">
+							
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+						
+
+									<?php
+
+									echo anchor(base_url().'index.php/Places_admin/adminusers/', 
+										"<span class='fa fa-users'></span>&nbsp;administrar usuarios", 
+										array('id' => 'admin-users',
+											'name' => 'admin-users',
+											'class' => 'btn btn-primary'));
+
+									?>
+
+							</div>
+
+						</div>
+										
+						<?php
+								}
+
+						?>								
 						
 
 						<?php

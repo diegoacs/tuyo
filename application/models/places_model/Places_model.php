@@ -9,6 +9,263 @@ class Places_model extends CI_Model {
     }
 
 
+    function updateAdmin($data)
+    {
+
+        $ids = trim($data['ids'],',');
+
+        if(!trim($ids)){
+
+            die('2'.chr(9).'Debe seleccionar al menos una entidad');
+        }
+
+        iniTr();
+
+        $sql="select email from users_entidad_public where id_user=".escstr($data['user']);
+        
+        $gen = oneRow($sql);
+
+        $mail = $gen->email;
+
+
+        $sql="update users_entidad_public set perfil='".escstr($data['profile'])."' where id_user=".escstr($data['user']);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error al actualizar.');
+        }
+
+
+        $sql="delete from entidades_usuario where usuario='".escstr($mail)."'";
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error al actualizar.');
+        }
+
+        $vals=array();
+
+        $ids = explode(',',$ids);
+
+        foreach ($ids as $value) {
+
+            $vals[]="('".escstr($mail)."','".escstr($value)."','U')";
+
+        }
+
+        $sql="insert into entidades_usuario (usuario,id_entidad,perfil) values ".implode(',',$vals);
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error al actualizar.');
+        }     
+         
+
+        endTr();
+        die('1'.chr(9).'Actualizado.');
+
+    }
+
+
+
+
+    function perfil_asigna($user)
+    {
+
+        $sql="select email,perfil from users_entidad_public where id_user='".escstr($user)."'";
+        $gen = oneRow($sql);
+
+        $mail = $gen->email;
+        $perfil = $gen->perfil;
+
+        $sql="select codigo,nombre from perfiles_public ".
+        "order by codigo asc";
+        $gen = getQuery($sql);
+
+        $rta = array('default' => $perfil,'data' => array());
+
+        $n=0;
+        foreach ($gen as $row) {
+
+
+            $rta['data'][$row['codigo']]=$row['nombre'];
+
+            
+        }
+
+        return $rta;        
+
+    }
+
+    function entidades_asigna($user)
+    {
+
+        $sql="select email from users_entidad_public where id_user='".escstr($user)."'";
+        $gen = oneRow($sql);
+
+        $mail = $gen->email;
+
+        $sql="select id_entidad,nom_entidad from entidad ".
+        "order by id_entidad asc";
+        $gen = getQuery($sql);
+
+        $rta = array('default' => '','data' => array(),'checked' => array());
+
+        $n=0;
+        foreach ($gen as $row) {
+
+            $sql="select id_entidad from entidades_usuario ".
+            "where usuario='".escstr($mail)."' and id_entidad=".escstr($row['id_entidad']);
+            if(nRows($sql)>0) $rta['checked'][]=$row['id_entidad'];
+
+
+            if($n==0) $rta['default']=$row['id_entidad'];
+
+            $rta['data'][$row['id_entidad']]=$row['nom_entidad'];
+
+            $n++;
+            
+        }
+
+        return $rta;        
+
+    }
+
+
+
+    function usershab($id=null)
+    {
+
+        $rta=array('data'=>array(),'default'=>'');
+
+        $sql="select id_user,nombres from users_entidad_public order by nombres";
+
+        $gen = getQuery($sql);
+
+        $n=0;
+
+        foreach ($gen as $row) {
+            
+            if($n==0) $rta['default'] = $row['id_user'];
+
+            $rta['data'][$row['id_user']] = $row['nombres'];
+
+            $n++;
+        }
+
+        if(trim($id)) $rta['default'] = $id;
+
+        return $rta;
+
+    }
+
+
+
+    function updatePass($data)
+    {
+
+        $sql="select authcode from entidad_auth_users where usuario='".escstr($this->session->user)."'";
+        $gen = oneRow($sql);
+
+        $pass = $gen->authcode;
+
+        // verificar password anterior
+
+        $rta = $this->encryptpass->compare_pass(array('pass'=> $data['old'], 'pss' => $pass ));
+
+        if(!$rta){
+
+            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Contraseña anterior es incorrecta.</p>");
+
+        }
+
+        // generar password nuevo
+        iniTr();
+
+        $encrypted = $this->encryptpass->generate_pass(array('password'=>$data['np'] , 'key' => '$2y$10$'));
+
+
+        $sql="update entidad_auth_users set authcode='".escstr($encrypted).
+        "' where usuario='".escstr($this->session->user)."'";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Error actualizando</p>");
+
+        }
+
+        endTr();
+        die('1'.chr(9).'Actualizado');
+
+    }
+
+    function updateInfo($data)
+    {
+
+        //verificar 
+        $sql="select email from users_entidad_public where email ='".escstr($data['mail'])."' and ".
+        "nombres='".escstr($this->session->nombres)."'";
+
+        if(nRows($sql)>0){
+
+            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Correo ya existe para otro usuario</p>");
+
+        }
+
+        $sql="select id_user from users_entidad_public where email='".escstr($this->session->user)."'";
+        $gen = oneRow($sql);
+
+        $id = $gen->id_user;
+
+        iniTr();
+
+        $sql="update users_entidad_public set email='".escstr($data['mail']).
+        "',nombres='".escstr($data['nom'])."' where id_user=".escstr($id);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Error actualizando</p>");
+
+        }
+
+        $sql="update entidad_auth_users set usuario='".escstr($data['mail']).
+        "' where id_reference=".escstr($id);
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Error actualizando</p>");
+
+        }
+
+        $sql="update entidades_usuario set usuario='".escstr($data['mail']).
+        "' where usuario='".escstr($this->session->user)."'";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;Error actualizando</p>");
+
+        }
+
+        $new_data = array(
+            'nombres' => $data['nom'],
+            'user' => $data['mail']
+        );
+        
+        $this->session->set_userdata( $new_data );
+
+
+        endTr();
+        die('1'.chr(9).'Actualizado');
+
+    }
+
+
+
     function descripcion($id)
     {
 
