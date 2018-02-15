@@ -9,6 +9,64 @@ class Places_model extends CI_Model {
     }
 
 
+    function newusers($data)
+    {
+
+        iniTr();
+        //registrando usuario en base 
+        $sql="select email from users_entidad_public where email='".escstr($data['nom'])."'";
+
+        if(nRows($sql)>0){
+
+            rollTr();
+            die('2'.chr(9).'Usuario con este correo ya se encuentra registrado.');
+
+        }
+
+        $sql="insert into users_entidad_public (nombres,email,perfil) values ".
+        "('".escstr($data['nom'])."','".escstr($data['nom'])."','".escstr($data['pro'])."')";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando usuario.');
+        }
+
+        //generar activacion
+        
+        $codigo = random_code(6);
+        
+        $sql="insert into codes_entidad_public (usuario,code_verifica) values ".
+        "('".escstr($data['nom'])."','".escstr($codigo)."')";
+
+        if(!exeQuery($sql)){
+
+            rollTr();
+            die('2'.chr(9).'Error: registrando usuario.');
+        }
+
+
+
+       $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
+
+        $msg = "<!DOCTYPE html><html><head><title></title></head>".
+        "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
+        "<p>Hola ".$data['nom']."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
+        "<p>Queremos darte la bienvenida a nuestro sitio, para activar tu cuenta haz click <a target='_blank' href='".$link_activa."'>aqui</a></p>".
+        "<p>Asi podras ingresar a tu cuenta</p></body></html>";
+
+        $datamail = ['mail' =>escstr($data['nom']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
+        $this->sendmail->send($datamail);
+
+
+        //
+
+        endTr();
+        die('1'.chr(9).'Registro exitoso, active su cuenta.');
+        
+    } 
+
+
     function updateAdmin($data)
     {
 
@@ -206,7 +264,7 @@ class Places_model extends CI_Model {
 
         //verificar 
         $sql="select email from users_entidad_public where email ='".escstr($data['mail'])."' and ".
-        "nombres='".escstr($this->session->nombres)."'";
+        "nombres!='".escstr($this->session->nombres)."'";
 
         if(nRows($sql)>0){
 

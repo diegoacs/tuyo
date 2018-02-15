@@ -127,7 +127,14 @@ class Signup extends CI_Controller {
 
 		    	$info = $this->places_model->generaldata($entidades['entidad']);
 
+		    	if(!$info){
+
+		    		redirect(base_url().'index.php/Signup/addplace/','refresh');
+		    	}
+		    	
 		    	$lugar = $this->places_model->getlugar($info->id_muni);
+
+
 
 
 				$pais=$this->signup_model->pais();

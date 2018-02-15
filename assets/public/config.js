@@ -1,6 +1,51 @@
 $(document).ready(function(){
 
 
+    $('#sendusr').click(function(){
+
+
+        var usr = $('#newusr').val();
+        var pro = $('#newprofile').val();
+
+        if(!$.trim(usr)){
+
+            alert('Debe escribir un correo electronico.');
+            return false;
+        }
+
+        var form = 'user='+usr+'&profile='+pro;
+
+        ajax_rqs(form,route+'Places_admin/newusers','POST','text',function(r){
+
+            if(r!='ERRINC'){
+
+                $('.texto-msg1').html(''); 
+
+                var rta=r.split(String.fromCharCode(9));
+
+                if(rta[0]=='1'){
+
+                    alert(rta[1]);
+
+                    window.open(route+'Places_admin/adminusers?id='+encodeURI($('#usuarios-select').val()),'_self');
+
+                }
+                else {
+
+                    $('.texto-msg1').html(rta[1]);
+
+                }
+            }
+            else alert('Error en proceso.'); 
+
+        });
+
+
+    });
+
+
+
+
     $('#usuarios-select').change(function(){
 
         window.open(route+'Places_admin/adminusers?id='+encodeURI($(this).val()),'_self');

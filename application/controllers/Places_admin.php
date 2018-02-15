@@ -13,6 +13,54 @@ class Places_admin extends CI_Controller {
 
 	}
 
+
+	public function newusers()
+	{
+
+
+
+			$info=array();
+	        
+	        // datos unicos
+
+	        $info['nom']=urldecode($this->input->post('user'));
+	        $info['pro']=urldecode($this->input->post('profile'));
+
+
+
+	        // enviar datos a validacion
+	        $this->form_validation->set_data($info);
+
+			$config = array(
+
+			    array('field' => 'pro','label' => 'perfil de usuario','rules' => 'required|trim|min_length[1]|max_length[1]|xss_clean'),
+			    array('field' => 'nom','label' => 'correo de usuario','rules' => 'required|trim|min_length[2]|max_length[60]|valid_email|xss_clean')
+
+			);
+
+			$this->form_validation->set_rules($config);
+
+	        if($this->form_validation->run() == FALSE) {
+
+	            die('2'.chr(9).validation_errors("<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;",'</p>'));
+
+	        }
+
+
+	        $rta = $this->places_model->newusers($info);
+
+	        $rta = explode(chr(9),$rta);
+
+	        if($rta[0] == '2'){
+
+	            die('2'.chr(9)."<p class='text-danger'><span class='fa fa-exclamation-triangle'></span>&nbsp;".$rta[1]."</p>");
+
+	        }
+
+	        die('1'.chr(9).'exito');
+
+	}
+
 	public function updateAdmin()
 	{
 
@@ -249,7 +297,9 @@ class Places_admin extends CI_Controller {
 
 			    		'perfiles' => form_dropdown('user-perfil', $perfil['data'],$perfil['default'],array('id' =>'user-perfil','class' => 'form-control')),
 
-			    		'entidades' => $text
+			    		'entidades' => $text,
+
+			    		'newperfil' => $perfil['data']
 
 			    	 ];
 

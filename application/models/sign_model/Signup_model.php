@@ -922,31 +922,6 @@ class Signup_model extends CI_Model {
             die('2'.chr(9).'Error: asociando entidades.');
         } 
 
-        
-
-        //destruir variable de session
-
-        // $this->session->unset_userdata('authcode');
-
-        // enviando correo
-
-        // ver_php($codigo);
-
-       //  $link_activa=base_url('index.php/Signup/placesactivation/'.$codigo);
-       // $msg = "<html><head><title>Activación de entidad y usuario</title></head><body><p>Bienvenido a Tuyo.com</p><br> Hola ".$data['info']['nombre']."<br><span>Queremos darte la bienvenida a tuyo.com, para activar tu cuenta da un click </span><a target='_blank' href='".$link_activa."'>Aqui</a></body></html>";
-
-        $msg = "<!DOCTYPE html><html><head><title></title></head>".
-        "<body style='font-family: arial;'><h2 style='color: #8a3ab9;'>Bienvenido a tuyo.com</h2>".
-        "<p>Hola ".$data['info']['nombre']."</p><p>Queremos darte la bienvenida a nuestro sitio</p>".
-        "<p>Queremos darte la bienvenida a nuestro sitio, para activar tu cuenta haz click <a target='_blank' href='".$link_activa."'>aqui</a></p>".
-        "<p>Asi podras ingresar a tu cuenta</p></body></html>";
-
-
-       //  $datamail = ['mail' =>escstr($data['info']['mail']),'subject'=>'Activación de cuenta usuario','msg'=>$msg,'from'=>'<no-responder@tuyo.com>' ];
-       //  $this->sendmail->send($datamail);
-
-
-        //
 
         endTr();
         die('1'.chr(9).'Registro exitoso, establecimiento creado.');
