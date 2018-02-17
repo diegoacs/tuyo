@@ -69,6 +69,28 @@
 									
 								</div>
 
+								<div class="form-group">
+
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										
+										<?php
+
+											if($this->session->has_userdata('user')){
+
+												echo anchor(base_url().'index.php/Signup/log_out/', 
+												"<span class='fa fa-close'></span>&nbsp;cerrar sesion", 
+												array('id' => 'close_session',
+												'name' => 'close_session',
+												'class' => 'btn btn-danger'));
+
+											}
+
+										?>
+										
+									</div>
+									
+								</div>
+
 
 							</div>
 

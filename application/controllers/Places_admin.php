@@ -14,6 +14,20 @@ class Places_admin extends CI_Controller {
 	}
 
 
+	public function chnunds()
+	{
+		echo $this->places_model->hab_actuales($this->session->calendario_actual,$this->input->post('id'));
+	}
+
+
+	public function editdeta()
+	{
+		echo $this->places_model->editdeta(array($this->input->post('deta'),
+													$this->input->post('id')));
+	}
+
+
+
 	public function newusers()
 	{
 
@@ -728,7 +742,9 @@ class Places_admin extends CI_Controller {
 				$categoria = $this->signup_model->categoria();
 				$unidad = $this->signup_model->unidad($categoria['default']);
 
-				$habitaciones_actuales = $this->places_model->hab_actuales($calendario);
+				$unidd = $this->places_model->selund($entidades['entidad']);
+				
+				$habitaciones_actuales = $this->places_model->hab_actuales($calendario,$unidd['default']);
 
 				$undcal = $this->places_model->unidadescalendario($calendario);
 
@@ -737,7 +753,11 @@ class Places_admin extends CI_Controller {
 				$unds = [
 
 					'hab_act' => $habitaciones_actuales,
+
+					'sel_unds' => form_dropdown('sel_unds', $unidd['data'],$unidd['default'],array('id'=>'sel_unds','class'=>'form-control')),
+
 					'undcal' => $undcal,
+
 					'camas' => form_dropdown('camas', $camas['data'],$camas['default'],array('id'=>'tcama','class'=>'form-control'))
 				];
 

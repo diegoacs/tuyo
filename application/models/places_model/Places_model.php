@@ -9,6 +9,56 @@ class Places_model extends CI_Model {
     }
 
 
+    function selund($id)
+    {
+
+
+        $rta=array('data'=>array(),'default'=>'');
+
+        $sql="select c.id_unidad,nom_unidad from unidad_calendario c ".
+        "join unidades u on c.id_unidad=u.id_unidad ".
+        "where id_calendario='".escstr($this->session->calendario_actual)."'";
+        
+        $gen = getQuery($sql);
+
+        $n=0;
+
+        foreach ($gen as $row) {
+            
+            if($n==0) $rta['default'] = $row['id_unidad'];
+
+            $rta['data'][$row['id_unidad']] = $row['nom_unidad'];
+
+            $n++;
+        }
+
+        return $rta;
+
+    }
+
+
+
+    function editdeta($id)
+    {
+        iniTr();
+
+        if(trim($id[0])){
+
+            $sql="update unidad_calendario set deta_unidad='".escstr($id[0])."' ".
+            " where id_calendario='".escstr($this->session->calendario_actual)."' and id_unidad='".escstr($id[1])."'";
+            if(!exeQuery($sql)){
+
+                rollTr();
+                die('2'.chr(9).'Problemas al actualizar.');
+            }
+        }
+
+        endTr();
+        die('1'.chr(9).'Actualizado.');
+
+
+    }
+
     function newusers($data)
     {
 
@@ -947,7 +997,7 @@ class Places_model extends CI_Model {
 			
 			$html.="<tr data-id='".$row['id_unidad']."'>".
 			"<td>".$row['nom_unidad']."</td>".
-			"<td>".$row['deta_unidad']."</td>".
+			"<td class='deta-edit'>".$row['deta_unidad']."</td>".
 			"<td class='price chhb'>".number_format($row['precio_normal'],2,'.',',')."</td>".
 			"<td>".
 			form_button(array(
@@ -990,14 +1040,14 @@ class Places_model extends CI_Model {
     }
 
 
-    function hab_actuales($calendario)
+    function hab_actuales($calendario,$id)
     {
 
     	$sql="select id_desc,c.nom_categoria,u.nom_unidad,".
 		"nom_desc,deta_desc,capacidad from desc_unidad du ".
 		"join unidades u on du.id_unidad=u.id_unidad ".
 		"join categorias c on u.id_categoria=c.id_categoria ".
-		"where du.id_calendario='".escstr($calendario)."'";
+		"where du.id_calendario='".escstr($calendario)."' and u.id_unidad='".escstr($id)."'";
 
 		$gen = getQuery($sql);
 

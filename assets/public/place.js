@@ -1,6 +1,65 @@
 $(document).ready(function(){
 
 
+
+    $('#sel_unds').change(function(){
+
+        ajax_rqs('id='+encodeURI($(this).val()),route+'Places_admin/chnunds','POST','text',function(r){
+            if(r!='ERRINC'){
+                if(r){
+                    
+                    $('.table-hab-show').html(r);
+                }
+            }
+            else alert('Error en proceso.');        
+        });
+
+    });
+
+
+    $(document).on('click','.table-unidades-show .deta-edit',function(){
+
+        $(this).html("<textarea row='10' class='editdeta'>"+$(this).text()+"</textarea>");
+
+        $(document).find('.editdeta').focus();
+
+    });
+
+
+    $(document).on('keypress','.table-unidades-show .editdeta',function(e){
+
+        if(e.keyCode==13){
+
+            if(!$.trim($(this).val())) return false;
+
+            var id = $(this).closest('tr').data('id');
+          
+            ajax_rqs('id='+encodeURI(id)+'&deta='+encodeURI($(this).val()),route+'Places_admin/editdeta','POST','text',function(r){
+
+                if(r!='ERRINC'){
+
+                    $('.texto-msg').html(''); 
+
+                    var rta=r.split(String.fromCharCode(9));
+
+                    if(rta[0]=='1'){
+
+                        alert(rta[1]);
+
+                        location.reload();
+
+                    }
+                    else alert(rta[1]);
+                }
+                else alert('Error en proceso.');  
+
+            });
+        
+        }
+
+    });
+
+
     $('.img-gallery').slick({
 
         slidesToShow: 5,

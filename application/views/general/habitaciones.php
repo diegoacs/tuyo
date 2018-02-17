@@ -97,6 +97,26 @@
 			En esta tabla se describen los las habitaciones detalladas.
 		</div>
 
+		<div class="form-horizontal">
+			
+			<div class="form-group">
+				
+				<label class="control-label col-xs-12 col-md-2">
+					<span class="fa fa-bars text-title"></span>
+					&nbsp;Tipo
+				</label>
+
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<?php
+
+						echo $sel_unds;
+					?>
+				</div>
+
+			</div>
+
+		</div>
+
 		<div class="table-responsive">
 			<table class="table table-hover table-bordered table-hab">
 				<thead>

@@ -79,7 +79,52 @@
 						<?php echo "total tablas: ".count($html); ?>
 						<br><br>
 						
-						<button type="button" class="btn btn-primary">ver tablas</button>
+						<div class="form-horizontal">
+							
+							<div class="form-group">
+
+								<div class="col-xs-12">
+	
+									<?php
+
+										echo anchor(base_url().'index.php/generic/Db_info/generatedb', 'generar backup', 
+											array('id'=>'generadb','class'=>'btn btn-primary'));
+									?>
+
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+								<div class="col-xs-12">
+	
+									<?php
+
+										echo anchor(base_url().'index.php/generic/Db_info/download_db', 'descargar backup', 
+											array('id'=>'downloaddb','class'=>'btn btn-primary'));
+									?>
+
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+								<div class="col-xs-12">
+	
+									<?php
+
+										echo anchor(base_url().'index.php/generic/Db_info/get_schema', 'obtener squema', 
+											array('id'=>'getsch','class'=>'btn btn-primary'));
+									?>
+
+								</div>
+
+							</div>
+
+						</div>
+
 
 					</div>
 				</div>
