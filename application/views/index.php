@@ -1,6 +1,99 @@
     
     <!-- portada de imagen -->
-    <div class="container-fluid c1" id='c1'>
+    
+    <div class="container-fluid" style="background-color: #eae8e8;margin-top: 50px;padding-top: 30px">
+
+        <div class="container">
+            
+            <div class="row">
+                
+                <form class="form-horizontal" role="form" method="post" action="<?php echo base_url('index.php/Panel_ini/searchRta'); ?>">
+
+                    <div class="form-group text-center">
+
+                        <label class="control-label col-xs-12">
+                            <span class="fa fa-search"></span>&nbsp;
+                            Busco
+                        </label>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <select class="selectpicker form-control" name="searchcategory" data-live-search="true">
+                                
+                                <?php echo $categorias; ?>
+
+                            </select>
+                        </div>                        
+                    </div>
+                    
+                    <div class="form-group text-center">
+
+                        <label class="control-label col-xs-12">
+                            <span class="fa fa-map-marker"></span>&nbsp;
+                            Lugar
+                        </label>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">   
+                            
+                            <?php
+
+                                echo form_input(array('type'=>'text','name'=>'searchcity',
+                                                    'class'=>'form-control'));
+                            ?>
+
+                        </div>                        
+                    </div>
+
+                    <div class="form-group text-center">
+                        
+                        <label class="control-label col-xs-6">
+                            <span class="fa fa-calendar"></span>&nbsp;
+                            Llegada
+                        </label>
+                        <label class="control-label col-xs-6">
+                            <span class="fa fa-calendar"></span>&nbsp;
+                            Salida
+                        </label>
+
+                    </div>
+                    
+                    <div class="form-group">
+
+                        <div class="col-xs-6">
+                            
+                            <?php
+
+                                echo form_input(array('type'=>'date','class'=>'form-control','name'=>'finin'));
+                            ?>
+                        </div>
+                        <div class="col-xs-6">
+                            
+                            <?php
+
+                                echo form_input(array('type'=>'date','class'=>'form-control','name'=>'ffin'));
+                            ?>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group text-center">
+                        
+                        <div class="col-xs-12">
+                            <button type="submit" class="btn btn-info searchbtn">
+                                <span class="fa fa-search"></span>&nbsp;buscar
+                            </button>
+                        </div>
+
+                    </div>  
+
+                </form>
+     
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid c1 hidden-xs hidden-sm" id='c1'>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -56,7 +149,7 @@
                                             </button>
                                         </div>
                                     </div>
-                            </div>
+                            </form>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     
@@ -66,7 +159,7 @@
     </div>
 
     <!-- ciudades -->
-    <div class="container-fluid c4">
+    <div class="container-fluid c4 hidden-xs hidden-sm">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -112,7 +205,7 @@
     </div>
 
     <!-- lugares cercanos -->
-    <div class="row c2">
+    <div class="row c2 hidden-xs hidden-sm">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h2 class="text-center text-title">
                 <span class="fa fa-map-marker text-danger"></span>
@@ -122,7 +215,7 @@
     </div>
 
     <!-- map -->
-    <div class="container-fluid mapgral">
+    <div class="container-fluid mapgral hidden-xs hidden-sm">
         <input type="hidden" id='routelist' value="<?php echo base_url("assets/public/img/logo2.png"); ?>">
         <div id="map_gral" style="height: 400px; width:auto;"></div>
 
