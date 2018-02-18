@@ -22,12 +22,13 @@ class Panel_ini extends CI_Controller {
                         'fecha2' => $this->input->post('searchdate2'),
                         'ciudad' => $this->input->post('searchcity'));
 
-            $rta=$this->items_model->check_search($data);      
+            $resultados = $this->items_model->check_search($data);      
 
             if(!trim($data['fecha1'])) $data['fecha1']=date('Y-m-d');
             if(!trim($data['fecha2'])) $data['fecha2']=date('Y-m-d');
 
-
+            $rta = $this->load->view('panel_rta',array('resultados' => $resultados),true);
+             
             $this->load->view('head', '', FALSE);
             $data1 = ['city' => $data['ciudad'] ,'categorias' => $this->items_model->getCat() ];
             $this->load->view('panel_search',$data1, FALSE);        
