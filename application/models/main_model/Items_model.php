@@ -144,47 +144,49 @@ class Items_model extends CI_Model {
         if(!trim($data['fecha1'])) $data['fecha1']=date('Ymd');
         if(!trim($data['fecha2'])) $data['fecha2']=date('Ymd');
 
-        $sql="select count(*)as num,max(u.nom_unidad) as nombre,max(du.id_unidad) as idund,".
+        $sql="select count(*)as num,max(u.nom_unidad) as nombre,".
         "max(deta_desc) as descr,max(uc.precio_normal) as precio,du.id_calendario,max(e.nom_entidad) as nom_entidad, ".
-        "max(e.id_entidad) as id_entidad, max(e.id_muni) as id_muni ".
+        "max(e.id_entidad) as id_entidad, max(e.id_muni) as id_muni, max(mn.nom_muni) as nom_muni,".
+        "max(e.descripcion) as descrip, max(e.condiciones) as condic ".
         "from desc_unidad du left join unidades u on du.id_unidad=u.id_unidad ".
         "left join calendario c on du.id_calendario=c.id_calendario ".
         "join unidad_calendario uc on du.id_unidad=uc.id_unidad and du.id_calendario=uc.id_calendario ".
         "left join entidad e on c.id_entidad=e.id_entidad ".
+        "join municipio mn on e.id_muni=mn.id_muni ".
         "where du.id_unidad in ( ".
         "select id_unidad from unidades where id_categoria=".escstr($data['categoria']).") ".
         "and id_desc not in ( ".
         "select id_desc from reservas where id_estado in ('01','02') and (fecha_inicio>='".escstr($data['fecha1']).
         "' and fecha_fin<='".escstr($data['fecha2'])."') ".
         "group by id_desc) and activo = 'S' and e.id_muni in ('".implode("','",$city)."') ".
-        "and e.tipo='H' group by du.id_unidad,du.id_calendario";
+        "and e.tipo='H' group by du.id_calendario";
 
-        $gen = getQuery($sql);
-        $html='';
+        return getQuery($sql);
 
-        if(nRows($sql)<1){
-            $html.="<tr>".
-            "<td colspan='6'><div class='alert alert-info'>
-                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                No encontramos resultados para su busqueda, intente de nuevo.
-            </div> </td>".
-            "</tr>";
-        }
-        else{
-            foreach ($gen as $r) {
-                $html.="<tr data-id='".base64_encode($r['idund'])."' data-enti='".base64_encode($r['id_entidad'])."'>".
-                "<td style='text-align:center' title='Disponibles en este momento'>".escstr($r['num'])."</td>".
-                "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
-                "<td title='Detalle'>".escstr($r['descr'])."</td>".
-                "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
-                "<td title='Lugar'><a href='".base_url('index.php/Panel_ini/productDetals/'.$r['id_entidad'].'/'.$r['id_muni'])."'>".$r['nom_entidad']."</a></td>".
-                "<td><a class='generarRv btn btn-xs btn-success' data-toggle='modal' href='#formRv'>".
-                "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
-                "</a></td>".
-                "</tr>";
-            }
-        }
-        return $html;
+        //         if(nRows($sql)<1){
+        //     $html.="<tr>".
+        //     "<td colspan='6'><div class='alert alert-info'>
+        //         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+        //         No encontramos resultados para su busqueda, intente de nuevo.
+        //     </div> </td>".
+        //     "</tr>";
+        // }
+        // else{
+        //     foreach ($gen as $r) {
+        //         $html.="<tr data-id='".base64_encode($r['idund'])."' data-enti='".base64_encode($r['id_entidad'])."'>".
+        //         "<td style='text-align:center' title='Disponibles en este momento'>".escstr($r['num'])."</td>".
+        //         "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
+        //         "<td title='Detalle'>".escstr($r['descr'])."</td>".
+        //         "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
+        //         "<td title='Lugar'><a href='".base_url('index.php/Panel_ini/productDetals/'.$r['id_entidad'].'/'.$r['id_muni'])."'>".$r['nom_entidad']."</a></td>".
+        //         "<td><a class='generarRv btn btn-xs btn-success' data-toggle='modal' href='#formRv'>".
+        //         "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
+        //         "</a></td>".
+        //         "</tr>";
+        //     }
+        // }
+        // return $html;
+        
 
     }
 

@@ -10,7 +10,7 @@
             <div class="row">
 
 
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 filtro">
+                <div class="hidden-xs hidden-sm col-md-3 col-lg-3 filtro">
                 
                     <div class="row">
                         
@@ -120,25 +120,11 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         
+                                    <?php echo $rta; ?>
+                        
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Disponibles</th>
-                                                <th colspan="<?php echo $cols; ?>">Detalles</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class='outside-rta'>
-                                <?php echo $rta; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-                            </div>
+                            
                             <div class="row">
 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -150,65 +136,6 @@
                             <div class="row">
                                 <?php echo $condiciones; ?>
                                 <br><br>
-<!--                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Quiza también te interese...</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <div class="media">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" style='width: 70px; height: 70px;' 
-                                                            src="<?php echo base_url('assets/public/img/mp3.jpg');?>" alt="Image">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">HOTEL</h4>
-                                                            <p>Hotel en cercanias de la ciudad...</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <div class="media">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" style='width: 70px; height: 70px;' 
-                                                            src="<?php echo base_url('assets/public/img/mp3.jpg');?>" alt="Image">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">HOTEL</h4>
-                                                            <p>Hotel en cercanias de la ciudad...</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <div class="media">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" style='width: 70px; height: 70px;' 
-                                                            src="<?php echo base_url('assets/public/img/mp3.jpg');?>" alt="Image">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">HOTEL</h4>
-                                                            <p>Hotel en cercanias de la ciudad...</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <div class="media">
-                                                        <a class="pull-left" href="#">
-                                                            <img class="media-object" style='width: 70px; height: 70px;' 
-                                                            src="<?php echo base_url('assets/public/img/mp3.jpg');?>" alt="Image">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="media-heading">HOTEL</h4>
-                                                            <p>Hotel en cercanias de la ciudad...</p>
-                                                        </div>
-                                                    </div>
-                                                </div>                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
 
                 </div>
