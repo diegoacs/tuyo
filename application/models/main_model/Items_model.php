@@ -213,24 +213,39 @@ class Items_model extends CI_Model {
         $html='';
 
         if(nRows($sql)<1){
-            $html.="<tr>".
-            "<td colspan='5'><div class='alert alert-info'>
-                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                No encontramos resultados para su busqueda, intente de nuevo.
-            </div> </td>".
-            "</tr>";
+
+            $html.="<div class='alert alert-info'>".
+            "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".
+            "No encontramos resultados para su busqueda, intente de nuevo.".
+            "</div>";
         }
         else{
             foreach ($gen as $r) {
-                $html.="<tr data-id='".base64_encode($tipo)."' data-enti='".base64_encode($entidad)."'>".
-                "<td style='text-align:center' title='Disponibles en este momento' >".escstr($r['num'])."</td>".
-                "<td title='Tipo espacio'>".escstr($r['nombre'])."</td>".
-                "<td title='Detalle'>".escstr($r['descr'])."</td>".
-                "<td title='Precio normal'><b>$".number_format($r['precio'],2,'.',',')."</b></td>".
-                "<td><a data-toggle='modal' href='#formRv' class='generarRv btn btn-xs btn-success'>".
-                "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
-                "</a></td>".
-                "</tr>";
+
+                $html.="<div class=\"panel panel-default\">".
+
+                    "<div class=\"panel-heading\">
+                        <h3 class=\"panel-title\">".
+                        "<span class='fa fa-bed'></span>&nbsp;".escstr($r['nombre'])."</h3>
+                    </div>".
+
+                    "<div class=\"panel-body\" data-id='".base64_encode($tipo)."' data-enti='".base64_encode($entidad)."'>
+                        
+                        <ul class=\"list-group\">
+                            <li class=\"list-group-item\">".
+                                "Disponibles: ".escstr($r['num']).
+                            "</li>".
+                            "<li class=\"list-group-item\">Detalles: ".escstr($r['descr'])."</li>
+                            <li class=\"list-group-item\">precio: $".number_format($r['precio'],2,'.',',')."</li>
+                            <li class=\"list-group-item\">".
+                                "<a data-toggle='modal' href='#formRv' class='generarRv btn btn-success'>".
+                                    "<span class='fa fa-calendar'></span>&nbsp;reservar ahora!".
+                                "</a>".
+                            "</li>
+                        </ul>
+                        
+                    </div>
+                </div>";
             }
         }
         return $html;
@@ -437,7 +452,7 @@ class Items_model extends CI_Model {
                 if($n==0)$html.="active";
                 $html.="'>".
                 "<img data-src='holder.js/900x500/auto/#777:#7a7a7a/text:fside' alt='fside' src='".
-                "http://localhost/cdig/assets/public/img/img_enti/".$entidad."/".$r['nombre'].$r['tipo'].
+                ruta_conf().$entidad."/".$r['nombre'].$r['tipo'].
                 "'>".
                 "<div class='container'><div class='carousel-caption'></div></div></div>";
                 $n++;

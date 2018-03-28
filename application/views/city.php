@@ -138,49 +138,107 @@
 
             	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 						
-						
-							<div class="row outside-rta">
+                        <?php  
 
-                                <?php
-                                $html='';
-                                foreach ($places as $row) {
-                                    $html.="
-                                    <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 destaca'>
+                            foreach ($places as $row) {
+                        
+                        ?>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+
+                                        <a href='<?php echo base_url('index.php/Panel_ini/productDetals/'.$row['id_entidad'].'/'.$idcity); ?>'>
+                                            <span class="fa fa-home text-title"></span>&nbsp;
+                                            <?php echo $row['nom_entidad'];?>
+                                        </a>
+
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+
+
                                         <div class='media'>
                                             <div class='media-left'>
                                                 <a href='#'>
                                                     <img class='media-object img-oferta' 
-                                                    src='http://localhost/cdig/assets/public/img/img_enti/".$row['id_entidad']."/".
-                                                    $row['nombre']."_thumb".$row['tipo']."' alt='".$row['nom_entidad']."'>
+                                                    src="
+                                                    
+                                                    <?php  
+    
+                                                        echo ruta_conf().$row['id_entidad'].'/'.
+                                                        $row['nombre'].'_thumb'.$row['tipo'];
+
+                                                    ?>
+
+                                                    ">
                                                 </a>
                                             </div>
                                             <div class='media-body'>
-                                                <h4 class='media-heading'><span class='fa fa-bookmark-o text-title'></span>&nbsp;".$row['nom_entidad']."</h4>
+
+                                                <h4 class='media-heading'>
+                                                    <span class='fa fa-bookmark-o text-title'></span>
+                                                        &nbsp;
+
+                                                        <?php 
+
+                                                            echo $row['nom_entidad']; 
+
+                                                        ?>
+                                                </h4>
+
                                                 <span class='fa fa-star color-star'></span>
                                                 <span class='fa fa-star color-star'></span>
                                                 <span class='fa fa-star color-star'></span>
                                                 <span class='fa fa-star color-star'></span>
                                                 <span class='fa fa-star-o color-star'></span>
+
                                                 4.3
-                                                <p class='text-paragraph mright'>".$row['descripcion']."</p>
+
+                                                <p class='text-paragraph mright'>
+                                                    
+                                                    <?php
+
+                                                        echo $row['descripcion'];
+
+                                                    ?>
+                                                </p>
+
                                                 <br>
 
-                                                <a href=".base_url('index.php/Panel_ini/productDetals/'.$row['id_entidad'].'/'.$idcity).">
-                                                <span class='fa fa-chevron-circle-right text-title'></span>&nbsp;ver más</a>
+                                                <a href="
+
+                                                    <?php  
+
+                                                        echo base_url('index.php/Panel_ini/productDetals/'.$row['id_entidad'].'/'.$idcity);
+
+                                                    ?> 
+                                                ">
+                                                
+                                                    <span class='fa fa-chevron-circle-right text-title'>
+                                                        &nbsp;ver más
+                                                    </span>
+                                                </a>
+
                                                 <div class='text-right mright'>
                                                     <a href='#'><span class='fa fa-comments-o'></span>&nbsp;comentarios</a>
                                                 </div>
 
 
                                             </div>
+
                                         </div>
-                                    </div>";
-                                }
-                                echo $html;
 
-                                ?>
+                                </div>
+                            </div>
 
-							</div>
+
+                        <?php
+
+                            }
+
+                        ?>
+
 
             	</div>
             </div>

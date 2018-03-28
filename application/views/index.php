@@ -1,14 +1,17 @@
     
-    <!-- portada de imagen -->
+    <!-- busqueda para moviles -->
     
-    <div class="container-fluid" style="background-color: #eae8e8;margin-top: 50px;padding-top: 30px">
+    <div class="container-fluid hidden-sm hidden-md hidden-lg" style="background-color: #eae8e8;margin-top: 50px;padding-top: 30px">
 
         <div class="container">
             
             <div class="row">
-                
-                <form class="form-horizontal" role="form" method="post" action="<?php echo base_url('index.php/Panel_ini/searchRta'); ?>">
 
+                <?php  
+                    $hidden = [];
+                    echo form_open('Panel_ini_searchRta',['role'=>'form','class'=>'form-horizontal','method'=>'post'], $hidden);
+                ?>
+                
                     <div class="form-group text-center">
 
                         <label class="control-label col-xs-12">
@@ -84,7 +87,9 @@
 
                     </div>  
 
-                </form>
+                <?php  
+                    echo form_close();
+                ?>
      
 
 
@@ -93,16 +98,23 @@
 
     </div>
 
-    <div class="container-fluid c1 hidden-xs hidden-sm" id='c1'>
+    <!-- portada de imagen -->
+
+    <div class="container-fluid c1 hidden-xs" id='c1'>
+
         <div class="container">
+
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                     <img src="<?php echo base_url("assets/public/img/logo_tuyo.png"); ?>" class="img-responsive img-medium">
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+                <div class="col-xs-12 col-sm-5 col-md-6 col-lg-6">
+
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <h1>Encuentra las mejores ofertas</h1>
@@ -111,51 +123,115 @@
                     </div>
 
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 panel-radi">
 
-                            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url('index.php/Panel_ini/searchRta'); ?>">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 panel-radi">
+
+                            <?php  
+
+                                $hidden =[];
+                                echo form_open('Panel_ini/searchRta',['class'=>'form-horizontal','role'=>'form','method'=>'post'], $hidden);
+
+                            ?>
+
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-map-marker text-danger"></span>&nbsp;Destino</label>
-                                        <div class="col-sm-12 col-md-8">
-                                            <input type="text" id="input" class="form-control" name="searchcity">
+
+                                        <label for="" class="col-sm-3 col-md-3 control-label text-bar">
+                                            <span class="fa fa-map-marker text-danger"></span>
+                                            &nbsp;Destino
+                                        </label>
+
+                                        <div class="col-sm-9 col-md-9">
+                                            <?php  
+
+                                                echo form_input('searchcity', '', ['class'=>'form-control','id'=>'input']);
+                                            ?>
                                         </div>
-                                    </div>                                
+
+                                    </div>   
+
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-calendar-check-o text-primary"></span>&nbsp;Desde</label>
-                                        <div class="col-sm-12 col-md-8">
-                                        <input type="date" class="form-control" name="searchdate1">
+
+                                        <label for="" class="col-sm-3 col-md-3 control-label text-bar">
+                                            <span class="fa fa-calendar-check-o text-primary"></span>
+                                            &nbsp;Desde
+                                        </label>
+
+                                        <div class="col-sm-9 col-md-9">
+
+                                            <?php  
+                                                echo form_input(['type'=>'date','class'=>'form-control','name'=>'searchdate1']);
+                                            ?>
+
                                         </div>
+
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-calendar-check-o text-primary"></span>&nbsp;Hasta</label>
-                                        <div class="col-sm-12 col-md-8">
-                                        <input type="date" class="form-control" name="searchdate2">
+
+                                        <label for="" class="col-sm-3 col-md-3 control-label text-bar">
+                                            <span class="fa fa-calendar-check-o text-primary"></span>
+                                            &nbsp;Hasta
+                                        </label>
+                                        
+                                        <div class="col-sm-9 col-md-9">
+
+                                            <?php  
+                                                echo form_input(['type'=>'date','class'=>'form-control','name'=>'searchdate2']);
+                                            ?>
+
                                         </div>
+
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12 col-md-4 control-label text-bar"><span class="fa fa-h-square text-info"></span>&nbsp;Busco</label>
-                                        <div class="col-sm-12 col-md-8">
+
+                                        <label for="" class="col-sm-3 col-md-3 control-label text-bar">
+                                            <span class="fa fa-h-square text-info"></span>
+                                                &nbsp;Busco
+                                        </label>
+                                        
+                                        <div class="col-sm-9 col-md-9">
+
                                             <select class="selectpicker form-control" name="searchcategory" data-live-search="true">
                                                 <?php echo $categorias; ?>
                                             </select>
+
                                         </div>
+
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="col-sm-offset-12 col-md-offset-4 col-sm-12 col-md-8">
-                                            <button type="submit" class="btn btn-info searchbtn">
-                                                <span class="fa fa-search"></span>&nbsp;buscar
-                                            </button>
+
+                                        <div class="col-sm-12 col-md-12">
+
+                                            <?php  
+
+                                                $text = "<span class='fa fa-search'></span>&nbsp;buscar";
+                                                echo form_button(['type'=>'submit','class'=>'btn btn-info searchbtn','content'=>$text]);
+
+                                            ?>
+
                                         </div>
+
                                     </div>
-                            </form>
+
+                            
+                            <?php  
+
+                                echo form_close();
+
+                            ?>
+
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+                <div class="col-xs-0 col-sm-1 col-md-2 col-lg-2">
                     
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
     <!-- ciudades -->
@@ -314,23 +390,25 @@
 
     <!-- unete a nosostros -->
     <div class="container-fluid c4">
+
+
         <div class="container">
+
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <div class="col-xs-12 text-center">
                     <h3>
                         
                         <?php
                             $text="<span class='fa fa-user-o text-title'></span>&nbsp;<b>Unete a nosotros</b>";
-                            echo anchor(base_url().'index.php/Signup/mainregister', $text, array(
-                                                                                                 'style'=>'text-decoration:none;color:inherit;'));
+                            echo anchor(base_url().'index.php/Signup/mainregister', $text, array('style'=>'text-decoration:none;color:inherit;'));
                         ?>
 
                     </h3>
                 </div>
             </div>
-            <br><br>
+
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="desc">
                             <h3><span class="fa fa-envelope-o text-title"></span>&nbsp;Ofertas increibles</h3>
                             <p>
@@ -339,7 +417,7 @@
                             </p>
                         </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="desc">
                             <h3><span class="fa fa-smile-o text-title"></span>&nbsp;Fácil y rápido</h3>
                             <p>
@@ -347,7 +425,7 @@
                             </p>
                         </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="desc">
                             <h3><span class="fa fa-heart text-title"></span>&nbsp;Compartenos</h3>
                             <p>
@@ -357,328 +435,5 @@
                 </div>             
             </div>  
         </div>
+
     </div> 
-
-
-<!--     <div class="container-fluid c2" id='c2'>
-        <div class="container">
-            <h2 class="text-center text-title">
-                <span class="fa fa-map-marker text-danger"></span>
-                 <b>Lugares cerca de ti</b></h2>
-            <br><br>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 marginA">
-                    <div id="map_gral" style="height: 400px; width: 100%"></div>
-
-
-
-                    <script>
-                        var map;
-                        function initMap() {
-                            map = new google.maps.Map(document.getElementById('map_gral'), {
-                            center: {lat: -34.397, lng: 150.644},
-                            zoom: 9
-                        });
-
-                        var marker = new google.maps.Marker({
-                            position: {lat: -34.397, lng: 150.644},
-                            map: map,
-                            title: 'Hello World!',
-                            animation: google.maps.Animation.BOUNCE,
-                            draggable: true
-                        });
-                    }
-
-                    </script>
-
-
-
-
-
-
-
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 panel-destacado">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marginA">
-                                <div>
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href=" <?php echo base_url('index.php/Panel_ini/productDetals'); ?> ">
-                                                <img class="media-object img-circle img-ini"
-                                                src="<?php echo base_url('assets/public/img/mp3.jpg'); ?>" alt="Villa María Paula">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Villa María Paula</h4>
-                                            <p>Finca campestre en Floridablanca<br>
-                                            <a href="<?php echo base_url('index.php/Panel_ini/productDetals');?>">
-                                                <span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más
-                                            </a> 
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marginA">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object img-circle img-ini" 
-                                        src="<?php echo base_url("assets/public/img/parapente.jpg"); ?>" alt="hotel colonial">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Parapente</h4>
-                                    <p>Parapente y deportes extremos <br>
-                                    <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a> </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marginA">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object img-circle img-ini" 
-                                        src="<?php echo base_url("assets/public/img/colonial1.jpg"); ?>" alt="hotel colonial">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Real</h4>
-                                    <p>Hotel estilo colonial,buena ubicación en centro histórico de la ciudad. <br>
-                                    <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a> </p>
-                                </div>
-                            </div>
-                        </div>   
-
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marginA text-right">
-                            <button type="button" class="btn btn-danger">
-                                más lugares&nbsp;<span class="fa fa-arrow-right"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-
-<!--     <div class="container-fluid c3 main-destacado" id='c3'>
-        <div class="container" >
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                    <h3><span class="fa fa-map text-title"></span>&nbsp;<b>Lugares destacados</b></h3>
-                </div>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"></div>
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-circle img-oferta" 
-                                src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>      
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-circle img-oferta" 
-                                src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>  
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-circle img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>      
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-circle img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>   
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-circle img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>    
-                <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"></div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"></div>
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-thumbnail img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>   
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>   
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-thumbnail img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>  
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-thumbnail img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>      
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-thumbnail img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>  
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 destaca">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-thumbnail img-oferta" src="<?php echo base_url("assets/public/img/colonial.jpg"); ?>" alt="hotel colonial">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading"><span class="fa fa-bookmark-o text-title"></span>&nbsp;Hotel Colonial</h4>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <span class='fa fa-star-o color-star'></span>
-                            <br>                             
-                            <a href="#"><span class="fa fa-chevron-circle-right text-title"></span>&nbsp;ver más</a>
-                        </div>
-                    </div>
-                </div>     
-                <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"></div>
-            </div>
-          
-        </div>
-    </div>   -->
-
-
- 
-
-

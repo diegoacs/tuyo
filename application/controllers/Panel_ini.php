@@ -6,7 +6,7 @@ class Panel_ini extends CI_Controller {
 
 	function __construct(){
         parent::__construct();
-        $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha'));
+        $this->load->helper(array('url','form','security','verphp','paginate','dates','querymysql','captcha','rutasconf'));
         $this->load->library(array('session','form_validation'));
         $this->load->library('css_js',null,'css_js');
 
@@ -18,34 +18,49 @@ class Panel_ini extends CI_Controller {
         if(count($_POST)>0){
 
             $data = array('categoria' => $this->input->post('searchcategory'),
+
                         'fecha1' => $this->input->post('searchdate1'),
+
                         'fecha2' => $this->input->post('searchdate2'),
-                        'ciudad' => $this->input->post('searchcity'));
+
+                        'ciudad' => $this->input->post('searchcity')
+                    );
 
             $resultados = $this->items_model->check_search($data);      
 
             if(!trim($data['fecha1'])) $data['fecha1']=date('Y-m-d');
+
             if(!trim($data['fecha2'])) $data['fecha2']=date('Y-m-d');
 
             $rta = $this->load->view('panel_rta',array('resultados' => $resultados),true);
              
             $this->load->view('head', '', FALSE);
+
             $data1 = ['city' => $data['ciudad'] ,'categorias' => $this->items_model->getCat() ];
-            $this->load->view('panel_search',$data1, FALSE);        
+
+            $this->load->view('panel_search',$data1, FALSE);     
+
             $filtros = $this->items_model->getFilters();
+
             $data2 = [
+
                 'rta' => $rta ,'filtros' => $filtros, 
                 'condiciones' => '', 'gallery' => '',
                 'cols' => '5','categorias' => $this->items_model->getCat(),
                 'fecha1' => $data['fecha1'],
                 'fecha2' => $data['fecha2'],
                 'ciudad' => $data['ciudad']
+
             ];
 
             $this->load->view('lista_busqueda',$data2, FALSE);
+
             $this->load->view('modal_form','', FALSE);
+
             $js=$this->css_js->js(array('rute'=>'public/panel.js?n='.rand()));
-            $this->load->view('footer_gris', array('js'=>$js), FALSE); 
+
+            $this->load->view('footer_gris', array('js'=>$js), FALSE);
+
         }
         else{
 
