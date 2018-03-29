@@ -7,7 +7,7 @@
 
 		<?php  
 
-			echo form_open('Panel_ini/searchRta',['class'=>'hidden-xs','role'=>'form','method'=>'post'],'');
+			echo form_open('Panel_ini/panelRta',['class'=>'hidden-xs','role'=>'form','method'=>'post'],'');
 
 		?>
 
@@ -57,7 +57,7 @@
 
 		<?php
 
-			echo form_open('Panel_ini/searchRta',['class'=>'hidden-sm hidden-md hidden-lg','role'=>'form','method'=>'post'],'');
+			echo form_open('Panel_ini/panelRta',['class'=>'hidden-sm hidden-md hidden-lg','role'=>'form','method'=>'post'],'');
 
 		?>
 

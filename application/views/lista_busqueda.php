@@ -48,7 +48,7 @@
                                     </div>
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                                        <select class="selectpicker form-control filtrocat" name="searchcategory1" data-live-search="true">
+                                        <select class="selectpicker form-control filtrocat_movil" name="searchcategory1" data-live-search="true">
                                         <?php echo $categorias; ?>      
                                         </select>
                                     </div>
@@ -59,7 +59,7 @@
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
                                         <?php 
-                                            echo form_input(array('type' => 'text','id' => 'ciudad1','class' => 'form-control', 'value' => $ciudad));
+                                            echo form_input(array('type' => 'text','id' => 'ciudad1_movil','class' => 'form-control', 'value' => ''));
                                         ?>
                                     </div>
 
@@ -91,7 +91,7 @@
                                                     foreach ($filtros as $row) {
                 
                                                         $html.="<div class='checkbox'><label>".
-                                                        "<input class='caracteristica' data-id='".$row['id_caracter']."' type='checkbox'>".
+                                                        "<input class='caracteristica_movil' data-id='".$row['id_caracter']."' type='checkbox'>".
                                                         "<span class='".$row['icono']."'></span>&nbsp;".$row['descripcion'].
                                                         "</label></div>";
                 
@@ -109,7 +109,7 @@
                                     </div>
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <button type="button" class="btn btn-success filter-char">
+                                        <button type="button" class="btn btn-success filter-char-movil">
                                             <span class="fa fa-search"></span>&nbsp;buscar
                                         </button>
                                     </div>
@@ -140,7 +140,7 @@
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
                             <?php 
-                                echo form_input(array('type' => 'date','id' => 'fechadesde1','class' => 'form-control', 'value' => $fecha1));
+                                echo form_input(array('type' => 'date','id' => 'fechadesde2','class' => 'form-control', 'value' => $fecha1));
                             ?>
                         </div>
                         
@@ -150,7 +150,7 @@
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
                             <?php 
-                                echo form_input(array('type' => 'date','id' => 'fechahasta1','class' => 'form-control', 'value' => $fecha2));
+                                echo form_input(array('type' => 'date','id' => 'fechahasta2','class' => 'form-control', 'value' => $fecha2));
                             ?>
                         </div>
 
@@ -171,7 +171,7 @@
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
                             <?php 
-                                echo form_input(array('type' => 'text','id' => 'ciudad1','class' => 'form-control', 'value' => $ciudad));
+                                echo form_input(array('type' => 'text','id' => 'ciudad1','class' => 'form-control', 'value' => ''));
                             ?>
                         </div>
 
@@ -234,7 +234,7 @@
                 <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 outside-rta">
                         
                                     <?php echo $rta; ?>
                         

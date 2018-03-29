@@ -17,26 +17,68 @@ $(document).ready(function(){
         var selected = $('.filtrocat').find('option:selected');
         var extra = selected.data('id');
 
-
         var form='cy=N&char='+encodeURI(chr)+'&city='+encodeURI($('#ciudad1').val());
             form+='&tipo='+encodeURI(extra);
-            form+='&ini='+encodeURI($("#fechadesde1").val())+'&fin='+encodeURI($("#fechahasta1").val());
+            form+='&ini='+encodeURI($("#fechadesde2").val())+'&fin='+encodeURI($("#fechahasta2").val());
 
         $.ajax({
             url:route+'Panel_ini/filterChar',
             type:'POST',
             data:form,
             success: function (r){  
+
                 $(".outside-rta").html(r);
             },
 
             error: function (r){
+
                 alert('error: filtrando busqueda.');
             }
         });
         
         
     });
+
+    $(".filter-char-movil").click(function () {
+       
+        var chr = [];
+        $('.caracteristica_movil').each(function(){
+
+            if(this.checked){
+
+                chr.push($(this).data('id'));
+            }
+        })
+
+        var selected = $('.filtrocat_movil').find('option:selected');
+        var extra = selected.data('id');
+
+        alert($('#ciudad1').val());
+
+        var form='cy=N&char='+encodeURI(chr)+'&city='+encodeURI($('#ciudad1_movil').val());
+            form+='&tipo='+encodeURI(extra);
+            form+='&ini='+encodeURI($("#fechadesde1").val())+'&fin='+encodeURI($("#fechahasta1").val());
+
+            alert(form);
+
+        $.ajax({
+            url:route+'Panel_ini/filterChar',
+            type:'POST',
+            data:form,
+            success: function (r){  
+
+                $(".outside-rta").html(r);
+            },
+
+            error: function (r){
+
+                alert('error: filtrando busqueda.');
+            }
+        });
+        
+        
+    });
+
 
     $(".filter-char-city").click(function () {
        

@@ -1,6 +1,23 @@
 
 <?php
-	foreach ($resultados as $row) {
+	if(count($resultados)<1){
+
+?>
+
+	<div class="alert alert-warning">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		No hay resultados para esta busqueda.
+	</div>
+
+
+
+<?php
+
+	}
+	else{
+
+
+		foreach ($resultados as $row) {
 		
 ?>
 	<div class="panel panel-default">
@@ -49,5 +66,7 @@
 
 
 <?php
+		}
+
 	}
 ?>
